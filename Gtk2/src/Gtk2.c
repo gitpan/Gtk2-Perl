@@ -1,4 +1,4 @@
-/* $Id: Gtk2.c,v 1.18 2003/01/08 19:02:23 ggc Exp $
+/* $Id: Gtk2.c,v 1.19 2003/02/08 15:42:24 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -206,6 +206,11 @@ void        gtk_propagate_event             (GtkWidget *widget,
 */
 
 /* special functions */
+
+int gtkperl_gtk2_pointer_address(char* class, SV* ptr)
+{
+    return SvIV(SvRV(ptr));
+}
 
 int gtkperl_gtk2_equals(char* class, SV* ptr1, SV* ptr2)
 {

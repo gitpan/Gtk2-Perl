@@ -1,4 +1,4 @@
-/* $Id: Widget.c,v 1.45 2003/01/09 17:14:35 ggc Exp $
+/* $Id: Widget.c,v 1.47 2003/02/03 17:12:03 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -142,8 +142,13 @@ void gtkperl_widget_destroyed(SV* widget, SV* widget_pointer)
 void        gtk_widget_set                  (GtkWidget *widget,
                                              const gchar *first_property_name,
                                              ...);
-void        gtk_widget_unparent             (GtkWidget *widget);
 */
+
+/* void gtk_widget_unparent (GtkWidget *widget) */
+void gtkperl_widget_unparent(SV* widget)
+{
+    gtk_widget_unparent(SvGtkWidget(widget));
+}
 
 SV* gtkperl_widget_show(SV* widget)
 {
@@ -151,9 +156,12 @@ SV* gtkperl_widget_show(SV* widget)
     return newRV(SvRV(widget));
 }
 
-/*
-void        gtk_widget_show_now             (GtkWidget *widget);
-*/
+/* void gtk_widget_show_now (GtkWidget *widget) */
+SV* gtkperl_widget_show_now(SV* widget)
+{
+    gtk_widget_show_now(SvGtkWidget(widget));
+    return newRV(SvRV(widget));
+}
 
 SV* gtkperl_widget_hide(SV* widget)
 {
@@ -224,13 +232,21 @@ SV* gtkperl_widget_size_request(SV* widget)
     return gtk2_perl_new_object_from_pointer(req, "Gtk2::Requisition");
 }
 
+/* void gtk_widget_queue_resize (GtkWidget *widget) */
+void gtkperl_widget_queue_resize(SV* widget)
+{
+    gtk_widget_queue_resize(SvGtkWidget(widget));
+}
+
+/* void gtk_widget_get_child_requisition (GtkWidget *widget, GtkRequisition *requisition) */
+void gtkperl_widget_get_child_requisition(SV* widget, SV* requisition)
+{
+    gtk_widget_get_child_requisition(SvGtkWidget(widget), SvGtkRequisition(requisition));
+}
+
 /*
-void        gtk_widget_queue_resize         (GtkWidget *widget);
 void        gtk_widget_draw                 (GtkWidget *widget,
                                              GdkRectangle *area);
-void        gtk_widget_get_child_requisition
-                                            (GtkWidget *widget,
-                                             GtkRequisition *requisition);
 void        gtk_widget_size_allocate        (GtkWidget *widget,
                                              GtkAllocation *allocation);
 void        gtk_widget_set_accel_path       (GtkWidget *widget,
@@ -326,12 +342,22 @@ SV* gtkperl_widget_get_events(SV* widget)
     return newSVGdkEventMask(gtk_widget_get_events(SvGtkWidget(widget)));
 }
 
+/* gboolean gtk_widget_is_ancestor (GtkWidget *widget, GtkWidget *ancestor) */
+int gtkperl_widget_is_ancestor(SV* widget, SV* ancestor)
+{
+    return gtk_widget_is_ancestor(SvGtkWidget(widget), SvGtkWidget(ancestor));
+}
+
+/* gboolean gtk_widget_hide_on_delete (GtkWidget *widget) */
+int gtkperl_widget_hide_on_delete(SV* widget)
+{
+    return gtk_widget_hide_on_delete(SvGtkWidget(widget));
+}
+
 /*
 void        gtk_widget_get_pointer          (GtkWidget *widget,
                                              gint *x,
                                              gint *y);
-gboolean    gtk_widget_is_ancestor          (GtkWidget *widget,
-                                             GtkWidget *ancestor);
 gboolean    gtk_widget_translate_coordinates
                                             (GtkWidget *src_widget,
                                              GtkWidget *dest_widget,
@@ -339,7 +365,6 @@ gboolean    gtk_widget_translate_coordinates
                                              gint src_y,
                                              gint *dest_x,
                                              gint *dest_y);
-gboolean    gtk_widget_hide_on_delete       (GtkWidget *widget);
 */
 
 void gtkperl_widget_set_style(SV* widget, SV* style)
@@ -375,19 +400,47 @@ SV* gtkperl_widget_get_default_style(char* class)
 GdkColormap* gtk_widget_get_default_colormap
                                             (void);
 GdkVisual*  gtk_widget_get_default_visual   (void);
-void        gtk_widget_set_direction        (GtkWidget *widget,
-                                             GtkTextDirection dir);
-enum        GtkTextDirection;
-GtkTextDirection gtk_widget_get_direction   (GtkWidget *widget);
-void        gtk_widget_set_default_direction
-                                            (GtkTextDirection dir);
-GtkTextDirection gtk_widget_get_default_direction
-                                            (void);
 */
+
+/* void gtk_widget_set_direction (GtkWidget *widget, GtkTextDirection dir) */
+void gtkperl_widget_set_direction(SV* widget, SV* dir)
+{
+    gtk_widget_set_direction(SvGtkWidget(widget), SvGtkTextDirection(dir));
+}
+
+/* GtkTextDirection gtk_widget_get_direction (GtkWidget *widget) */
+SV* gtkperl_widget_get_direction(SV* widget)
+{
+    return newSVGtkTextDirection(gtk_widget_get_direction(SvGtkWidget(widget)));
+}
+
+/* void gtk_widget_set_default_direction (GtkTextDirection dir) */
+void gtkperl_widget_set_default_direction(char* class, SV* dir)
+{
+    gtk_widget_set_default_direction(SvGtkTextDirection(dir));
+}
+
+/* GtkTextDirection gtk_widget_get_default_direction (void) */
+SV* gtkperl_widget_get_default_direction(char* class)
+{
+    return newSVGtkTextDirection(gtk_widget_get_default_direction());
+}
 
 void gtkperl_widget_shape_combine_mask(SV *widget, SV *shape_mask, int offset_x, int offset_y)
 {
     gtk_widget_shape_combine_mask(SvGtkWidget(widget), SvGdkBitmap(shape_mask), offset_x, offset_y);
+}
+
+/* gchar* gtk_widget_get_composite_name (GtkWidget *widget) */
+SV* gtkperl_widget_get_composite_name(SV* widget)
+{
+    return newSVgchar(gtk_widget_get_composite_name(SvGtkWidget(widget)));
+}
+
+/* void gtk_widget_modify_fg (GtkWidget *widget, GtkStateType state, GdkColor *color) */
+void gtkperl_widget_modify_fg(SV* widget, SV* state, SV* color)
+{
+    gtk_widget_modify_fg(SvGtkWidget(widget), SvGtkStateType(state), SvGdkColor(color));
 }
 
 /*void        gtk_widget_path                 (GtkWidget *widget,
@@ -398,20 +451,15 @@ void        gtk_widget_class_path           (GtkWidget *widget,
                                              guint *path_length,
                                              gchar **path,
                                              gchar **path_reversed);
-gchar*      gtk_widget_get_composite_name   (GtkWidget *widget);
 void        gtk_widget_modify_style         (GtkWidget *widget,
                                              GtkRcStyle *style);
 GtkRcStyle* gtk_widget_get_modifier_style   (GtkWidget *widget);
-void        gtk_widget_modify_fg            (GtkWidget *widget,
-                                             GtkStateType state,
-                                             GdkColor *color);
 */
 
 void gtkperl_widget_modify_bg(SV* widget, SV* state, SV* color)
 {
     gtk_widget_modify_bg(SvGtkWidget(widget), SvGtkStateType(state), SvGdkColor(color));
 }
-
 
 void gtkperl_widget_modify_text(SV* widget, SV* state, SV* color)
 {
@@ -446,6 +494,60 @@ SV* gtkperl_widget_create_pango_layout(SV* widget, gchar* text)
 					     "Gtk2::Pango::Layout");
 }
 
+/* void gtk_widget_queue_clear (GtkWidget *widget) */
+void gtkperl_widget_queue_clear(SV* widget)
+{
+    gtk_widget_queue_clear(SvGtkWidget(widget));
+}
+
+/* void gtk_widget_queue_clear_area (GtkWidget *widget, gint x, gint y, gint width, gint height) */
+void gtkperl_widget_queue_clear_area(SV* widget, int x, int y, int width, int height)
+{
+    gtk_widget_queue_clear_area(SvGtkWidget(widget), x, y, width, height);
+}
+
+/* void gtk_widget_queue_draw_area (GtkWidget *widget, gint x, gint y, gint width, gint height) */
+void gtkperl_widget_queue_draw_area(SV* widget, int x, int y, int width, int height)
+{
+    gtk_widget_queue_draw_area(SvGtkWidget(widget), x, y, width, height);
+}
+
+/* void gtk_widget_reset_shapes (GtkWidget *widget) */
+void gtkperl_widget_reset_shapes(SV* widget)
+{
+    gtk_widget_reset_shapes(SvGtkWidget(widget));
+}
+
+/* void gtk_widget_set_app_paintable (GtkWidget *widget, gboolean app_paintable) */
+void gtkperl_widget_set_app_paintable(SV* widget, int app_paintable)
+{
+    gtk_widget_set_app_paintable(SvGtkWidget(widget), app_paintable);
+}
+
+/* void gtk_widget_set_double_buffered (GtkWidget *widget, gboolean double_buffered) */
+void gtkperl_widget_set_double_buffered(SV* widget, int double_buffered)
+{
+    gtk_widget_set_double_buffered(SvGtkWidget(widget), double_buffered);
+}
+
+/* void gtk_widget_set_redraw_on_allocate (GtkWidget *widget, gboolean redraw_on_allocate) */
+void gtkperl_widget_set_redraw_on_allocate(SV* widget, int redraw_on_allocate)
+{
+    gtk_widget_set_redraw_on_allocate(SvGtkWidget(widget), redraw_on_allocate);
+}
+
+/* void gtk_widget_set_composite_name (GtkWidget *widget, const gchar *name) */
+void gtkperl_widget_set_composite_name(SV* widget, gchar* name)
+{
+    gtk_widget_set_composite_name(SvGtkWidget(widget), name);
+}
+
+/* gboolean gtk_widget_set_scroll_adjustments (GtkWidget *widget, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment) */
+int gtkperl_widget_set_scroll_adjustments(SV* widget, SV* hadjustment, SV* vadjustment)
+{
+    return gtk_widget_set_scroll_adjustments(SvGtkWidget(widget), SvGtkAdjustment(hadjustment), SvGtkAdjustment(vadjustment));
+}
+
 /*
 GdkPixbuf*  gtk_widget_render_icon          (GtkWidget *widget,
                                              const gchar *stock_id,
@@ -453,31 +555,6 @@ GdkPixbuf*  gtk_widget_render_icon          (GtkWidget *widget,
                                              const gchar *detail);
 void        gtk_widget_pop_composite_child  (void);
 void        gtk_widget_push_composite_child (void);
-void        gtk_widget_queue_clear          (GtkWidget *widget);
-void        gtk_widget_queue_clear_area     (GtkWidget *widget,
-                                             gint x,
-                                             gint y,
-                                             gint width,
-                                             gint height);
-void        gtk_widget_queue_draw_area      (GtkWidget *widget,
-                                             gint x,
-                                             gint y,
-                                             gint width,
-                                             gint height);
-void        gtk_widget_reset_shapes         (GtkWidget *widget);
-void        gtk_widget_set_app_paintable    (GtkWidget *widget,
-                                             gboolean app_paintable);
-void        gtk_widget_set_double_buffered  (GtkWidget *widget,
-                                             gboolean double_buffered);
-void        gtk_widget_set_redraw_on_allocate
-                                            (GtkWidget *widget,
-                                             gboolean redraw_on_allocate);
-void        gtk_widget_set_composite_name   (GtkWidget *widget,
-                                             const gchar *name);
-gboolean    gtk_widget_set_scroll_adjustments
-                                            (GtkWidget *widget,
-                                             GtkAdjustment *hadjustment,
-                                             GtkAdjustment *vadjustment);
 gboolean    gtk_widget_mnemonic_activate    (GtkWidget *widget,
                                              gboolean group_cycling);
 void        gtk_widget_class_install_style_property
@@ -521,23 +598,38 @@ SV* gtkperl_widget_style_get_property(SV* widget, gchar* property_name)
     return property;
 }
 
+/* gboolean gtk_widget_child_focus (GtkWidget *widget, GtkDirectionType direction) */
+int gtkperl_widget_child_focus(SV* widget, SV* direction)
+{
+    return gtk_widget_child_focus(SvGtkWidget(widget), SvGtkDirectionType(direction));
+}
+
+/* void gtk_widget_child_notify (GtkWidget *widget, const gchar *child_property) */
+void gtkperl_widget_child_notify(SV* widget, gchar* child_property)
+{
+    gtk_widget_child_notify(SvGtkWidget(widget), child_property);
+}
+
+/* void gtk_widget_freeze_child_notify (GtkWidget *widget) */
+void gtkperl_widget_freeze_child_notify(SV* widget)
+{
+    gtk_widget_freeze_child_notify(SvGtkWidget(widget));
+}
+
+/* gboolean gtk_widget_get_child_visible (GtkWidget *widget) */
+int gtkperl_widget_get_child_visible(SV* widget)
+{
+    return gtk_widget_get_child_visible(SvGtkWidget(widget));
+}
+
 /*
 void        gtk_widget_style_get            (GtkWidget *widget,
                                              const gchar *first_property_name,
                                              ...);
-void        gtk_widget_style_get_property   (GtkWidget *widget,
-                                             const gchar *property_name,
-                                             GValue *value);
 void        gtk_widget_style_get_valist     (GtkWidget *widget,
                                              const gchar *first_property_name,
                                              va_list var_args);
 AtkObject*  gtk_widget_get_accessible       (GtkWidget *widget);
-gboolean    gtk_widget_child_focus          (GtkWidget *widget,
-                                             GtkDirectionType direction);
-void        gtk_widget_child_notify         (GtkWidget *widget,
-                                             const gchar *child_property);
-void        gtk_widget_freeze_child_notify  (GtkWidget *widget);
-gboolean    gtk_widget_get_child_visible    (GtkWidget *widget);
 */
 
 /* GtkWidget* gtk_widget_get_parent (GtkWidget *widget) */
@@ -546,21 +638,38 @@ SV* gtkperl_widget_get_parent(SV* widget)
     return gtk2_perl_new_object(gtk_widget_get_parent(SvGtkWidget(widget)));
 }
 
+/* GdkWindow* gtk_widget_get_root_window (GtkWidget *widget) */
+SV* gtkperl_widget_get_root_window(SV* widget)
+{
+    return gtk2_perl_new_object(gtk_widget_get_root_window(SvGtkWidget(widget)));
+}
+
+/* void gtk_widget_get_size_request (GtkWidget *widget, gint *width, gint *height) */
+SV* gtkperl_widget__get_size_request(SV* widget)
+{
+    gint width, height;
+    AV* values = newAV();
+    gtk_widget_get_size_request(SvGtkWidget(widget), &width, &height);
+    av_push(values, newSViv(width));
+    av_push(values, newSViv(height));
+    return newRV_noinc((SV*) values);
+}
+
+/* void gtk_widget_set_child_visible (GtkWidget *widget, gboolean is_visible) */
+void gtkperl_widget_set_child_visible(SV* widget, int is_visible)
+{
+    gtk_widget_set_child_visible(SvGtkWidget(widget), is_visible);
+}
+
 /*
 GtkSettings* gtk_widget_get_settings        (GtkWidget *widget);
 GtkClipboard* gtk_widget_get_clipboard      (GtkWidget *widget,
                                              GdkAtom selection);
 GdkDisplay* gtk_widget_get_display          (GtkWidget *widget);
-GdkWindow*  gtk_widget_get_root_window      (GtkWidget *widget);
 GdkScreen*  gtk_widget_get_screen           (GtkWidget *widget);
 gboolean    gtk_widget_has_screen           (GtkWidget *widget);
-void        gtk_widget_get_size_request     (GtkWidget *widget,
-                                             gint *width,
-                                             gint *height);
 #define     gtk_widget_pop_visual           ()
 #define     gtk_widget_push_visual          (visual)
-void        gtk_widget_set_child_visible    (GtkWidget *widget,
-                                             gboolean is_visible);
 #define     gtk_widget_set_default_visual   (visual)
 */
 
@@ -569,9 +678,14 @@ void gtkperl_widget_set_size_request(SV *widget, int width, int height)
     gtk_widget_set_size_request(SvGtkWidget(widget), width, height);
 }
 
+/* void gtk_widget_thaw_child_notify (GtkWidget *widget) */
+void gtkperl_widget_thaw_child_notify(SV* widget)
+{
+    gtk_widget_thaw_child_notify(SvGtkWidget(widget));
+}
+
 /*
 #define     gtk_widget_set_visual           (widget,visual)
-void        gtk_widget_thaw_child_notify    (GtkWidget *widget);
 
 GtkRequisition* gtk_requisition_copy        (const GtkRequisition *requisition);
 void        gtk_requisition_free            (GtkRequisition *requisition);

@@ -1,4 +1,4 @@
-/* $Id: ItemFactory.c,v 1.9 2002/11/14 21:31:56 gthyni Exp $
+/* $Id: ItemFactory.c,v 1.10 2003/02/03 11:00:17 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -34,7 +34,7 @@ GtkWidget*  gtk_item_factory_get_item       (GtkItemFactory *ifactory,
 
 SV* gtkperl_item_factory_get_widget(SV *ifactory, gchar *path)
 {
-    return gtk2_perl_new_object(gtk_item_factory_get_widget(SvGtkItemFactory(ifactory), path));
+    return gtk2_perl_new_object_nullok(gtk_item_factory_get_widget(SvGtkItemFactory(ifactory), path));
 }
 
 /*

@@ -102,6 +102,9 @@ finished with it, to free its associated memory.
 Gtk2::Gdk::Drawable::get_colormap                  Gtk2::Gdk::Colormap              reference
 Gtk2::Pango::Layout::get_context                   Gtk2::Pango::Context             reference
 Gtk2::Pango::Context::get_metrics                  Gtk2::Pango::FontMetrics         allocates (it's not a GObject, but use unref anyway)
+Gtk2::Bin::get_child                               Gtk2::Widget                     references
+Gtk2::Image::get_pixbuf                            Gtk2::Gdk::Pixbuf                reference
+Gtk2::Image::get_pixmap                [ Gtk2::Gdk::Pixmap, Gtk2::Gdk::Bitmap ]     reference, reference
 Gtk2::Style::new                                   Gtk2::Style                      allocates
 Gtk2::TextBuffer::create_tag                       Gtk2::TextTag                    reference
 Gtk2::TextView::get_buffer                         Gtk2::TextBuffer                 reference
@@ -109,8 +112,6 @@ Gtk2::Widget::create_pango_context                 Gtk2::Pango::Context         
 Gtk2::Widget::create_pango_layout                  Gtk2::Pango::Layout              allocates
 Gtk2::Widget::get_pango_context                    Gtk2::Pango::Context             reference
 Gtk2::Widget::get_style                            Gtk2::Style                      reference
-Gtk2::Image::get_pixbuf                            Gtk2::Gdk::Pixbuf                reference
-Gtk2::Image::get_pixmap                [ Gtk2::Gdk::Pixmap, Gtk2::Gdk::Bitmap ]     reference, reference
 
 
 Here is the list of subroutines which return back a boxed type,

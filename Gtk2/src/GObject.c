@@ -1,4 +1,4 @@
-/* $Id: GObject.c,v 1.16 2003/01/03 15:10:22 ggc Exp $
+/* $Id: GObject.c,v 1.17 2003/02/08 15:43:25 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -94,90 +94,62 @@ SV* gperl_object__list_properties(SV* object)
     return newRV_noinc((SV*) properties);
 }
 
-SV* gperl_object_ref_count(SV* object)
+int gperl_object_ref_count(SV* object)
 {
-    return newSVuv(SvGObject(object)->ref_count);
+    return SvGObject(object)->ref_count;
 }
 
+/* gpointer g_object_ref (gpointer object) */
 void gperl_object_ref(SV* object)
 {
     g_object_ref(SvGObject(object));
 }
 
+/* void g_object_unref (gpointer object) */
 void gperl_object_unref(SV* object)
 {
     g_object_unref(SvGObject(object));
 }
 
+/* auto generated marshal for GWeakNotify (using genscripts/castmacros-autogen.pl GWeakNotify) */
+static void marshal_GWeakNotify(gpointer data, GObject *where_the_object_was)
+{
+    struct callback_data * cb_data = data;
+    dSP;
+    ENTER;
+    SAVETMPS;
+    PUSHMARK(SP);
+    XPUSHs(cb_data->data);
+    XPUSHs(sv_2mortal(newSViv((IV)where_the_object_was)));
+    PUTBACK;
+    perl_call_sv(cb_data->pl_func, G_DISCARD);
+    FREETMPS;
+    LEAVE;
+}
+
+/* void g_object_weak_ref (GObject *object, GWeakNotify notify, gpointer data) */
+void gperl_object_weak_ref(SV* object, SV* notify, SV* data)
+{
+    /* the real call of that callback is of course deferred, hence we
+       need to allocate the cb_data, incref the stuff inside it, and
+       use an additional weak_ref with gtk2_perl_destroy_notify that will
+       decref and g_free */
+    struct callback_data * cb_data = g_malloc0(sizeof(struct callback_data));
+    cb_data->pl_func = notify;
+    cb_data->data = data;
+    SvREFCNT_inc(cb_data->pl_func);
+    SvREFCNT_inc(cb_data->data);
+    g_object_weak_ref(SvGObject(object), marshal_GWeakNotify, cb_data);
+    g_object_weak_ref(SvGObject(object), (GWeakNotify)gtk2_perl_destroy_notify, cb_data);
+}
+
+/* weak_unref would be rather complicated :) */
+
+
 gchar* gperl_object_DEBUG_get_perl_type(SV* object)
 { 
     return get_class(SvGObject(object));
 }
-
-
-/*
- * Local variables:
- *  c-basic-offset: 4
- * End:
- */
-/*
-GtkObject*  gtk_object_new                  (GtkType type,
-                                             const gchar *first_property_name,
-                                             ...);
-void        gtk_object_sink                 (GtkObject *object);
-GtkObject*  gtk_object_ref                  (GtkObject *object);
-void        gtk_object_unref                (GtkObject *object);
-void        gtk_object_weakref              (GtkObject *object,
-                                             GtkDestroyNotify notify,
-                                             gpointer data);
-void        gtk_object_weakunref            (GtkObject *object,
-                                             GtkDestroyNotify notify,
-                                             gpointer data);
-void        gtk_object_destroy              (GtkObject *object);
-void        gtk_object_get                  (GtkObject *object,
-                                             const gchar *first_property_name,
-                                             ...);
-void        gtk_object_set                  (GtkObject *object,
-                                             const gchar *first_property_name,
-                                             ...);
-void        gtk_object_set_data             (GtkObject *object,
-                                             const gchar *key,
-                                             gpointer data);
-void        gtk_object_set_data_full        (GtkObject *object,
-                                             const gchar *key,
-                                             gpointer data,
-                                             GtkDestroyNotify destroy);
-void        gtk_object_remove_data          (GtkObject *object,
-                                             const gchar *key);
-gpointer    gtk_object_get_data             (GtkObject *object,
-                                             const gchar *key);
-void        gtk_object_remove_no_notify     (GtkObject *object,
-                                             const gchar *key);
-void        gtk_object_set_user_data        (GtkObject *object,
-                                             gpointer data);
-gpointer    gtk_object_get_user_data        (GtkObject *object);
-void        gtk_object_add_arg_type         (const gchar *arg_name,
-                                             GtkType arg_type,
-                                             guint arg_flags,
-                                             guint arg_id);
-void        gtk_object_set_data_by_id       (GtkObject *object,
-                                             GQuark data_id,
-                                             gpointer data);
-void        gtk_object_set_data_by_id_full  (GtkObject *object,
-                                             GQuark data_id,
-                                             gpointer data,
-                                             GtkDestroyNotify destroy);
-gpointer    gtk_object_get_data_by_id       (GtkObject *object,
-                                             GQuark data_id);
-void        gtk_object_remove_data_by_id    (GtkObject *object,
-                                             GQuark data_id);
-void        gtk_object_remove_no_notify_by_id
-                                            (GtkObject *object,
-                                             GQuark key_id);
-#define     gtk_object_data_try_key
-#define     gtk_object_data_force_id
-
-*/
 
 /*
  * Local variables:

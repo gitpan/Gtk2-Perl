@@ -1,4 +1,4 @@
-/* $Id: TreeViewColumn.c,v 1.9 2002/11/14 17:11:38 ggc Exp $
+/* $Id: TreeViewColumn.c,v 1.10 2003/02/03 22:39:19 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -43,11 +43,19 @@ void gtkperl_tree_view_column_pack_start(SV* tree_column, SV* cell, int expand)
     gtk_tree_view_column_pack_start(SvGtkTreeViewColumn(tree_column), SvGtkCellRenderer(cell), expand);
 }
 
+/* void gtk_tree_view_column_pack_end (GtkTreeViewColumn *tree_column, GtkCellRenderer *cell, gboolean expand) */
+void gtkperl_tree_view_column_pack_end(SV* tree_column, SV* cell, int expand)
+{
+    gtk_tree_view_column_pack_end(SvGtkTreeViewColumn(tree_column), SvGtkCellRenderer(cell), expand);
+}
+
+/* void gtk_tree_view_column_clear (GtkTreeViewColumn *tree_column) */
+void gtkperl_tree_view_column_clear(SV* tree_column)
+{
+    gtk_tree_view_column_clear(SvGtkTreeViewColumn(tree_column));
+}
+
 /* NOT IMPLEMENTED YET
-void        gtk_tree_view_column_pack_end   (GtkTreeViewColumn *tree_column,
-                                             GtkCellRenderer *cell,
-                                             gboolean expand);
-void        gtk_tree_view_column_clear      (GtkTreeViewColumn *tree_column);
 GList*      gtk_tree_view_column_get_cell_renderers(GtkTreeViewColumn *tree_column);
 */
 
@@ -73,10 +81,13 @@ void        gtk_tree_view_column_set_cell_data_func
                                              GtkTreeCellDataFunc func,
                                              gpointer func_data,
                                              GtkDestroyNotify destroy);
-void        gtk_tree_view_column_clear_attributes
-                                            (GtkTreeViewColumn *tree_column,
-                                             GtkCellRenderer *cell_renderer);
 */
+
+/* void gtk_tree_view_column_clear_attributes (GtkTreeViewColumn *tree_column, GtkCellRenderer *cell_renderer) */
+void gtkperl_tree_view_column_clear_attributes(SV* tree_column, SV* cell_renderer)
+{
+    gtk_tree_view_column_clear_attributes(SvGtkTreeViewColumn(tree_column), SvGtkCellRenderer(cell_renderer));
+}
 
 /* void gtk_tree_view_column_set_spacing (GtkTreeViewColumn *tree_column, gint spacing) */
 void gtkperl_tree_view_column_set_spacing(SV* tree_column, int spacing)
@@ -233,19 +244,37 @@ int gtkperl_tree_view_column_get_reorderable(SV* tree_column)
     return gtk_tree_view_column_get_reorderable(SvGtkTreeViewColumn(tree_column));
 }
 
+/* gint gtk_tree_view_column_get_sort_column_id (GtkTreeViewColumn *tree_column) */
+int gtkperl_tree_view_column_get_sort_column_id(SV* tree_column)
+{
+    return gtk_tree_view_column_get_sort_column_id(SvGtkTreeViewColumn(tree_column));
+}
+
+/* void gtk_tree_view_column_set_sort_indicator (GtkTreeViewColumn *tree_column, gboolean setting) */
+void gtkperl_tree_view_column_set_sort_indicator(SV* tree_column, int setting)
+{
+    gtk_tree_view_column_set_sort_indicator(SvGtkTreeViewColumn(tree_column), setting);
+}
+
+/* gboolean gtk_tree_view_column_get_sort_indicator (GtkTreeViewColumn *tree_column) */
+int gtkperl_tree_view_column_get_sort_indicator(SV* tree_column)
+{
+    return gtk_tree_view_column_get_sort_indicator(SvGtkTreeViewColumn(tree_column));
+}
+
+/* void gtk_tree_view_column_set_sort_order (GtkTreeViewColumn *tree_column, GtkSortType order) */
+void gtkperl_tree_view_column_set_sort_order(SV* tree_column, SV* order)
+{
+    gtk_tree_view_column_set_sort_order(SvGtkTreeViewColumn(tree_column), SvGtkSortType(order));
+}
+
+/* GtkSortType gtk_tree_view_column_get_sort_order (GtkTreeViewColumn *tree_column) */
+SV* gtkperl_tree_view_column_get_sort_order(SV* tree_column)
+{
+    return newSVGtkSortType(gtk_tree_view_column_get_sort_order(SvGtkTreeViewColumn(tree_column)));
+}
+
 /*
-gint        gtk_tree_view_column_get_sort_column_id
-                                            (GtkTreeViewColumn *tree_column);
-void        gtk_tree_view_column_set_sort_indicator
-                                            (GtkTreeViewColumn *tree_column,
-                                             gboolean setting);
-gboolean    gtk_tree_view_column_get_sort_indicator
-                                            (GtkTreeViewColumn *tree_column);
-void        gtk_tree_view_column_set_sort_order
-                                            (GtkTreeViewColumn *tree_column,
-                                             GtkSortType order);
-GtkSortType gtk_tree_view_column_get_sort_order
-                                            (GtkTreeViewColumn *tree_column);
 void        gtk_tree_view_column_cell_set_cell_data
                                             (GtkTreeViewColumn *tree_column,
                                              GtkTreeModel *tree_model,
@@ -259,10 +288,11 @@ void        gtk_tree_view_column_cell_get_size
                                              gint *y_offset,
                                              gint *width,
                                              gint *height);
-gboolean    gtk_tree_view_column_cell_is_visible
-                                            (GtkTreeViewColumn *tree_column);
-
-
-
 */
+
+/* gboolean gtk_tree_view_column_cell_is_visible (GtkTreeViewColumn *tree_column) */
+int gtkperl_tree_view_column_cell_is_visible(SV* tree_column)
+{
+    return gtk_tree_view_column_cell_is_visible(SvGtkTreeViewColumn(tree_column));
+}
 

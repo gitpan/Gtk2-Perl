@@ -1,29 +1,91 @@
-2003-01-21  gthyni
+2003-02-09  gthyni
+
+	* Gtk2/_Object.pm: shuffle
+	* Gtk2/GObject.pm: fix build problems by shuffeling lines
+
+2003-02-08  ggc
+
+	* ChangeLog: update
+	* Gtk2/src/GObject.c, misc-examples/gobject-weakref.pl:
+	add Gtk2::GObject::weak_ref
+	* Gtk2/src/Gtk2.c:
+	add Gtk2->pointer_address, a function to get the Gtk address (e.g. memory pointer address) of a gtk2-perl wrapped object
+
+2003-02-08  ggc
+
+	* Gtk2/src/GObject.c, misc-examples/gobject-weakref.pl: add Gtk2::GObject::weak_ref
+	* Gtk2/src/Gtk2.c: add Gtk2->pointer_address, a function to get the
+	Gtk address (e.g. memory pointer address) of a gtk2-perl wrapped
+	object
+
+2003-02-07  ggc
+
+	* Gtk2/src/_Helpers.c: leak less memory
+	* Gtk2/src/_Helpers.c: fix detection of a derivative of GtkStyle
+	(for engines) -> it failed when the style's name began with G
+	because of the glib things :)
+
+2003-02-03  ggc
+
+	* Gtk2/src/TreeViewColumn.c: add a few (easy) missing functions
+	* Gtk2/src/BoxChild.c: don't set BoxChild->widget to a
+	Gtk2::Widget, let it discover the class itself
+	* Gtk2/: Widget.pm, src/Widget.c: add most simple missing functions
+	* Gtk2/src/Widget.c: add set_direction get_direction
+	set_default_direction get_default_direction
+	* Gtk2/src/ItemFactory.c: gtk_item_factory_get_widget can return
+	NULL, call the right gtk2_perl function so that we return undef in
+	that case
+	* docs/memory: add Gtk2::Bin::get_child
+	* Gtk2/src/Bin.c: get_child can return a NULL pointer, call the
+	right gtk2_perl function
+
+2003-01-24 17:27  ggc
+
+	* Gtk2/src/GClosure.c: support return values from closures, so that
+	we can specify return values for subroutines connected to signals
+	(strange no one complained before?)
+
+2003-01-22 12:57  dlacroix
+
+	* Gtk2/src/ListStore.c: - added Gtk2::ListStore::remove function
+
+2003-01-21 20:27  gthyni
+
+	* Gtk2.pm: update version post 0.08 release
+
+2003-01-21 20:23  gthyni
 
 	* MANIFEST: more updates for 0.08
 
-2003-01-21  ggc
+2003-01-21 19:57  gthyni
 
-	* ChangeLog: update
-
-2003-01-21  gthyni  <gthyni@trotskij.no-ip.org>
-
-	* t/045_Gtk2_FontSelectionDialog.t, t/059_Gtk2_FontSelection.t:
+	* t/: 045_Gtk2_FontSelectionDialog.t, 059_Gtk2_FontSelection.t:
 	updated tests for 0.08
+
+2003-01-21 19:43  gthyni
 
 	* Gtk2.pm, MANIFEST: updated for release 0.08
 
-2003-01-21  ggc  <ggc@trotskij.no-ip.org>
+2003-01-21 16:14  ggc
 
-	* Gtk2/CheckMenuItem.pm, Gtk2/Notebook.pm, Gtk2/ToggleButton.pm:
-	allow giving "undef" for a false value when setting boolean values - needs to not test for the new value to be "defined" but that function argument is present
+	* Gtk2/: CheckMenuItem.pm, Notebook.pm, ToggleButton.pm: allow
+	giving "undef" for a false value when setting boolean values -
+	needs to not test for the new value to be "defined" but that
+	function argument is present
+
+2003-01-21 13:19  ggc
 
 	* Gtk2/Gdk/src/Cursor.c: add gdk_cursor_ref and gdk_cursor_unref
 
-	* Gtk2/Gdk/src/Window.c:
-	gdk_window_foreign_new can return a NULL pointer; add invalidate_rect
+2003-01-21 13:19  ggc
 
-	* docs/memory: *** empty log message ***
+	* Gtk2/Gdk/src/Window.c: gdk_window_foreign_new can return a NULL
+	pointer; add invalidate_rect
+
+2003-01-21 12:57  ggc
+
+	* docs/memory: [no log message]
 
 2003-01-20 13:07  ggc
 
@@ -56,10 +118,6 @@
 
 	* Gtk2/src/Widget.c: add gtk_widget_size_request
 
-2003-01-08 20:19  ggc
-
-	* ChangeLog: update
-
 2003-01-08 20:02  ggc
 
 	* Gtk2/: include/gtk2-perl.h, src/GClosure.c, src/Gtk2.c,
@@ -86,10 +144,6 @@
 
 	* Gtk2/: TreeView.pm, src/TreeView.c: add
 	gtk_tree_view_get_path_at_pos
-
-2003-01-05 09:11  ggc
-
-	* ChangeLog: update
 
 2003-01-05 09:09  ggc
 
@@ -121,15 +175,6 @@
 	merge_child_shapes set_static_gravities lookup get_frame_extents
 	get_pointer fullscreen unfullscreen freeze_updates thaw_updates
 	process_all_updates process_updates)
-
-2002-12-17 11:40  ggc
-
-	* ChangeLog: group same commits that are a little distant in time
-	but are really the same
-
-2002-12-16 19:16  ggc
-
-	* ChangeLog: update
 
 2002-12-16 19:12  ggc
 

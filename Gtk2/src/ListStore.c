@@ -1,4 +1,4 @@
-/* $Id: ListStore.c,v 1.10 2002/11/12 16:20:54 ggc Exp $
+/* $Id: ListStore.c,v 1.11 2003/01/22 11:57:00 dlacroix Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -55,7 +55,14 @@ void gtkperl_list_store_set(SV* list_store, SV* iter, SV* argv_ref)
 /* NOT IMPLEMENTED YET 
 void gtk_list_store_set_valist(GtkListStore *list_store,GtkTreeIter *iter,va_list var_args);
 void gtk_list_store_set_value(GtkListStore *list_store,GtkTreeIter *iter,gint column,GValue *value);
-gboolean gtk_list_store_remove(GtkListStore *list_store,GtkTreeIter *iter);
+*/
+
+int gtkperl_list_store_remove(SV *list_store, SV *iter)
+{
+  return gtk_list_store_remove(SvGtkListStore(list_store),SvGtkTreeIter(iter));
+}
+
+/* NOT IMPLEMENTED YET
 void gtk_list_store_insert(GtkListStore *list_store,GtkTreeIter *iter,gint position);
 void gtk_list_store_insert_before(GtkListStore *list_store,GtkTreeIter *iter,GtkTreeIter *sibling);
 void gtk_list_store_insert_after(GtkListStore *list_store,GtkTreeIter *iter,GtkTreeIter *sibling);

@@ -1,6 +1,6 @@
 package Gtk2::_Object;
 
-# $Id: _Object.pm,v 1.11 2003/01/12 22:50:41 joered Exp $
+# $Id: _Object.pm,v 1.12 2003/02/09 20:23:05 gthyni Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
@@ -8,17 +8,17 @@ package Gtk2::_Object;
 # This is internal class which should be parent to
 # all classes in Gtk2, gobjects or not.
 
-our $rcsid = '$Id: _Object.pm,v 1.11 2003/01/12 22:50:41 joered Exp $';
+our $rcsid = '$Id: _Object.pm,v 1.12 2003/02/09 20:23:05 gthyni Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 use strict;
 use Carp;
 use vars qw($loader %loaded $AUTOLOAD);
 
-do 'Gtk2/_loader.pm';
-
 use Gtk2::GType;
 use Gtk2::_Helpers;
+
+do 'Gtk2/_loader.pm';
 
 use constant TRUE  => 1;
 use constant FALSE => 0;

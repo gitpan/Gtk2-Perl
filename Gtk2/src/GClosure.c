@@ -1,4 +1,4 @@
-/* $Id: GClosure.c,v 1.16 2003/01/08 19:02:23 ggc Exp $
+/* $Id: GClosure.c,v 1.17 2003/01/24 16:27:10 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -85,7 +85,18 @@ perl_closure_marshal(GClosure *closure,
 	XPUSHs(pc->extra_args ? pc->extra_args : &PL_sv_undef);
 	XPUSHs(pc->swap_data ? pc->swap_data : &PL_sv_undef);
 	PUTBACK;
-	perl_call_sv(pc->callback, G_DISCARD|G_EVAL);
+
+	if (return_value) {
+	    i = perl_call_sv(pc->callback, G_SCALAR|G_EVAL);
+	    SPAGAIN;
+	    if (i != 1)
+		croak("Big trouble\n");
+	    else
+		gperl_value_from_object(return_value, POPs);
+	    PUTBACK;
+	} else
+	    perl_call_sv(pc->callback, G_DISCARD|G_EVAL);
+
 	if (SvTRUE(ERRSV)) {
 	    if (!gtk2_perl_trap_exceptions_in_callbacks)
 		fprintf(stderr, "\tGtk2-Perl: callback throwed a perl exception (a die) but I can't recover\n"

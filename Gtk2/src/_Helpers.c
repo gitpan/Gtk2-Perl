@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: _Helpers.c,v 1.31 2003/01/08 19:02:23 ggc Exp $
+ * $Id: _Helpers.c,v 1.34 2003/02/07 19:39:50 ggc Exp $
  */
 
 #include "gtk2-perl.h"
@@ -98,21 +98,20 @@ int build_class_name(char *name, char *class, int name_pos, int class_pos, Class
 char *get_class_from_classname(char *name)
 {
   char* class = NULL;
-  if (name)
-      {
-	  int i, res = -1;
-	  class = (char *) g_malloc(strlen(name)*2 + 4);  /* 4 is the glib case */
-	  for (i = 0; (i < nb_levels) && (res == -1); i++)
-	      res = build_class_name(name, class, 0, 0, levels[i]);
-	  if (res == -1) {
-	      /* themes include a derivative object of GtkStyle, e.g. BluecurveStyle or the like */
-	      int l = strlen(name);
-	      if (l > 5 && !strcmp(name + strlen(name) - 5, "Style"))
-		  return g_strdup("Gtk2::Style");
+  if (name) {
+      int i, l, res = -1;
 
-	      croak("FATAL: gtk object type is unknown (name is %s)", name);
-	  }
-      }
+      /* themes include a derivative object of GtkStyle, e.g. BluecurveStyle or the like */
+      l = strlen(name);
+      if (l > 5 && !strcmp(name + strlen(name) - 5, "Style"))
+	  return g_strdup("Gtk2::Style");
+
+      class = (char *) g_malloc(strlen(name)*2 + 4);  /* 4 is the glib case */
+      for (i = 0; (i < nb_levels) && (res == -1); i++)
+	  res = build_class_name(name, class, 0, 0, levels[i]);
+      if (res == -1)
+	  croak("FATAL: gtk object type is unknown (name is %s)", name);
+  }
   return class;
 }
 

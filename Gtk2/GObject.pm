@@ -1,17 +1,15 @@
 package Gtk2::GObject;
 
-# $Id: GObject.pm,v 1.22 2002/12/16 17:16:00 ggc Exp $
+# $Id: GObject.pm,v 1.23 2003/02/09 20:22:29 gthyni Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: GObject.pm,v 1.22 2002/12/16 17:16:00 ggc Exp $';
+our $rcsid = '$Id: GObject.pm,v 1.23 2003/02/09 20:22:29 gthyni Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; $@ and die }
-
 use base qw(Gtk2::_Object);
-
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 sub set_data
   {

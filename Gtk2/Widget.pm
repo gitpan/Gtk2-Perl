@@ -1,11 +1,11 @@
 package Gtk2::Widget;
 
-# $Id: Widget.pm,v 1.27 2002/12/16 17:23:56 ggc Exp $
+# $Id: Widget.pm,v 1.28 2003/02/03 17:11:48 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Widget.pm,v 1.27 2002/12/16 17:23:56 ggc Exp $';
+our $rcsid = '$Id: Widget.pm,v 1.28 2003/02/03 17:11:48 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 BEGIN { do 'Gtk2/_config.pm'; $@ and die }
@@ -69,13 +69,16 @@ sub can_focus {
     _flag_setget_wrap($self, 'can-focus', $set);
 }
 
-
 sub style_get {
     my $self = shift;
     my @values = map { $self->style_get_property($_) } @_;
     return wantarray ? @values : (@values == 1 ? $values[0] : \@values);
 }
 
+sub get_size_request {
+    my $values = shift->_get_size_request;
+    return wantarray ? @$values : $values;
+}
 
 # PROPERTIES
 

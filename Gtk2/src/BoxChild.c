@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: BoxChild.c,v 1.1 2002/11/28 13:55:28 ggc Exp $
+ * $Id: BoxChild.c,v 1.2 2003/02/03 22:05:40 ggc Exp $
  */
 
 #include "gtk2-perl.h"
@@ -22,7 +22,7 @@
 SV* gtkperl_box_child__values(SV* boxchild)
 {
     AV* values = newAV();
-    av_push(values, gtk2_perl_new_object_from_pointer_nullok(SvGtkBoxChild(boxchild)->widget, "Gtk2::Widget"));
+    av_push(values, gtk2_perl_new_object_nullok(SvGtkBoxChild(boxchild)->widget));
     av_push(values, newSVuv(SvGtkBoxChild(boxchild)->padding));
     av_push(values, newSVuv(SvGtkBoxChild(boxchild)->expand));
     av_push(values, newSVuv(SvGtkBoxChild(boxchild)->fill));
@@ -33,7 +33,7 @@ SV* gtkperl_box_child__values(SV* boxchild)
 
 SV* gtkperl_box_child_widget(SV* boxchild)
 {
-    return gtk2_perl_new_object_from_pointer_nullok(SvGtkBoxChild(boxchild)->widget, "Gtk2::Widget");
+    return gtk2_perl_new_object_nullok(SvGtkBoxChild(boxchild)->widget);
 }
 
 int gtkperl_box_child_padding(SV* boxchild)
