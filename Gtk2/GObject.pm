@@ -1,14 +1,14 @@
 package Gtk2::GObject;
 
-# $Id: GObject.pm,v 1.20 2002/11/22 18:25:16 ggc Exp $
+# $Id: GObject.pm,v 1.22 2002/12/16 17:16:00 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: GObject.pm,v 1.20 2002/11/22 18:25:16 ggc Exp $';
+our $rcsid = '$Id: GObject.pm,v 1.22 2002/12/16 17:16:00 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use base qw(Gtk2::_Object);
 
@@ -55,13 +55,13 @@ sub get_set {
 
 
 sub list_properties {
-    my $properties = shift->_list_properties();
+    my $properties = shift->_list_properties;
     return wantarray ? @$properties : $properties;
 }
 
 sub find_property {
     my ($self, $property_name) = @_;
-    foreach ($self->_list_properties()) {
+    foreach ($self->_list_properties) {
 	return $_ if ($_->{name} eq $property_name);
     }
     return undef;

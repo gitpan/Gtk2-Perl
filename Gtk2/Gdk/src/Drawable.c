@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Drawable.c,v 1.9 2002/12/02 21:44:00 ggc Exp $
+ * $Id: Drawable.c,v 1.11 2002/12/16 17:55:50 ggc Exp $
  */
 
 #include "gtk2-perl-gdk.h"
@@ -122,10 +122,37 @@ void gdkperl_drawable__draw_lines(SV* drawable, SV* gc, SV* points)
 			      gdk_draw_lines(SvGdkDrawable(drawable), SvGdkGC(gc), g_values, n_values));
 }
 
+#if GTK_CHECK_VERSION(2, 1, 1)
+/* void gdk_draw_pixbuf (GdkDrawable *drawable, GdkGC *gc, GdkPixbuf *pixbuf,
+                         gint src_x, gint src_y, gint dest_x, gint dest_y, gint width, gint height,
+			 GdkRgbDither dither, gint x_dither, gint y_dither) */
+void gdkperl_drawable_draw_pixbuf(SV* drawable, SV* gc, SV* pixbuf,
+				  int src_x, int src_y, int dest_x, int dest_y, int width, int height,
+				  SV* dither, int x_dither, int y_dither)
+{
+    gdk_draw_pixbuf(SvGdkDrawable(drawable), SvGdkGC_nullok(gc), SvGdkPixbuf(pixbuf),
+		    src_x, src_y, dest_x, dest_y, width, height,
+		    SvGdkRgbDither(dither), x_dither, y_dither);
+}
+#endif
+
 void gdkperl_drawable_draw_layout(SV* drawable, SV* gc, int x, int y, SV* layout)
 {
     gdk_draw_layout(SvGdkDrawable(drawable), SvGdkGC(gc), x, y, SvPangoLayout(layout));
 }
+
+/* void gdk_draw_layout_with_colors (GdkDrawable *drawable, GdkGC *gc,
+                                     gint x, gint y, PangoLayout *layout,
+                                     GdkColor *foreground, GdkColor *background) */
+void gdkperl_draw_layout_with_colors(SV* drawable, SV* gc,
+				     int x, int y, SV* layout,
+				     SV* foreground, SV* background)
+{
+    gdk_draw_layout_with_colors(SvGdkDrawable(drawable), SvGdkGC(gc),
+				x, y, SvPangoLayout(layout),
+				SvGdkColor_nullok(foreground), SvGdkColor_nullok(background));
+}
+
 
 /* #define GDK_DRAWABLE_XID(win)           (gdk_x11_drawable_get_xid (win)) */
 int gdkperl_drawable_XID(SV* drawable)

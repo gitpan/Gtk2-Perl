@@ -16,9 +16,17 @@ Gtk2/Gdk/src/Rectangle.c
 Gtk2/Gdk/src/Segment.c
 Gtk2/Gdk/src/Span.c
 Gtk2/Gdk/Event/src/Button.c
+Gtk2/Gdk/Event/src/Configure.c
+Gtk2/Gdk/Event/src/Crossing.c
+Gtk2/Gdk/Event/src/Expose.c
+Gtk2/Gdk/Event/src/Focus.c
 Gtk2/Gdk/Event/src/Key.c
 Gtk2/Gdk/Event/src/Motion.c
-Gtk2/Gdk/Event/src/Expose.c
+Gtk2/Gdk/Event/src/Property.c
+Gtk2/Gdk/Event/src/Scroll.c
+Gtk2/Gdk/Event/src/Selection.c
+Gtk2/Gdk/Event/src/Visibility.c
+Gtk2/Gdk/Event/src/WindowState.c
 Gtk2/Gdk/Event/Button.pm
 Gtk2/Gdk/Event/Client.pm
 Gtk2/Gdk/Event/Configure.pm
@@ -445,7 +453,7 @@ docs/release-plan.txt
 old-test/samples/chart-demo.pl
 old-test/test.pl
 CONTRIBUTE.txt
-Changelog
+ChangeLog
 Gtk2.pm
 MANIFEST.SKIP
 Makefile.PL

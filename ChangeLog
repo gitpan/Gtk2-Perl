@@ -1,0 +1,3805 @@
+2003-01-21  gthyni
+
+	* MANIFEST: more updates for 0.08
+
+2003-01-21  ggc
+
+	* ChangeLog: update
+
+2003-01-21  gthyni  <gthyni@trotskij.no-ip.org>
+
+	* t/045_Gtk2_FontSelectionDialog.t, t/059_Gtk2_FontSelection.t:
+	updated tests for 0.08
+
+	* Gtk2.pm, MANIFEST: updated for release 0.08
+
+2003-01-21  ggc  <ggc@trotskij.no-ip.org>
+
+	* Gtk2/CheckMenuItem.pm, Gtk2/Notebook.pm, Gtk2/ToggleButton.pm:
+	allow giving "undef" for a false value when setting boolean values - needs to not test for the new value to be "defined" but that function argument is present
+
+	* Gtk2/Gdk/src/Cursor.c: add gdk_cursor_ref and gdk_cursor_unref
+
+	* Gtk2/Gdk/src/Window.c:
+	gdk_window_foreign_new can return a NULL pointer; add invalidate_rect
+
+	* docs/memory: *** empty log message ***
+
+2003-01-20 13:07  ggc
+
+	* misc-examples/background-image.pl: add
+
+2003-01-19 23:43  gthyni
+
+	* testgtk.pl: put some more work in still a lot to go
+
+2003-01-17 19:46  dlacroix
+
+	* Gtk2/src/OptionMenu.c: - added Gtk2::OptionMenu::get_history and
+	set_history
+
+2003-01-16 22:24  joered
+
+	* Gtk2/: Alignment.pm, Arrow.pm, AspectFrame.pm, HBox.pm, Table.pm,
+	Toolbar.pm, VBox.pm, src/Alignment.c, src/Arrow.c,
+	src/AspectFrame.c, src/HBox.c, src/Table.c, src/VBox.c: - new()
+	method now has the same defaults as the corresponding Gtk1/Perl
+	method,   which improves Gtk1 compatability
+
+2003-01-12 23:50  joered
+
+	* Gtk2/_Object.pm: - AUTOLOAD: catch exceptions from method call
+	and croak them again,	otherwise the wrong caller is printed in
+	the error message.  - use strict, use vars ($AUTOLOAD)
+
+2003-01-09 18:14  ggc
+
+	* Gtk2/src/Widget.c: add gtk_widget_size_request
+
+2003-01-08 20:19  ggc
+
+	* ChangeLog: update
+
+2003-01-08 20:02  ggc
+
+	* Gtk2/: include/gtk2-perl.h, src/GClosure.c, src/Gtk2.c,
+	src/_Helpers.c: fix exception trapping mechanism - when
+	gtk_main_quit is called, the latest gtk_main is not called at once,
+	gtk may honor other pending callbacks - so 1- we need to save ERRSV
+	else it might be void when croak is called, and 2- we need to not
+	call gtk_main_quit another time if a pending callback also throws
+	an exception: we'll just print a warning message on stderr
+	informing the user we can't honor two exceptions at the same time
+
+2003-01-08 18:15  ggc
+
+	* misc-examples/treeview.pl: add example on get_path_at_pos and
+	Gtk2->equals
+
+2003-01-08 18:05  ggc
+
+	* Gtk2/src/Gtk2.c: add a function so that
+	Gtk2->equals($gtk2_perl_var_1, $gtk2_perl_var_2) will return true
+	if the two wrapped objects are the same gtk objects pointer-wise
+
+2003-01-08 18:03  ggc
+
+	* Gtk2/: TreeView.pm, src/TreeView.c: add
+	gtk_tree_view_get_path_at_pos
+
+2003-01-05 09:11  ggc
+
+	* ChangeLog: update
+
+2003-01-05 09:09  ggc
+
+	* Gtk2/src/Widget.c: add remove_accelerator
+
+2003-01-03 16:30  ggc
+
+	* Gtk2/Pango/src/Context.c: PangoLanuage may be NULL is get_metrics
+
+2003-01-03 16:10  ggc
+
+	* Gtk2/src/GObject.c: cleanup perl memory set up by "set_data" by
+	using set_data_full with a destroy data notifier
+
+2003-01-02 14:54  ggc
+
+	* Gtk2/ToggleButton.pm: TRUE is commented out in Gtk2.pm !?
+
+2002-12-20 14:56  ggc
+
+	* docs/porting: remove unneeded () for method calls
+
+2002-12-17 12:01  ggc
+
+	* Gtk2/Gdk/: src/Window.c, Window.pm: add a few functions (destroy
+	get_window_type at_pointer show hide withdraw show_unraised move
+	resize move_resize reparent clear clear_area clear_area_e raise
+	lower focus set_override_redirect scroll set_child_shapes
+	merge_child_shapes set_static_gravities lookup get_frame_extents
+	get_pointer fullscreen unfullscreen freeze_updates thaw_updates
+	process_all_updates process_updates)
+
+2002-12-17 11:40  ggc
+
+	* ChangeLog: group same commits that are a little distant in time
+	but are really the same
+
+2002-12-16 19:16  ggc
+
+	* ChangeLog: update
+
+2002-12-16 19:12  ggc
+
+	* Gtk2/_loader.pm, Gtk2/Pango/AttrList.pm, Gtk2/Pango/Attribute.pm,
+	Gtk2/Pango/src/AttrList.c, Gtk2/Pango/src/Attribute.c,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h,
+	genscripts/castmacros-autogen.pl,
+	misc-examples/pango-text-attributes.pl: initial support for pango
+	text attributes (PangoAttribute and PangoAttrList) but it doesn't
+	work properly (program runs but acts as if the attributes were
+	ignored)
+
+2002-12-16 18:56  ggc
+
+	* Gtk2/Pango/src/Pango.c: add PANGO_SCALE_* double values
+
+2002-12-16 18:55  ggc
+
+	* Gtk2/Gdk/src/Drawable.c: add gdk_draw_layout_with_colors
+
+2002-12-16 18:55  ggc
+
+	* Gtk2/Pango/Pango.pm: actually it seems that only the
+	PANGO_TYPE_WEIGHT enum is reported as an int rather than a regular
+	enum
+
+2002-12-16 18:15  ggc
+
+	* Gtk2/src/TreeView.c: add a few missing functions
+	(gtk_tree_view_columns_autosize etc)
+
+2002-12-16 18:08  ggc
+
+	* Gtk2/Pango/src/Layout.c: add some missing functions
+	(set_attributes set_markup context_changed etc)
+
+2002-12-16 18:05  ggc
+
+	* Gtk2/: AccelGroup.pm, AccelLabel.pm, AccelMap.pm, Accessible.pm,
+	Adjustment.pm, Alignment.pm, Arrow.pm, AspectFrame.pm,
+	BindingSet.pm, Bin.pm, BoxChild.pm, _Boxed.pm, Box.pm,
+	ButtonBox.pm, Button.pm, Calendar.pm, CellEditable.pm,
+	CellRendererPixbuf.pm, CellRenderer.pm, CellRendererText.pm,
+	CellRendererToggle.pm, CheckButton.pm, CheckMenuItem.pm,
+	Clipboard.pm, CList.pm, ColorSelectionDialog.pm, ColorSelection.pm,
+	Combo.pm, Container.pm, CTree.pm, Curve.pm, Dialog.pm, DND.pm,
+	DrawingArea.pm, Editable.pm, Entry.pm, EventBox.pm,
+	FileSelection.pm, Fixed.pm, FontSelectionDialog.pm,
+	FontSelection.pm, Frame.pm, GammaCurve.pm, GClosure.pm, GC.pm,
+	GObject.pm, GSignal.pm, Gtk2.pm, GType.pm, HandleBox.pm, HBox.pm,
+	HButtonBox.pm, _Helpers.pm, HPaned.pm, HRuler.pm, HScale.pm,
+	HScrollbar.pm, HSeparator.pm, HSV.pm, IconFactory.pm, IconSet.pm,
+	IconSource.pm, ImageMenuItem.pm, Image.pm, IMContext.pm,
+	IMContextSimple.pm, IMModule.pm, IMMultiContext.pm, InputDialog.pm,
+	Invisible.pm, ItemFactoryEntry.pm, ItemFactory.pm, Item.pm,
+	KeyHash.pm, Label.pm, Layout.pm, ListItem.pm, List.pm,
+	ListStore.pm, MenuBar.pm, MenuItem.pm, Menu.pm, MenuShell.pm,
+	MessageDialog.pm, Misc.pm, Notebook.pm, Object.pm, OldEditable.pm,
+	OptionMenu.pm, Paned.pm, Pixmap.pm, Plug.pm, Preview.pm,
+	ProgressBar.pm, Progress.pm, RadioButton.pm, RadioMenuItem.pm,
+	Range.pm, RBTree.pm, Rc.pm, Requisition.pm, Ruler.pm, Scale.pm,
+	Scrollbar.pm, ScrolledWindow.pm, SelectionData.pm,
+	SeparatorMenuItem.pm, Settings.pm, SizeGroup.pm, Socket.pm,
+	SpinButton.pm, Statusbar.pm, Style.pm, Table.pm,
+	TearoffMenuItem.pm, TextBTree.pm, TextBuffer.pm, TextLayout.pm,
+	TextMark.pm, Text.pm, TextTag.pm, TextTagTable.pm, TextView.pm,
+	ThemeEngine.pm, TipsQuery.pm, ToggleButton.pm, Toolbar.pm,
+	Tooltips.pm, TreeDataList.pm, TreeItem.pm, TreeIter.pm,
+	TreeModel.pm, TreeModelSort.pm, TreePath.pm, Tree.pm,
+	TreeSelection.pm, TreeStore.pm, TreeViewColumn.pm, TreeView.pm,
+	VBox.pm, VButtonBox.pm, Viewport.pm, VPaned.pm, VRuler.pm,
+	VScale.pm, VScrollbar.pm, VSeparator.pm, Widget.pm, Window.pm,
+	Atk/Object.pm, Gdk/Atom.pm, Gdk/Bitmap.pm, Gdk/Colormap.pm,
+	Gdk/Color.pm, Gdk/Cursor.pm, Gdk/Drawable.pm, Gdk/Event.pm,
+	Gdk/GC.pm, Gdk/Gdk.pm, Gdk/Keymap.pm, Gdk/Pixbuf.pm, Gdk/Pixmap.pm,
+	Gdk/Point.pm, Gdk/Rectangle.pm, Gdk/Segment.pm, Gdk/Selection.pm,
+	Gdk/Span.pm, Gdk/Visual.pm, Gdk/Window.pm, Pango/Context.pm,
+	Pango/FontDescription.pm, Pango/FontMetrics.pm, Pango/Language.pm,
+	Pango/Layout.pm, Pango/Pango.pm, Gdk/Event/Button.pm,
+	Gdk/Event/Client.pm, Gdk/Event/Configure.pm, Gdk/Event/Crossing.pm,
+	Gdk/Event/DND.pm, Gdk/Event/Expose.pm, Gdk/Event/Focus.pm,
+	Gdk/Event/Key.pm, Gdk/Event/Motion.pm, Gdk/Event/NoExpose.pm,
+	Gdk/Event/Property.pm, Gdk/Event/Proximity.pm, Gdk/Event/Scroll.pm,
+	Gdk/Event/Selection.pm, Gdk/Event/Setting.pm,
+	Gdk/Event/Visibility.pm, Gdk/Event/WindowState.pm: when the 'do' in
+	the BEGIN (_config.pm) has an error, die with the error message,
+	instead of doing nothing
+
+2002-12-16 15:39  ggc
+
+	* Gtk2/: BoxChild.pm, Container.pm, Editable.pm, Entry.pm,
+	Frame.pm, GObject.pm, Label.pm, Layout.pm, ListStore.pm,
+	Requisition.pm, Style.pm, Test.pm, TextBuffer.pm, TreeModel.pm,
+	TreePath.pm, TreeSelection.pm, TreeStore.pm, TreeView.pm,
+	Widget.pm, Window.pm, Gdk/Drawable.pm, Gdk/Event.pm, Gdk/Point.pm,
+	Gdk/Rectangle.pm, Gdk/Segment.pm, Gdk/Span.pm, Gdk/Window.pm,
+	Pango/Layout.pm: remove unneeded () in method calls
+
+2002-12-16 15:29  ggc
+
+	* Gtk2/: Gdk/src/Drawable.c, include/gtk2-perl-common.h: add
+	GdkDrawable::draw_pixbuf (available from 2.1.1 on - needs that we
+	always include gtk/gtkversion.h - not a big deal I hope)
+
+2002-12-16 11:48  gthyni
+
+	* Changelog, NEWS: renamed old Changelog to NEWS
+
+2002-12-16 11:24  ggc
+
+	* Gtk2/: src/Dialog.c, Dialog.pm: no more explicit 'use' since
+	lazyloading is now automatic
+
+2002-12-13 17:14  ggc
+
+	* ChangeLog: add changelog file
+
+2002-12-13 17:04  ggc
+
+	* Gtk2/Gdk/Event/: src/Visibility.c, Visibility.pm: add
+	GdkEventVisibility
+
+2002-12-13 16:58  ggc
+
+	* Gtk2/Gdk/Event/NoExpose.pm: update
+
+2002-12-13 16:54  ggc
+
+	* Gtk2/Gdk/Event/: src/WindowState.c, WindowState.pm: add
+	GdkEventWindowState
+
+2002-12-13 16:48  ggc
+
+	* Gtk2/Gdk/Event/: src/Selection.c, Selection.pm: add
+	GdkEventSelection
+
+2002-12-13 16:43  ggc
+
+	* Gtk2/Gdk/Event/: src/Property.c, Property.pm: add
+	GdkEventProperty
+
+2002-12-13 16:39  ggc
+
+	* Gtk2/Gdk/Event/: src/Configure.c, Configure.pm: add
+	GdkEventConfigure
+
+2002-12-13 16:34  ggc
+
+	* Gtk2/Gdk/Event/: src/Focus.c, Focus.pm: add GdkEventFocus
+
+2002-12-13 16:29  ggc
+
+	* Gtk2/Gdk/Event/: src/Scroll.c, Scroll.pm: add GdkEventScroll
+
+2002-12-13 16:22  ggc
+
+	* Gtk2/Gdk/Event/src/Crossing.c: typo
+
+2002-12-13 16:21  ggc
+
+	* Gtk2/Gdk/Event/Crossing.pm, Gtk2/Gdk/Event/src/Crossing.c,
+	misc-examples/eventcrossing.pl: support GdkEventCrossing
+
+2002-12-13 15:27  ggc
+
+	* Gtk2/IconSet.pm, Gtk2/IconSource.pm, Gtk2/Image.pm,
+	Gtk2/_loader.pm, Gtk2/src/IconSet.c, Gtk2/src/IconSource.c,
+	Gtk2/src/Image.c, Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h, Gtk2/src/Style.c,
+	misc-examples/iconset.pl, genscripts/castmacros-autogen.pl,
+	genscripts/loader.pl: add iconset mechanism
+
+2002-12-12 18:36  dlacroix
+
+	* Gtk2/src/_Helpers.c: - added Gnome2::Art support in
+	Gtk2/src/_Helpers.c
+
+2002-12-12 18:12  ggc
+
+	* Gtk2/Gdk/Event/: Expose.pm, src/Expose.c: explicit 'use' no more
+	needed
+
+2002-12-12 17:41  ggc
+
+	* Gtk2/Gdk/src/Pixbuf.c: add 'Utility and miscellaneous convenience
+	functions'
+
+2002-12-12 13:50  noiddicle
+
+	* Gtk2/: Label.pm, Window.pm: Added pod documentation for the
+	widgets Gtk2::Window and Gtk2::Label.  man files automatically
+	generated.
+
+2002-12-11 23:16  gthyni
+
+	* INSTALL: small update to reflect new debian inline package
+
+2002-12-11 23:06  gthyni
+
+	* tools/apicoverage.pl: good to have, what's there, what's missing
+
+2002-12-11 19:33  borup
+
+	* Gtk2/TreeModel.pm: Forgot to free the allocated TreeIter in
+	Gtk2::TreeModel::get().
+
+2002-12-11 14:11  gthyni
+
+	* Gtk2/src/_Helpers.c: accept alt enum syntax for backward
+	compatability
+
+2002-12-11 14:10  gthyni
+
+	* misc-examples/hello5.pl: test alt enum syntax, in this example
+	-toplevel
+
+2002-12-11 13:42  gthyni
+
+	* fast-compile.pl: modernize a bit
+
+2002-12-11 13:40  gthyni
+
+	* fast-compile.pl: make sure we compile the right one even if older
+	Gtk2 is installed in @INC path
+
+2002-12-11 12:50  ggc
+
+	* Gtk2/src/Fixed.c: add gtk_fixed_set_has_window and
+	gtk_fixed_get_has_window
+
+2002-12-10 14:13  gthyni
+
+	* Gtk2.pm: new version 0.07 (post release)
+
+2002-12-10 13:53  gthyni
+
+	* Gtk2.pm: new version (release)
+
+2002-12-10 13:53  gthyni
+
+	* Gtk2/_config.pm: use saver CWD, hopefully works better with
+	CPAN.pm
+
+2002-12-10 13:49  gthyni
+
+	* Changelog, MANIFEST: updated
+
+2002-12-10 11:09  gthyni
+
+	* Makefile.PL: updated requirements
+
+2002-12-10 10:28  gthyni
+
+	* Gtk2/_blib_config.pm: hmmm
+
+2002-12-10 08:51  gthyni
+
+	* Gtk2.pm: new version post 0.04 release
+
+2002-12-09 23:10  ggc
+
+	* Gtk2/: Gtk2.pm, include/gtk2-perl.h, src/GClosure.c,
+	src/_Helpers.c: trying hard to have the exceptions handling
+	mechanism compile
+
+2002-12-09 22:59  ggc
+
+	* Gtk2/: Gtk2.pm, src/Gtk2.c, src/GClosure.c: put things at
+	different places to allow compilation
+
+2002-12-09 22:51  ggc
+
+	* Gtk2/src/GClosure.c, Gtk2/src/Gtk2.c,
+	misc-examples/exception-trapping.pl: have exception trapping from
+	within callbacks to not mess up gtk C stack call and eventually
+	segfault
+
+2002-12-09 21:44  gthyni
+
+	* README, README.txt: rename readme
+
+2002-12-09 21:44  gthyni
+
+	* MANIFEST: readme file name
+
+2002-12-09 21:40  gthyni
+
+	* docs/release-plan.txt: update
+
+2002-12-09 21:38  gthyni
+
+	* Gtk2.pm: version 0.04
+
+2002-12-09 21:38  gthyni
+
+	* Makefile.PL: fix for "make test"
+
+2002-12-09 21:20  gthyni
+
+	* Gtk2/_blib_config.pm: remove debugging output
+
+2002-12-09 21:03  gthyni
+
+	* MANIFEST: prepare for 0.04
+
+2002-12-09 15:44  gthyni
+
+	* MANIFEST, Gtk2/_blib_config.pm, tools/makemanifest.pl: new tool
+	for generating MANIFEST files
+
+2002-12-09 11:36  ggc
+
+	* Gtk2/Gdk/src/Window.c: gdkperl_window_set_back_pixmap: the
+	GdkPixmap may be NULL
+
+2002-12-07 21:33  gthyni
+
+	* misc-examples/idle.pl: fix broken script
+
+2002-12-06 21:44  ggc
+
+	* Gtk2/Image.pm, Gtk2/include/gtk2-perl-common.h, Gtk2/src/Image.c,
+	Gtk2/src/_Helpers.c, docs/memory: add some GtkImage stuff
+
+2002-12-02 23:07  gthyni
+
+	* Gtk2/src/Socket.c: the active field is not avialable in Gtk+
+	2.0.x
+
+2002-12-02 22:51  gthyni
+
+	* testgtk.pl: daily hacking, does not compile yet
+
+2002-12-02 22:45  ggc
+
+	* Gtk2/Plug.pm, Gtk2/Socket.pm, Gtk2/src/Plug.c, Gtk2/src/Socket.c,
+	misc-examples/plug-socket.pl: add plug/socket mechanism (there is a
+	bug with gtk 2.1.2 which prevents it from working, it seems - but
+	it does work with 2.0.6)
+
+2002-12-02 22:44  ggc
+
+	* Gtk2/Gdk/src/: Drawable.c, Window.c: add a few functions
+
+2002-12-02 15:08  ggc
+
+	* Gtk2/src/GType.c, misc-examples/textview-with-tags.pl: support
+	converting GBoxed types, do a better type check when converting
+	GObject types, better error messages
+
+2002-12-01 23:58  gthyni
+
+	* testgtk.pl: more porting yet
+
+2002-12-01 23:57  gthyni
+
+	* tutorial-examples/arrows.pl: updated to test new return value of
+	show
+
+2002-12-01 21:32  gthyni
+
+	* Gtk2/src/Widget.c: this is how to do it
+
+2002-12-01 21:16  gthyni
+
+	* Gtk2/src/Widget.c: show/hide now returns its widget which is
+	usable
+
+2002-12-01 19:10  gthyni
+
+	* testgtk.pl: a bit more porting
+
+2002-11-29 17:18  gthyni
+
+	* testgtk.pl: more hacking, still thousands of lines to go
+
+2002-11-28 17:10  ggc
+
+	* docs/porting: more
+
+2002-11-28 16:43  ggc
+
+	* docs/porting: more
+
+2002-11-28 16:37  ggc
+
+	* docs/porting: gtk_window_set_policy is deprecated
+
+2002-11-28 15:52  ggc
+
+	* Gtk2/src/Widget.c: better fix again: if widget is not realized,
+	return undef as "window"
+
+2002-11-28 15:39  ggc
+
+	* Gtk2/src/Widget.c: when calling "window" before realization,
+	allows a better error message
+
+2002-11-28 15:25  ggc
+
+	* Gtk2/src/GClosure.c: when failure to convert a g_value to a perl
+	value, print a nice warning message
+
+2002-11-28 15:25  ggc
+
+	* Gtk2/src/GType.c: support pointer type in converting back, better
+	warning messages when unhandled types
+
+2002-11-28 15:24  ggc
+
+	* Gtk2/_Object.pm: add a backtrace when autoload dies
+
+2002-11-28 14:55  ggc
+
+	* Gtk2/Box.pm, Gtk2/BoxChild.pm, Gtk2/include/gtk2-perl-common.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h, Gtk2/src/Box.c,
+	Gtk2/src/BoxChild.c, Gtk2/src/_Helpers.c,
+	genscripts/castmacros-autogen.pl, genscripts/convert_funcs.pl,
+	misc-examples/boxchild.pl: finish off GtkBox stuff (add missing
+	functions, add BoxChild support)
+
+2002-11-28 14:44  gthyni
+
+	* testgtk.pl: more porting, not ready yet
+
+2002-11-28 14:40  gthyni
+
+	* Gtk2/: ToggleButton.pm, src/ToggleButton.c: a reasonable default
+	for set_active()
+
+2002-11-28 12:55  ggc
+
+	* Gtk2/Gdk/src/Gdk.c: typo in function names
+
+2002-11-28 00:53  gthyni
+
+	* testgtk.pl: more hacking
+
+2002-11-28 00:19  gthyni
+
+	* Gtk2/Gdk/Visual.pm: new class
+
+2002-11-28 00:19  gthyni
+
+	* Gtk2/Gdk/src/Window.c: add new()
+
+2002-11-28 00:05  gthyni
+
+	* Gtk2/include/gtk2-perl-helpers-gdk-autogen.h: add SvGdkVisual
+
+2002-11-27 20:46  ggc
+
+	* Gtk2/Rc.pm, Gtk2/src/Rc.c, misc-examples/rc.pl: rc
+
+2002-11-27 19:43  ggc
+
+	* Gtk2/Gdk/src/Gdk.c: add some juice
+
+2002-11-27 17:33  ggc
+
+	* misc-examples/test-pixbuf-drawing.pl: remove unneeded ()
+
+2002-11-27 17:12  ggc
+
+	* Gtk2/Pango/src/Pango.c: define it as a class constructor rather
+	than a static method, enables autoloading
+
+2002-11-27 16:58  ggc
+
+	* genscripts/convert_funcs.pl: misc fixes
+
+2002-11-27 14:18  gthyni
+
+	* Gtk2/Gdk/: Pixmap.pm, src/Pixmap.c: remove Inline_ macros
+
+2002-11-27 12:13  ggc
+
+	* docs/porting: progressbar
+
+2002-11-27 01:28  gthyni
+
+	* testgtk.pl: rm some more cruft
+
+2002-11-27 01:25  gthyni
+
+	* testgtk.pl: started port of megatest from libgtk+ feel free to
+	hack away
+
+2002-11-26 21:36  gthyni
+
+	* Gtk2/Gdk/Pixmap.pm: dooh! remove crashing debugging code
+
+2002-11-26 21:35  gthyni
+
+	* Gtk2/src/Widget.c: add shape_combine_mask()
+
+2002-11-26 21:34  gthyni
+
+	* misc-examples/wheelbarrow.pl: transparent window!
+
+2002-11-26 19:59  ggc
+
+	* docs/porting: document change about boxed types
+
+2002-11-26 17:38  ggc
+
+	* Gtk2/src/GClosure.c, docs/porting, misc-examples/alloc.pl,
+	misc-examples/chart.pl, misc-examples/hello5.pl,
+	misc-examples/test-pixbuf-drawing.pl,
+	misc-examples/transparent-window.pl, tutorial-examples/colorsel.pl,
+	tutorial-examples/hello1.pl, tutorial-examples/hello2.pl,
+	tutorial-examples/hello5.pl, tutorial-examples/itemfactory.pl,
+	tutorial-examples/menu.pl, tutorial-examples/selection.pl,
+	tutorial-examples/selection2.pl, tutorial-examples/textentry.pl,
+	tutorial-examples/toolbar.pl: big move of parameter orders of
+	signals: the "extra arg" is not the 2nd arg anymore, it's the last
+	one, as in C-gtk (plus fix a few bugs in examples)
+
+2002-11-26 17:31  gthyni
+
+	* Gtk2/src/Widget.c: added get_default_style
+
+2002-11-26 17:30  gthyni
+
+	* Gtk2/src/Style.c: added _get_bg_color
+
+2002-11-26 17:30  gthyni
+
+	* Gtk2/Style.pm: added get_bg_color
+
+2002-11-26 17:29  gthyni
+
+	* Gtk2/Gdk/: Pixmap.pm, src/Pixmap.c: new create from _d
+
+2002-11-26 16:41  ggc
+
+	* Gtk2/_Object.pm: let's hide the "dynamically loading" message now
+	that it seems to work
+
+2002-11-26 16:13  ggc
+
+	* Gtk2/include/: gtk2-perl-common.h, gtk2-perl.h: put Gtk specific
+	callback stuff where they belong, allow to not include gtk.h when
+	compiling gdk/pango/glib etc stuff
+
+2002-11-26 16:04  ggc
+
+	* docs/porting: ibid
+
+2002-11-26 16:04  ggc
+
+	* docs/porting: minor addition of void lines
+
+2002-11-26 15:54  ggc
+
+	* Gtk2/: src/TreeView.c, TreeView.pm: add expand_to_path (beware,
+	it segfaults with gtk 2.1.2)
+
+2002-11-26 15:42  gthyni
+
+	* Gtk2/include/gtk2-perl-common.h: add include of gtk.h
+
+2002-11-26 14:46  ggc
+
+	* Gtk2/Bin.pm: add "child" method for gtk 1.2 compat
+
+2002-11-26 14:46  ggc
+
+	* Gtk2/: TreePath.pm, src/TreePath.c: add missing functions
+
+2002-11-26 11:14  gthyni
+
+	* misc-examples/tree_simple.pl: handle delete_event so it can quit
+	cleanly
+
+2002-11-25 21:41  ggc
+
+	* Gtk2/src/TreeView.c: in scroll_to_cell, path and column may be
+	NULL
+
+2002-11-25 21:35  ggc
+
+	* Gtk2/: GList.pm, GSList.pm: add
+
+2002-11-25 21:24  ggc
+
+	* Gtk2/src/_Helpers.c: remember already require'd packages, to not
+	impact performance too much by lazyloading
+
+2002-11-25 18:30  ggc
+
+	* Gtk2/: src/Container.c, src/_Helpers.c,
+	include/gtk2-perl-common.h: add support for the generic GtkCallback
+	callback function, use it for gtk_container_foreach and forall
+
+2002-11-25 18:28  ggc
+
+	* Gtk2/src/GObject.c: add DEBUG_get_perl_type, so that we can get
+	the real type of a perl gtk object only known as a GtkWidget or a
+	GObject (for example, when inside gtk_container_foreach)
+
+2002-11-25 17:04  ggc
+
+	* docs/porting, misc-examples/tree_simple.pl: more doc about
+	TreeView's
+
+2002-11-23 14:39  gthyni
+
+	* Gtk2/Window.pm: smarter(?) property access
+
+2002-11-23 00:32  gthyni
+
+	* old-test/test.pl: cleanup, but still not running
+
+2002-11-22 22:31  gthyni
+
+	* MANIFEST: update a little
+
+2002-11-22 22:27  gthyni
+
+	* Makefile.PL: update INC to reflect new place of Gtk2.c
+
+2002-11-22 19:25  ggc
+
+	* Gtk2/GObject.pm: shorter find_property
+
+2002-11-22 19:22  ggc
+
+	* Gtk2/GObject.pm: typo
+
+2002-11-22 19:17  ggc
+
+	* Gtk2/: GObject.pm, src/GSignal.c: add
+	signal_stop_emission_by_name
+
+2002-11-22 17:54  ggc
+
+	* Gtk2/src/TreeIter.c: add iter_copy
+
+2002-11-22 15:38  ggc
+
+	* Gtk2/ListStore.pm: add the append_set helper function
+
+2002-11-22 15:00  ggc
+
+	* Gtk2/src/TreeView.c: gtkperl_tree_view_set_cursor: focus_column
+	is allowed to be NULL
+
+2002-11-22 13:50  ggc
+
+	* genscripts/convert_funcs.pl: correctly generate function wrappers
+	for functions with callbacks
+
+2002-11-22 13:02  ggc
+
+	* Gtk2/src/TreeModel.c, misc-examples/tree.pl: add
+	TreeModel::foreach
+
+2002-11-22 13:00  ggc
+
+	* Gtk2/src/TreeSelection.c: fix borup's typo
+
+2002-11-22 12:37  ggc
+
+	* Gtk2/src/TreeSelection.c, genscripts/castmacros-autogen.pl: let's
+	make marshal functions static
+
+2002-11-22 12:09  ggc
+
+	* Gtk2/include/gtk2-perl-common.h, Gtk2/src/TreeSelection.c,
+	Gtk2/src/_Helpers.c, genscripts/castmacros-autogen.pl,
+	misc-examples/treeview.pl: allow use of functions that take a
+	callback as parameter (a WhateverFunc typed parameter): - write an
+	autogenerator for the callback marshal, howto use it:	- "perl
+	genscripts/castmacros-autogen.pl WhateverFunc" on commandline	-
+	copy the results in the .c file   - then use it in the perl/gtk
+	function wrapper, see TreeSelection.c for examples (two forms, the
+	simple one for foreach-like functions, a more complex one when the
+	function installs a callback to be called deferredly) - write the
+	two TreeSelection wrappers using a function callback fix a segfault
+	in TreeSelection::get_selected_rows (when nothing is selected)
+
+2002-11-21 22:15  gthyni
+
+	* Gtk2/TreeSelection.pm: check version of gtk+ so we know
+	get_selected_rows exists
+
+2002-11-21 22:14  gthyni
+
+	* Gtk2/src/Gtk2.c: added CHECK_VERSION for checking the version of
+	the underlying gtk+
+
+2002-11-21 20:55  borup
+
+	* Gtk2/TreeModel.pm, Gtk2/TreeSelection.pm,
+	Gtk2/src/TreeSelection.c, misc-examples/treeview.pl: Changed the
+	order of the values returned by
+	Gtk2::TreeSelection->get_selected_rows.
+
+2002-11-21 18:00  ggc
+
+	* Gtk2/TreeView.pm, Gtk2/src/TreeView.c, docs/memory: add some more
+	TreeView juice
+
+2002-11-21 17:12  ggc
+
+	* Gtk2/: Combo.pm, include/gtk2-perl-common.h, src/Combo.c,
+	src/_Helpers.c: allow GtkCombo::set_popdown_strings to be called
+	with a array or an arrayref, don't leak memory in it, place the
+	SvGList_of_strings function where it belongs more (_Helpers rather
+	than inside Combo)
+
+2002-11-21 16:35  ggc
+
+	* Gtk2/: Widget.pm, src/Widget.c: add some style properties stuff
+
+2002-11-21 16:35  ggc
+
+	* Gtk2/: Toolbar.pm, src/Toolbar.c: allow two forms of 'new', allow
+	appending without a callback
+
+2002-11-21 16:34  ggc
+
+	* Gtk2/TreeViewColumn.pm: add set_minmax_width helper function
+
+2002-11-21 16:33  ggc
+
+	* Gtk2/src/Button.c: add the couple of missing functions
+
+2002-11-21 01:44  borup
+
+	* Gtk2/TreeModel.pm, Gtk2/TreeSelection.pm,
+	Gtk2/src/TreeSelection.c, misc-examples/treeview.pl: Added
+	Gtk2::TreeSelection->get_selected_rows() and updated treeview.pl to
+	use it.
+	
+	Gtk2::TreeModel->get() now takes either a Gtk2::TreeIter or
+	Gtk2::TreePath as parameter.
+
+2002-11-20 22:33  ggc
+
+	* Gtk2/TreeViewColumn.pm: allow void titles in use strict
+
+2002-11-20 21:42  gthyni
+
+	* Gtk2/ListItem.pm, Gtk2/OldEditable.pm, Gtk2/src/Editable.c,
+	Gtk2/src/ListItem.c, Gtk2/src/Text.c, old-test/test.pl,
+	old-test/samples/chart-demo.pl: more from porting of tests from old
+	gnome-perl
+
+2002-11-20 20:54  ggc
+
+	* Gtk2/Label.pm: remove warning uninitialized variable to allow use
+	strict
+
+2002-11-20 20:30  gthyni
+
+	* Gtk2/Gtk2.pm, Gtk2/Text.pm, Gtk2/src/Gtk2.c, old-test/test.pl:
+	add test.pl from old gnome-perl
+
+2002-11-20 19:51  gthyni
+
+	* Gtk2/_Object.pm: better error message
+
+2002-11-20 19:36  ggc
+
+	* Gtk2/: Gdk/src/Gdk.c, Pango/src/Pango.c: fix function names after
+	Goran move of files (untested? :)
+
+2002-11-20 19:15  ggc
+
+	* Gtk2/Label.pm, Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h, Gtk2/src/Label.c,
+	genscripts/castmacros-autogen.pl: have all functions of Label
+
+2002-11-20 19:06  gthyni
+
+	* Gtk2.pm, Gtk2/Gdk.pm, Gtk2/Gtk2.pm, Gtk2/Pango.pm,
+	Gtk2/_Object.pm, Gtk2/Gdk/Gdk.pm, Gtk2/Gdk/src/Gdk.c,
+	Gtk2/Pango/Pango.pm, Gtk2/Pango/src/Pango.c, Gtk2/src/Gdk.c,
+	Gtk2/src/Gtk2.c, Gtk2/src/Pango.c: move around to avoid recursion
+	in Inline and fix a better AUTOLOAD too
+
+2002-11-20 19:02  gthyni
+
+	* tutorial-examples/range.pl: glib is on object!
+
+2002-11-20 19:01  gthyni
+
+	* Gtk2/GLib.pm: make OO
+
+2002-11-20 15:31  ggc
+
+	* Gtk2/src/TreeSelection.c: fix memory corruption (g_free on an
+	SV*) && clean it up a bit
+
+2002-11-19 17:47  ggc
+
+	* Gtk2/Gdk/: Window.pm, src/Window.c: add many missing functions
+
+2002-11-19 17:46  ggc
+
+	* Gtk2/Gdk/: Event.pm, src/Event.c: add a few functions
+
+2002-11-19 17:40  ggc
+
+	* Gtk2/src/Gdk.c: fix typo again (me stupid)
+
+2002-11-19 17:21  ggc
+
+	* Gtk2/src/Gdk.c: fix typo
+
+2002-11-19 17:11  ggc
+
+	* Gtk2/src/Gdk.c: add set/get show_events
+
+2002-11-19 17:08  ggc
+
+	* Gtk2/src/GSignal.c: don't display gdk events debugging stuff!
+
+2002-11-19 15:43  gthyni
+
+	* Gtk2/: OldEditable.pm, TextMark.pm, TipsQuery.pm: fix wrong
+	package names
+
+2002-11-19 15:37  gthyni
+
+	* Gtk2/TextLayout.pm: wrong package name
+
+2002-11-19 14:56  ggc
+
+	* Gtk2/src/: GClosure.c, GSignal.c: handle double free on timeout's
+	and idle's
+
+2002-11-19 14:07  ggc
+
+	* Gtk2/GSignal.pm: cleanup (lazyload now done automatically from
+	the object creators)
+
+2002-11-18 22:48  ggc
+
+	* Gtk2/src/_Helpers.c: try to support the derived classes of
+	GtkStyle (for themes)
+
+2002-11-18 22:42  ggc
+
+	* Gtk2/src/TreeModel.c: fix a few things
+
+2002-11-18 22:41  ggc
+
+	* Gtk2/src/GSignal.c: allow timeout and idle functions to return
+	stuff to gtk (so that they can stop themselves, with 0)
+
+2002-11-18 22:38  ggc
+
+	* misc-examples/transparent-window.pl, Gtk2/Widget.pm,
+	Gtk2/src/Widget.c, docs/memory: to enhance ortogonality, really
+	return a GtkAllocation and a GtkRequisition in GtkWidget
+
+2002-11-18 22:20  ggc
+
+	* Gtk2/: TreeIter.pm, src/TreeIter.c: GtkTreeIter uses its own free
+	function
+
+2002-11-18 19:21  ggc
+
+	* Gtk2/Pango.pm, misc-examples/textview-with-tags.pl: add pango
+	constants (they are not in the gtype system :(()
+
+2002-11-18 18:31  gthyni
+
+	* compile-widgets.pl: handle all config files
+
+2002-11-18 18:30  gthyni
+
+	* fast-compile.pl: cleanup
+
+2002-11-18 16:42  gthyni
+
+	* Changelog: update
+
+2002-11-18 16:36  gthyni
+
+	* CONTRIBUTE.txt: updated
+
+2002-11-18 16:28  gthyni
+
+	* Gtk2/_config.pm: add BUILD_NOISY inline >= 0.44 needed
+
+2002-11-18 16:22  gthyni
+
+	* INSTALL: add note about patch to Inline 0.44
+
+2002-11-18 16:20  gthyni
+
+	* MANIFEST: add INSTALL file
+
+2002-11-18 15:56  gthyni
+
+	* TODO.txt: removed finished items
+
+2002-11-18 15:54  ggc
+
+	* INSTALL: added (thx to Janne Morén <jan.moren@lucs.lu.se>)
+
+2002-11-18 15:47  ggc
+
+	* TODO.txt, CONTRIBUTE.txt: update
+
+2002-11-17 14:19  gthyni
+
+	* Gtk2.pm: update version post release 0.02
+
+2002-11-17 14:00  gthyni
+
+	* Makefile.PL, Gtk2/OldEditable.pm: fixes for release 0.02
+
+2002-11-17 13:59  gthyni
+
+	* t/105_Gtk2_ProgressBar.t: fixs for some locales
+
+2002-11-17 13:43  gthyni
+
+	* fast-compile.pl: filter config files
+
+2002-11-17 13:35  gthyni
+
+	* Makefile.PL: fix warnings
+
+2002-11-17 11:50  gthyni
+
+	* MANIFEST: prepare for rel 0.02
+
+2002-11-17 11:46  gthyni
+
+	* Gtk2.pm, Makefile.PL: prepare relase 0.02
+
+2002-11-16 08:56  glade-perl
+
+	* Gtk2/Test.pm: Fixed the fix
+
+2002-11-16 08:42  glade-perl
+
+	* Gtk2/src/Combo.c: Ensure that latest version is committed
+
+2002-11-16 08:37  glade-perl
+
+	* Gtk2/Test.pm: Changed other isdigit to regex as I had
+	reintroduced it - sorry :(
+
+2002-11-16 08:33  glade-perl
+
+	* Gtk2/src/Progress.c, Gtk2/src/ProgressBar.c,
+	Gtk2/src/SpinButton.c, Gtk2/src/Statusbar.c,
+	t/063_Gtk2_Statusbar.t, t/105_Gtk2_ProgressBar.t: Some last few
+	methods and a couple of new tests
+
+2002-11-16 04:45  glade-perl
+
+	* Gtk2/Test.pm, t/000_Gtk2_Test.t, t/010_Gtk2_main.t,
+	t/011_Gtk2_GObject.t, t/059_Gtk2_FontSelection.t,
+	t/062_Gtk2_Combo.t, t/064_Gtk2_CList.t, t/071_Gtk2_List.t: Expected
+	error handling fixed in Gtk2::Test and 2 new test scripts
+
+2002-11-16 00:21  gthyni
+
+	* Gtk2/Test.pm: remove other isdigit too and no use POSIX give
+	faster startup as a bonus
+
+2002-11-15 23:39  gthyni
+
+	* Gtk2/Test.pm: do not use isdigit on string, regex is better and
+	more predictable
+
+2002-11-15 19:29  ggc
+
+	* Gtk2/: TreeModel.pm, TreeView.pm, src/TreeModel.c,
+	src/TreeView.c, src/Widget.c: add a bunch of missing functions
+
+2002-11-15 17:43  ggc
+
+	* Gtk2/Window.pm: add most of GtkWindow properties
+
+2002-11-15 16:02  gthyni
+
+	* misc-examples/resize.pl: test resizable flag on windows
+
+2002-11-15 15:57  gthyni
+
+	* Gtk2/GObject.pm: and again! :-(
+
+2002-11-15 15:57  gthyni
+
+	* Gtk2/GObject.pm: ooh what a typo! blame me, I'm stupid
+
+2002-11-15 12:38  ggc
+
+	* Gtk2/: Gdk/src/Color.c, Gdk/src/Drawable.c,
+	include/gtk2-perl-common.h, src/TreePath.c, src/Window.c,
+	src/_Helpers.c: add _nullok object creators casters
+
+2002-11-15 12:36  ggc
+
+	* Gtk2/: Widget.pm, src/Widget.c: cleanup
+
+2002-11-15 12:28  ggc
+
+	* Gtk2.pm: fix update_ui
+
+2002-11-15 12:20  ggc
+
+	* Gtk2/include/gtk2-perl.h: remove unused
+
+2002-11-15 07:26  glade-perl
+
+	* Gtk2/Test.pm, Gtk2/src/Combo.c, Gtk2/src/List.c, Gtk2/src/Misc.c,
+	Gtk2/src/RadioMenuItem.c, t/011_Gtk2_GObject.t, t/062_Gtk2_Combo.t:
+	Fixes to list passing
+
+2002-11-15 05:13  glade-perl
+
+	* Gtk2/CList.pm, Gtk2/Test.pm, Gtk2/src/CList.c, Gtk2/src/Gtk2.c,
+	t/000_Gtk2_Test.t, t/010_Gtk2_main.t, t/011_Gtk2_GObject.t,
+	t/012_Gtk2_AccelGroup.t, t/013_Gtk2_Object.t, t/014_Gtk2_Widget.t,
+	t/039_Gtk2_ListItem.t, t/045_Gtk2_FontSelectionDialog.t,
+	t/059_Gtk2_FontSelection.t, tools/newer_than_cvs: Improved
+	interactive tests and some more test scripts
+
+2002-11-14 23:03  gthyni
+
+	* misc-examples/list-selection.pl: use treeview instead
+
+2002-11-14 22:58  gthyni
+
+	* misc-examples/list-selection.pl: still not working
+
+2002-11-14 22:31  gthyni
+
+	* Gtk2/GObject.pm, Gtk2/ItemFactory.pm, Gtk2/Style.pm,
+	Gtk2/Widget.pm, Gtk2/Gdk/Drawable.pm, Gtk2/Gdk/src/Drawable.c,
+	Gtk2/Pango/Context.pm, Gtk2/Pango/Layout.pm,
+	Gtk2/Pango/src/Context.c, Gtk2/Pango/src/Layout.c,
+	Gtk2/src/ItemFactory.c, Gtk2/src/Style.c, Gtk2/src/Widget.c,
+	tutorial-examples/itemfactory.pl: cleanups
+
+2002-11-14 20:32  gthyni
+
+	* Gtk2/_Object.pm: applied Guillaume patch
+
+2002-11-14 20:21  glade-perl
+
+	* Gtk2/src/GObject.c, t/000_Gtk2_Test.t, t/010_Gtk2_main.t,
+	t/011_Gtk2_GObject.t: Some initial test scripts
+
+2002-11-14 18:11  ggc
+
+	* Gtk2/src/TreeViewColumn.c: add a bunch of functions
+
+2002-11-14 18:11  ggc
+
+	* Gtk2/: CellRendererPixbuf.pm, src/CellRendererPixbuf.c: add
+
+2002-11-14 18:10  ggc
+
+	* Gtk2/src/TreeView.c: add expand_all and collapse_all
+
+2002-11-14 18:10  ggc
+
+	* Gtk2/: src/Label.c, Label.pm: allow creating a label without any
+	text argument
+
+2002-11-14 17:31  gthyni
+
+	* Gtk2.pm, Gtk2/_Object.pm: move around a little
+
+2002-11-14 15:34  ggc
+
+	* Gtk2/src/_Helpers.c: dynamically load class at object creation,
+	to avoid many 'require' in *.pm files when method objects return
+	different object types
+
+2002-11-14 15:18  gthyni
+
+	* Gtk2/Window.pm: tested modern syntax and it worked, so committed
+
+2002-11-14 14:47  gthyni
+
+	* Gtk2.pm: cleanup
+
+2002-11-14 14:29  ggc
+
+	* docs/memory: Gtk2::TreeSelection::get_selected
+
+2002-11-14 10:31  gthyni
+
+	* Gtk2/Widget.pm: get_parent_window() defined twice
+
+2002-11-14 06:38  glade-perl
+
+	* Gtk2/Test.pm, MANIFEST.SKIP, t/000_Gtk2_Test.t,
+	t/041_Gtk2_Window.t, t/045_Gtk2_FontSelectionDialog.t,
+	tools/newer_than_cvs, tools/write_test_scripts.pl: Some test
+	improvements and extra MANIFEST.SKIP items
+
+2002-11-14 00:28  ggc
+
+	* Gtk2/: Widget.pm, src/Widget.c: support lazyloading for
+	get_parent and get_parent_window
+
+2002-11-13 23:59  ggc
+
+	* misc-examples/tree.pl: use TreePath::to_string
+
+2002-11-13 23:50  ggc
+
+	* Gtk2/: Notebook.pm, src/Notebook.c: add a few things
+
+2002-11-13 23:48  ggc
+
+	* Gtk2/TreeView.pm: treeview's use TreePath
+
+2002-11-13 23:28  ggc
+
+	* Gtk2/: CheckButton.pm, src/CheckButton.c: add wrapper for 'new'
+	to be able to call it with a name or not
+
+2002-11-13 22:09  ggc
+
+	* Gtk2/src/TreeSelection.c, misc-examples/tree.pl: add more
+	TreeSelection stuff
+
+2002-11-13 21:53  ggc
+
+	* Gtk2/TreePath.pm, Gtk2/TreeStore.pm, Gtk2/src/TreePath.c,
+	Gtk2/src/TreeView.c, docs/memory, misc-examples/tree.pl: add some
+	TreePath stuff
+
+2002-11-13 21:36  glade-perl
+
+	* Gtk2/src/Window.c, t/041_Gtk2_Window.t: A fix for G_CONST_RETURN
+	in Window->get_title()
+
+2002-11-13 20:32  ggc
+
+	* Gtk2/Widget.pm: add can-focus
+
+2002-11-13 20:21  glade-perl
+
+	* Gtk2/Test.pm, Gtk2/src/ItemFactoryEntry.c, t/000_Gtk2_Test.t,
+	t/010_Gtk2_main.t, t/041_Gtk2_Window.t,
+	t/045_Gtk2_FontSelectionDialog.t, t/059_Gtk2_FontSelection.t,
+	t/062_Gtk2_Combo.t, tools/newer_than_cvs, tools/show-comp-errors,
+	tools/write_test_scripts.pl: Improvements to test engine and some
+	new tests Also new script to show any warnings in the _Inline build
+	tree
+
+2002-11-13 17:45  ggc
+
+	* Gtk2/Pango/: Layout.pm, src/Layout.c: lazy loading
+
+2002-11-13 17:16  ggc
+
+	* tutorial-examples/textentry.pl: typo fix
+
+2002-11-13 16:55  ggc
+
+	* Gtk2/src/_Boxed.c: protect against double free
+
+2002-11-13 16:46  ggc
+
+	* misc-examples/test-pixbuf-drawing.pl: make it more like I wanted
+	it to be :) enhance description text better polygon
+
+2002-11-13 16:23  gthyni
+
+	* misc-examples/test-pixbuf-drawing.pl: id string added
+
+2002-11-13 16:23  gthyni
+
+	* misc-examples/test-pixbuf-drawing.pl: more cruft removed
+
+2002-11-13 16:22  gthyni
+
+	* misc-examples/test-pixbuf-drawing.pl: remove debugging cruft
+
+2002-11-13 16:21  gthyni
+
+	* misc-examples/test-pixbuf-drawing.pl: fix typo made during heavy
+	testing
+
+2002-11-13 16:13  gthyni
+
+	* inline_0_44.diff: patch to make inline compiling work again apply
+	to a clean Inline 0.44 tree and install it
+
+2002-11-13 13:49  ggc
+
+	* Gtk2/Gdk/: Drawable.pm, src/Drawable.c: get_colormap needs we
+	load Gtk2::Gdk::Colormap
+
+2002-11-13 13:11  ggc
+
+	* fast-compile.pl: when croaking, exit with an error status
+
+2002-11-13 13:08  ggc
+
+	* Gtk2/Style.pm: [no log message]
+
+2002-11-13 12:38  ggc
+
+	* Gtk2/Pango/: FontDescription.pm, src/FontDescription.c: revert
+	the require which is unneeded
+
+2002-11-13 11:31  gthyni
+
+	* Makefile.PL: more cleaning
+
+2002-11-13 11:26  gthyni
+
+	* Makefile.PL: remove cruft and outdated comment
+
+2002-11-13 11:16  gthyni
+
+	* Makefile.PL: more make less script
+
+2002-11-13 05:22  glade-perl
+
+	* Gtk2/Test.pm, t/000_Gtk2_Test.t, t/010_Gtk2_main.t,
+	t/045_Gtk2_FontSelectionDialog.t, t/059_Gtk2_FontSelection.t,
+	t/i_test.pl, tools/newer_than_cvs: [no log message]
+
+2002-11-13 00:25  gthyni
+
+	* Gtk2/_Object.pm: ad a die for now for easier debugging of dynamic
+	loading
+
+2002-11-13 00:24  gthyni
+
+	* Gtk2/Widget.pm: hack style
+
+2002-11-13 00:23  gthyni
+
+	* Gtk2/Style.pm: a little hack
+
+2002-11-13 00:22  gthyni
+
+	* misc-examples/test-pixbuf-drawing.pl: hack hack this does not
+	work since dynamic loading the GC is not reurned correctly from
+	Gtk2::Style :-(
+
+2002-11-13 00:13  glade-perl
+
+	* Gtk2/Test.pm, Gtk2/_config.pm, Gtk2/src/CList.c,
+	Gtk2/src/CTree.c, Gtk2/src/FontSelectionDialog.c, Gtk2/src/List.c,
+	t/010_Gtk2_main.t, t/045_Gtk2_FontSelectionDialog.t,
+	t/059_Gtk2_FontSelection.t: [no log message]
+
+2002-11-12 23:32  gthyni
+
+	* Gtk2/Widget.pm, Gtk2/Gdk/Event/Expose.pm,
+	Gtk2/Gdk/Event/src/Expose.c, Gtk2/src/Widget.c,
+	misc-examples/chart.pl, misc-examples/enums-as-strings.pl,
+	misc-examples/list-selection.pl, misc-examples/list.pl,
+	misc-examples/liststore.pl,
+	misc-examples/signal-disconnect-immediate.pl,
+	misc-examples/test-memoryleak.pl,
+	misc-examples/test-pixbuf-drawing.pl,
+	misc-examples/transparent-window.pl, misc-examples/treeview.pl,
+	misc-examples/typecheck.pl, misc-examples/utf-textentry.pl: updated
+	for dynamic loading
+
+2002-11-12 23:27  gthyni
+
+	* Gtk2/GSignal.pm: remove some debug printing
+
+2002-11-12 22:56  ggc
+
+	* docs/memory: import
+
+2002-11-12 22:37  gthyni
+
+	* misc-examples/: latin1.pl, hello5.pl: updated for dynamic loading
+
+2002-11-12 22:30  gthyni
+
+	* fast-compile.pl: Gtk2.pm last instead of first
+
+2002-11-12 22:16  ggc
+
+	* Gtk2/Style.pm, Gtk2/Widget.pm, Gtk2/Pango/Context.pm,
+	Gtk2/Pango/FontDescription.pm, Gtk2/Pango/src/Context.c,
+	Gtk2/Pango/src/FontDescription.c, Gtk2/src/Style.c,
+	Gtk2/src/Widget.c, misc-examples/background-color.pl,
+	misc-examples/textview-with-tags.pl, misc-examples/tree.pl: a bunch
+	of 'require' and marshall functions to support great new goran's
+	lazyload mechanism
+
+2002-11-12 21:30  gthyni
+
+	* Gtk2.pm: dynamic loading OK
+
+2002-11-12 21:30  gthyni
+
+	* tutorial-examples/: arrows.pl, aspectframe.pl, button.pl,
+	buttonbox.pl, calendar.pl, colorsel.pl, container.pl, filesel.pl,
+	fixed.pl, frame.pl, hello1.pl, hello2.pl, hello5.pl,
+	itemfactory.pl, label.pl, menu.pl, notebook.pl, pack1.pl, pack2.pl,
+	panedwindow.pl, progressbar.pl, radio.pl, range.pl, rulers.pl,
+	scrolledwin.pl, selection.pl, selection2.pl, spinbutton.pl,
+	statusbar.pl, textentry.pl, toolbar.pl, tooltips.pl: examples
+	updated for dynamic loading
+
+2002-11-12 21:29  gthyni
+
+	* genscripts/loader.pl, Gtk2/Button.pm, Gtk2/Dialog.pm,
+	Gtk2/FileSelection.pm, Gtk2/Frame.pm, Gtk2/ToggleButton.pm,
+	Gtk2/Widget.pm, Gtk2/_Object.pm, Gtk2/_loader.pm,
+	Gtk2/src/Dialog.c, Gtk2/src/FileSelection.c, Gtk2/src/Frame.c,
+	Gtk2/src/ToggleButton.c, Gtk2/src/Widget.c: add dynamic loading of
+	classes solution suggested by Joern Reder I modified it to use
+	AUTOLOADER just using "use Gtk2" is now enough
+
+2002-11-12 20:54  ggc
+
+	* Gtk2/Gdk/src/Drawable.c: gdk_drawable_get_colormap can return
+	NULL
+
+2002-11-12 19:43  ggc
+
+	* Gtk2/TextBuffer.pm, Gtk2/TextIter.pm,
+	misc-examples/textview-with-tags.pl: free up memory allocated for
+	TextIter's
+
+2002-11-12 19:42  gthyni
+
+	* Gtk2.pm: load metaclass so we can lazyload the rest
+
+2002-11-12 17:20  ggc
+
+	* Gtk2/ItemFactoryEntry.pm, Gtk2/ListStore.pm, Gtk2/Requisition.pm,
+	Gtk2/TextBuffer.pm, Gtk2/TreeIter.pm, Gtk2/TreeView.pm,
+	Gtk2/_Boxed.pm, Gtk2/Gdk/Color.pm, Gtk2/Gdk/Point.pm,
+	Gtk2/Gdk/Rectangle.pm, Gtk2/Gdk/Segment.pm, Gtk2/Gdk/Span.pm,
+	Gtk2/src/ListStore.c, Gtk2/src/_Boxed.c,
+	misc-examples/background-color.pl, misc-examples/chart.pl,
+	misc-examples/test-pixbuf-drawing.pl,
+	misc-examples/transparent-window.pl, misc-examples/tree.pl,
+	misc-examples/treeview.pl, tutorial-examples/colorsel.pl: add
+	_Boxed so that we can ->free() the memory of boxed types
+
+2002-11-12 16:56  ggc
+
+	* Gtk2/src/GClosure.c: remove console output of debugging stuff
+
+2002-11-12 16:33  gthyni
+
+	* misc-examples/alloc.pl: cleanup
+
+2002-11-12 14:28  gthyni
+
+	* misc-examples/list-selection.pl: new example, not finished yet
+
+2002-11-12 14:09  gthyni
+
+	* Gtk2/GSignal.pm, misc-examples/alloc.pl: add more smartness for
+	signal returns
+
+2002-11-12 11:55  gthyni
+
+	* Gtk2/GSignal.pm, tutorial-examples/menu.pl,
+	tutorial-examples/rulers.pl, tutorial-examples/selection.pl,
+	tutorial-examples/selection2.pl: more use cleanups
+
+2002-11-12 11:41  gthyni
+
+	* Gtk2/Widget.pm, Gtk2/src/Widget.c,
+	tutorial-examples/container.pl: more use cleanup
+
+2002-11-12 11:29  gthyni
+
+	* Gtk2/ColorSelectionDialog.pm, tutorial-examples/colorsel.pl,
+	tutorial-examples/selection2.pl: cleanup some "uses"
+
+2002-11-12 08:28  dlacroix
+
+	* Gtk2/src/Combo.c: - Gtk2/src/Combo.c	
+	gtkperl_combo_set_popdown_strings modify to correct a table size
+	bug
+
+2002-11-11 23:32  gthyni
+
+	* Gtk2/src/TextView.c: trim comment
+
+2002-11-11 22:56  ggc
+
+	* misc-examples/typecheck.pl: fix
+
+2002-11-11 22:53  gthyni
+
+	* .cvsignore: add xs directory created by Makefile.PL
+
+2002-11-11 22:42  gthyni
+
+	* docs/release-plan.txt: add id
+
+2002-11-11 22:41  gthyni
+
+	* docs/release-plan.txt: updated
+
+2002-11-11 22:15  ggc
+
+	* Gtk2/TreeStore.pm, Gtk2/src/TreeStore.c, misc-examples/tree.pl:
+	support TreeStore
+
+2002-11-11 22:14  gthyni
+
+	* Gtk2/Gdk/Keymap.pm: new class
+
+2002-11-11 22:10  gthyni
+
+	* misc-examples/chart.pl: Gtk2 instead of Gtk in destroy handler
+
+2002-11-11 21:06  gthyni
+
+	* Gtk2/: KeyHash.pm, TearoffMenuItem.pm, Tree.pm, TreeItem.pm,
+	TreeModelSort.pm, TreeStore.pm: fixups in new classes
+
+2002-11-11 20:58  gthyni
+
+	* fast-compile.pl: add atk
+
+2002-11-11 20:56  gthyni
+
+	* Gtk2/Atk/: Object.pm, src/Object.c: first atk class
+
+2002-11-11 20:50  gthyni
+
+	* Gtk2/: SizeGroup.pm, Socket.pm, TearoffMenuItem.pm, Text.pm,
+	TextBTree.pm, TextLayout.pm, TextMark.pm, TextTagTable.pm,
+	ThemeEngine.pm, TipsQuery.pm, Tree.pm, TreeDataList.pm,
+	TreeItem.pm, TreeModelSort.pm, TreeStore.pm: add missing classes,
+	part 2
+
+2002-11-11 20:13  ggc
+
+	* Gtk2/: Frame.pm, src/Frame.c: add the few missing things
+
+2002-11-11 20:09  ggc
+
+	* Gtk2/src/: RadioButton.c, RadioMenuItem.c: use _nullok casters
+
+2002-11-11 20:08  ggc
+
+	* genscripts/convert_funcs.pl: support disguised getters using
+	float values
+
+2002-11-11 18:49  ggc
+
+	* Gtk2/_Helpers.pm: ok then back to the original shorter form :)
+
+2002-11-11 17:55  gthyni
+
+	* Gtk2/: AccelMap.pm, Accessible.pm, BindingSet.pm, CList.pm,
+	CTree.pm, CellEditable.pm, CellRendererPixbuf.pm, Clipboard.pm,
+	DND.pm, Editable.pm, GC.pm, HSV.pm, IMContext.pm,
+	IMContextSimple.pm, IMModule.pm, IMMultiContext.pm, IconFactory.pm,
+	KeyHash.pm, MessageDialog.pm, OldEditable.pm, Pixmap.pm, Plug.pm,
+	Preview.pm, RBTree.pm, Rc.pm, SeparatorMenuItem.pm, Settings.pm,
+	_Helpers.pm, src/AccelMap.c, src/Accessible.c: added missing
+	classes part 1
+
+2002-11-11 17:54  ggc
+
+	* Gtk2/Gdk/Drawable.pm, Gtk2/Gdk/Event/Expose.pm,
+	Gtk2/Gdk/Event/src/Expose.c, Gtk2/Gdk/src/Drawable.c,
+	Gtk2/Gdk/src/Pixmap.c, Gtk2/Gdk/src/Window.c,
+	misc-examples/chart.pl, misc-examples/test-pixbuf-drawing.pl: make
+	chart.pl work
+
+2002-11-11 17:53  gthyni
+
+	* Makefile.PL: fix path to typemap
+
+2002-11-11 14:30  gthyni
+
+	* misc-examples/chart.pl: half ported, not runnable yet
+
+2002-11-11 01:28  gthyni
+
+	* Makefile.PL: now works with VERSION too, still needs to be
+	smarter (lots of brute force left)
+
+2002-11-11 01:27  gthyni
+
+	* Gtk2/_blib_config.pm: hacks
+
+2002-11-11 01:25  gthyni
+
+	* fast-compile.pl: redefinition of croak so we can see if something
+	goes wrong
+
+2002-11-10 19:11  dlacroix
+
+	* Gtk2/src/Combo.c: - in Gtk2/src/Combo.c   added
+	gtkperl_combo_set_popdown_strings
+
+2002-11-09 19:29  ggc
+
+	* tutorial-examples/toolbar.pl: use strings as enums, not function
+	calls
+
+2002-11-09 19:26  ggc
+
+	* Gtk2.pm, Gtk2/Toolbar.pm,
+	Gtk2/include/gtk2-perl-helpers-atk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-glib-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h, Gtk2/src/Toolbar.c,
+	genscripts/castmacros-autogen.pl, tutorial-examples/toolbar.pl: use
+	enums in toolbar stuff, use _nullok, be more versatile for _nullok
+	so that both undef and NULL/0 will now work (and workarounds
+	problem of undef "changing" address when the C code is called after
+	two perl subroutines passing the undef variable around)
+
+2002-11-09 18:10  ggc
+
+	* Gtk2/Window.pm, Gtk2/src/Window.c, genscripts/convert_funcs.pl:
+	add ability to convert "disguised getters" funcs, add a few things
+	to GtkWindow
+
+2002-11-09 17:54  gthyni
+
+	* MANIFEST: add MANIFEST file needed for release
+
+2002-11-09 17:53  ggc
+
+	* Gtk2/Gdk/src/Segment.c: typo fix
+
+2002-11-09 17:45  gthyni
+
+	* fast-compile.pl: print versions
+
+2002-11-09 17:45  gthyni
+
+	* Gtk2.pm: minor adjustment
+
+2002-11-09 17:44  gthyni
+
+	* Gtk2/Window.pm: not versions!
+
+2002-11-09 17:42  gthyni
+
+	* Gtk2/: TreeSelection.pm, CellRendererToggle.pm: missing version
+	and rcsid
+
+2002-11-09 17:23  gthyni
+
+	* Makefile.PL, fast-compile.pl, Gtk2/AccelGroup.pm,
+	Gtk2/AccelLabel.pm, Gtk2/Adjustment.pm, Gtk2/Alignment.pm,
+	Gtk2/Allocation.pm, Gtk2/Arrow.pm, Gtk2/AspectFrame.pm,
+	Gtk2/Bin.pm, Gtk2/Box.pm, Gtk2/Button.pm, Gtk2/ButtonBox.pm,
+	Gtk2/Calendar.pm, Gtk2/CellRenderer.pm, Gtk2/CellRendererText.pm,
+	Gtk2/CheckButton.pm, Gtk2/CheckMenuItem.pm, Gtk2/ColorSelection.pm,
+	Gtk2/ColorSelectionDialog.pm, Gtk2/Combo.pm, Gtk2/Container.pm,
+	Gtk2/Curve.pm, Gtk2/Dialog.pm, Gtk2/DrawingArea.pm,
+	Gtk2/Editable.pm, Gtk2/Entry.pm, Gtk2/EventBox.pm,
+	Gtk2/FileSelection.pm, Gtk2/Fixed.pm, Gtk2/FontSelection.pm,
+	Gtk2/FontSelectionDialog.pm, Gtk2/Frame.pm, Gtk2/GClosure.pm,
+	Gtk2/GLib.pm, Gtk2/GObject.pm, Gtk2/GSignal.pm, Gtk2/GType.pm,
+	Gtk2/GammaCurve.pm, Gtk2/Gdk.pm, Gtk2/HBox.pm, Gtk2/HButtonBox.pm,
+	Gtk2/HPaned.pm, Gtk2/HRuler.pm, Gtk2/HScale.pm, Gtk2/HScrollbar.pm,
+	Gtk2/HSeparator.pm, Gtk2/HandleBox.pm, Gtk2/Image.pm,
+	Gtk2/ImageMenuItem.pm, Gtk2/InputDialog.pm, Gtk2/Invisible.pm,
+	Gtk2/Item.pm, Gtk2/ItemFactory.pm, Gtk2/ItemFactoryEntry.pm,
+	Gtk2/Label.pm, Gtk2/Layout.pm, Gtk2/List.pm, Gtk2/ListItem.pm,
+	Gtk2/ListStore.pm, Gtk2/Menu.pm, Gtk2/MenuBar.pm, Gtk2/MenuItem.pm,
+	Gtk2/MenuShell.pm, Gtk2/Misc.pm, Gtk2/Notebook.pm, Gtk2/Object.pm,
+	Gtk2/OptionMenu.pm, Gtk2/Paned.pm, Gtk2/Pango.pm, Gtk2/Progress.pm,
+	Gtk2/ProgressBar.pm, Gtk2/RadioButton.pm, Gtk2/RadioMenuItem.pm,
+	Gtk2/Range.pm, Gtk2/Requisition.pm, Gtk2/Ruler.pm, Gtk2/Scale.pm,
+	Gtk2/Scrollbar.pm, Gtk2/ScrolledWindow.pm, Gtk2/SelectionData.pm,
+	Gtk2/Separator.pm, Gtk2/Signal.pm, Gtk2/SpinButton.pm,
+	Gtk2/Statusbar.pm, Gtk2/Stock.pm, Gtk2/Style.pm, Gtk2/Table.pm,
+	Gtk2/TextBuffer.pm, Gtk2/TextTag.pm, Gtk2/TextView.pm,
+	Gtk2/ToggleButton.pm, Gtk2/Toolbar.pm, Gtk2/Tooltips.pm,
+	Gtk2/TreeIter.pm, Gtk2/TreeModel.pm, Gtk2/TreePath.pm,
+	Gtk2/TreeView.pm, Gtk2/TreeViewColumn.pm, Gtk2/Type.pm,
+	Gtk2/VBox.pm, Gtk2/VButtonBox.pm, Gtk2/VPaned.pm, Gtk2/VRuler.pm,
+	Gtk2/VScale.pm, Gtk2/VScrollbar.pm, Gtk2/VSeparator.pm,
+	Gtk2/Viewport.pm, Gtk2/Widget.pm, Gtk2/Window.pm, Gtk2/_Helpers.pm,
+	Gtk2/_Object.pm, Gtk2/Gdk/Atom.pm, Gtk2/Gdk/Bitmap.pm,
+	Gtk2/Gdk/Color.pm, Gtk2/Gdk/Colormap.pm, Gtk2/Gdk/Cursor.pm,
+	Gtk2/Gdk/Drawable.pm, Gtk2/Gdk/Event.pm, Gtk2/Gdk/GC.pm,
+	Gtk2/Gdk/Pixbuf.pm, Gtk2/Gdk/Pixmap.pm, Gtk2/Gdk/Point.pm,
+	Gtk2/Gdk/Rectangle.pm, Gtk2/Gdk/Segment.pm, Gtk2/Gdk/Selection.pm,
+	Gtk2/Gdk/Span.pm, Gtk2/Gdk/Window.pm, Gtk2/Gdk/Event/Client.pm,
+	Gtk2/Gdk/Event/Configure.pm, Gtk2/Gdk/Event/Crossing.pm,
+	Gtk2/Gdk/Event/DND.pm, Gtk2/Gdk/Event/Expose.pm,
+	Gtk2/Gdk/Event/Focus.pm, Gtk2/Gdk/Event/Key.pm,
+	Gtk2/Gdk/Event/Motion.pm, Gtk2/Gdk/Event/NoExpose.pm,
+	Gtk2/Gdk/Event/Property.pm, Gtk2/Gdk/Event/Proximity.pm,
+	Gtk2/Gdk/Event/Scroll.pm, Gtk2/Gdk/Event/Selection.pm,
+	Gtk2/Gdk/Event/Setting.pm, Gtk2/Gdk/Event/Visibility.pm,
+	Gtk2/Gdk/Event/WindowState.pm, Gtk2/Pango/Context.pm,
+	Gtk2/Pango/FontDescription.pm, Gtk2/Pango/FontMetrics.pm,
+	Gtk2/Pango/Language.pm, Gtk2/Pango/Layout.pm: mega commit sets
+	version in all modules, needed for release
+
+2002-11-09 16:55  ggc
+
+	* Gtk2/src/Table.c: add the few simple missing functions
+
+2002-11-09 16:54  gthyni
+
+	* Gtk2/Gdk/Event/Button.pm: set version
+
+2002-11-09 16:51  gthyni
+
+	* Gtk2/Window.pm: add version
+
+2002-11-09 14:40  gthyni
+
+	* Makefile.PL: added dependencies on include files
+
+2002-11-08 19:02  ggc
+
+	* Gtk2/Allocation.pm, Gtk2/Requisition.pm, Gtk2/Gdk/Point.pm,
+	Gtk2/Gdk/Rectangle.pm, Gtk2/Gdk/Segment.pm, Gtk2/Gdk/Span.pm,
+	Gtk2/Gdk/src/Point.c, Gtk2/Gdk/src/Rectangle.c,
+	Gtk2/Gdk/src/Segment.c, Gtk2/Gdk/src/Span.c,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/src/Requisition.c, genscripts/castmacros-autogen.pl,
+	misc-examples/transparent-window.pl: add a bunch of boxed types
+
+2002-11-08 17:02  ggc
+
+	* Gtk2/include/gtk2-perl-common.h,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h, Gtk2/src/GType.c,
+	Gtk2/src/_Helpers.c, genscripts/castmacros-autogen.pl: use
+	gtk2_perl_ everywhere for internal functions, for consistency
+
+2002-11-08 16:47  ggc
+
+	* Gtk2/src/GClosure.c,
+	misc-examples/signal-disconnect-immediate.pl: add an example for
+	the problem of disconnecting signals from within their own closure
+
+2002-11-08 16:46  ggc
+
+	* Gtk2/include/glib2-perl.h: i suck, typecheck is possible, sorry
+	goran
+
+2002-11-08 16:17  ggc
+
+	* Gtk2/src/TreeModel.c: clean _get a bit
+
+2002-11-08 16:14  ggc
+
+	* Gtk2/TreePath.pm, Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/src/TreeModel.c, Gtk2/src/TreePath.c,
+	genscripts/castmacros-autogen.pl, misc-examples/liststore.pl: add
+	TreePath and more TreeModel support for the TreeView object
+
+2002-11-08 15:23  ggc
+
+	* Gtk2/src/GClosure.c: disable refcount-dec of the callback in the
+	closure invalidation, to workaround the refcount problem -
+	temporary - we should find a real fix sometime :(
+
+2002-11-08 15:19  ggc
+
+	* Gtk2/src/GClosure.c: use an av rather than a malloc, should be
+	safer
+
+2002-11-08 14:59  ggc
+
+	* Gtk2/src/GSignal.c: prevent from segfaulting, don't g_free the
+	closure
+
+2002-11-08 13:43  gthyni
+
+	* Gtk2.pm: comments
+
+2002-11-08 13:42  gthyni
+
+	* Gtk2.pm: add utility function main_window as an example how one
+	could rationalize common code sequences.
+
+2002-11-08 13:18  gthyni
+
+	* tutorial-examples/arrows.pl: no NULL = 0
+
+2002-11-08 12:03  gthyni
+
+	* Gtk2/include/glib2-perl.h: remove typecheck
+
+2002-11-08 11:55  gthyni
+
+	* Gtk2/: include/glib2-perl.h, src/GClosure.c, src/GSignal.c:
+	cleanup and leak stop
+
+2002-11-08 11:14  gthyni
+
+	* Gtk2/src/GClosure.c: more checking and generizlization
+
+2002-11-08 11:08  ggc
+
+	* Gtk2/src/GType.c: don't forget to set utf8 on
+
+2002-11-08 11:03  gthyni
+
+	* Gtk2/src/: GClosure.c, GType.c: apply generalizing patch to
+	signal marshalling from Guillaume
+
+2002-11-08 10:50  ggc
+
+	* Gtk2/src/TreeSelection.c: let it compile in Werror
+
+2002-11-08 10:43  gthyni
+
+	* Gtk2/: include/glib2-perl.h, src/GClosure.c, src/GSignal.c:
+	finish signal/closure split
+
+2002-11-08 00:49  gthyni
+
+	* Gtk2/src/GSignal.c: these where also refinc:ed in closure creator
+
+2002-11-08 00:44  gthyni
+
+	* Gtk2/: GClosure.pm, GSignal.pm, src/GClosure.c, src/GSignal.c:
+	split signal and closure
+
+2002-11-08 00:33  gthyni
+
+	* Makefile.PL: cleanup
+
+2002-11-08 00:19  gthyni
+
+	* Makefile.PL: hack hack hack! now it works I think
+
+2002-11-08 00:19  gthyni
+
+	* Gtk2/Scrollbar.pm: compile C for this module
+
+2002-11-08 00:18  gthyni
+
+	* Gtk2/: ItemFactoryEntry.pm, src/ItemFactoryEntry.c: compiles now
+
+2002-11-07 17:51  gthyni
+
+	* Makefile.PL: now works, almost
+
+2002-11-07 16:34  ggc
+
+	* blib-build.sh: complete even if rm is interactive for the user
+
+2002-11-07 16:34  ggc
+
+	* Gtk2/TreeIter.pm: a treeiter is not a box!?
+
+2002-11-07 16:10  ggc
+
+	* Gtk2/src/TreeViewColumn.c, misc-examples/liststore.pl: use our
+	"good" enums for treeviewcolum::set_size
+
+2002-11-07 13:43  ggc
+
+	* misc-examples/transparent-window.pl: addition
+
+2002-11-07 13:21  ggc
+
+	* Gtk2/: GObject.pm, src/GSignal.c: first naive support for signal
+	disconnect
+
+2002-11-07 13:06  ggc
+
+	* Gtk2/Gdk/: Event/src/Button.c, Event/src/Key.c,
+	Event/src/Motion.c, Event/Motion.pm, src/Event.c: add
+	GdkEventMotion
+
+2002-11-07 12:28  ggc
+
+	* Gtk2/Gdk/src/Event.c: fix some breakage of mine
+
+2002-11-06 23:29  gthyni
+
+	* .cvsignore: add blib
+
+2002-11-06 23:28  gthyni
+
+	* blib-build.sh: now working :-)
+
+2002-11-06 23:13  gthyni
+
+	* Gtk2/_blib_config.pm: comment out debug
+
+2002-11-06 23:02  ggc
+
+	* Gtk2/Gdk/src/: Bitmap.c, Window.c: add some stuff to be able to
+	do transparent windows
+
+2002-11-06 22:56  ggc
+
+	* Gtk2/Gdk/Pixmap.pm: i suck
+
+2002-11-06 22:47  ggc
+
+	* Gtk2/Gdk/Bitmap.pm: it's a GdkDrawable
+
+2002-11-06 22:46  ggc
+
+	* Gtk2/Gdk/Pixmap.pm: a GdkPixmap is a GdkDrawable
+
+2002-11-06 22:46  gthyni
+
+	* fast-compile.pl: typo
+
+2002-11-06 22:44  gthyni
+
+	* Gtk2/Object.pm: config file must go first
+
+2002-11-06 22:41  gthyni
+
+	* Gtk2/GObject.pm: add metaclass as parent
+
+2002-11-06 22:41  gthyni
+
+	* fast-compile.pl: compile no configuration files
+
+2002-11-06 22:38  gthyni
+
+	* Gtk2/_blib_config.pm: added id string
+
+2002-11-06 22:38  gthyni
+
+	* Gtk2/_blib_config.pm: this file is to overwrite _config.pm when
+	installed instead of Inline:ing we bootstrap modules
+
+2002-11-06 22:36  gthyni
+
+	* Gtk2/_Object.pm: meta class not much yet
+
+2002-11-06 22:35  gthyni
+
+	* Gtk2/_config.pm: do not CLEAN, we want XS source for debugging
+	and object file for linking
+
+2002-11-06 22:34  gthyni
+
+	* Gtk2/: Pango/Language.pm, Gdk/Event/Client.pm, TextTag.pm: no C
+	code yet!
+
+2002-11-06 22:26  gthyni
+
+	* tutorial-examples/hello5.pl: remove debug prints
+
+2002-11-06 19:37  ggc
+
+	* Gtk2/Gdk/Event/src/Button.c, Gtk2/Gdk/Event/src/Key.c,
+	Gtk2/Gdk/Event.pm, Gtk2/Gdk/Event/Key.pm, Gtk2/Gdk/src/Event.c,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h, docs/porting,
+	genscripts/castmacros-autogen.pl: add key events stuff
+
+2002-11-06 18:21  ggc
+
+	* Gtk2/src/FileSelection.c: add accessors to all internal widgets
+
+2002-11-06 18:21  ggc
+
+	* Gtk2/src/Widget.c: add get_parent
+
+2002-11-06 18:16  ggc
+
+	* genscripts/convert_funcs.pl: make it usable in commandline aswell
+
+2002-11-06 17:41  ggc
+
+	* Gtk2/src/Frame.c: make use-strict compatible with unnamed frames
+
+2002-11-06 17:13  ggc
+
+	* Gtk2/: Container.pm, src/Container.c: make it compile in Werror
+
+2002-11-06 16:18  gthyni
+
+	* blib-build.sh: first stab at a raw build script for an
+	installable module should be converted to make or MakeMaker when we
+	understand how it should work
+
+2002-11-06 15:10  ggc
+
+	* genscripts/convert_funcs.pl: put a comment with the prototype
+	before each function, thx to borup
+
+2002-11-06 06:02  glade-perl
+
+	* i_test.pl: 
+	 need for two versions - sorry
+
+2002-11-06 06:01  glade-perl
+
+	* Gtk2/src/: FileSelection.c, FontSelectionDialog.c, Range.c,
+	TreeView.c, Widget.c, Window.c: Some fixes and some new methods
+
+2002-11-06 00:25  glade-perl
+
+	* Gtk2/src/: FontSelection.c, Image.c: Some silly coding errors :(
+	Thanks for the report Guillaume
+
+2002-11-05 23:47  ggc
+
+	* genscripts/convert_funcs.pl: localize const_return! (i'm too
+	dumb)
+
+2002-11-05 23:41  borup
+
+	* Gtk2/TreeModel.pm: Removed useless debug info from
+	Gtk2::TreeModel->get()
+
+2002-11-05 23:36  borup
+
+	* Gtk2/ListStore.pm, Gtk2/TreeModel.pm, Gtk2/TreeSelection.pm,
+	Gtk2/src/TreeModel.c, Gtk2/src/TreeSelection.c,
+	misc-examples/treeview.pl: 
+	Added Gtk2::TreeSelection->get_selected() and
+	Gtk2::TreeModel->get().  The treeview.pl test-script tests both.
+
+2002-11-05 21:20  ggc
+
+	* genscripts/castmacros-autogen.pl,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/src/SelectionData.c: add caster for GtkSelectionData
+
+2002-11-05 21:13  glade-perl
+
+	* Gtk2/src/: ColorSelectionDialog.c, Dialog.c,
+	FontSelectionDialog.c: Yet more methods and accessors
+
+2002-11-05 18:10  gthyni
+
+	* misc-examples/treeview.pl: type in Id string :-(
+
+2002-11-05 18:10  gthyni
+
+	* misc-examples/treeview.pl: posted to the mailing list by
+	Christian Borup guess he can add a copyright and licence if he like
+	:-)
+
+2002-11-05 18:01  gthyni
+
+	* Gtk2/Gdk/src/Atom.c: fix casting typo visible with -Werror
+
+2002-11-05 17:54  gthyni
+
+	* Gtk2/: Gdk/src/Atom.c, include/gtk2-perl-gdk.h,
+	src/SelectionData.c: clean up new atom
+
+2002-11-05 17:53  gthyni
+
+	* compile-widgets.pl: easier debugging
+
+2002-11-05 17:48  gthyni
+
+	* Gtk2/src/Widget.c: typo
+
+2002-11-05 17:32  gthyni
+
+	* Gtk2/src/GSignal.c: logic typo, spotted by GC
+
+2002-11-05 16:57  gthyni
+
+	* Gtk2/Gdk/: Selection.pm, src/Selection.c: forgot to add these
+	yesterday, sorry
+
+2002-11-05 13:22  ggc
+
+	* Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	genscripts/castmacros-autogen.pl: add more object casters (more
+	tolerant with .h definitions, add GdkAtom by hand)
+
+2002-11-05 13:19  ggc
+
+	* Gtk2/src/_Helpers.c: SvUTF8_on is not meant to be used as an
+	rvalue
+
+2002-11-05 12:31  ggc
+
+	* Gtk2/src/Menu.c: let it compile in Wall Werror
+
+2002-11-05 12:22  ggc
+
+	* Gtk2/src/Paned.c: fix missing "return"
+
+2002-11-05 05:34  glade-perl
+
+	* Gtk2/src/: Box.c, HandleBox.c, Notebook.c, Paned.c, Viewport.c:
+	Some more methods
+
+2002-11-05 00:40  glade-perl
+
+	* Gtk2/: Container.pm, GammaCurve.pm, InputDialog.pm,
+	src/Container.c, src/InputDialog.c: New widget InputDialog and some
+	more methods
+
+2002-11-04 22:58  gthyni
+
+	* tutorial-examples/selection2.pl: almost work
+
+2002-11-04 22:57  gthyni
+
+	* Gtk2/src/Widget.c: correct calls
+
+2002-11-04 22:55  gthyni
+
+	* Gtk2/Gdk/Drawable.pm: structure
+
+2002-11-04 22:53  gthyni
+
+	* Gtk2/: SelectionData.pm, Widget.pm: add use
+
+2002-11-04 21:11  gthyni
+
+	* Gtk2/src/Layout.c: rename Deprecated func() to _func()
+
+2002-11-04 21:09  gthyni
+
+	* Gtk2/_Helpers.pm: deprecated(), 2 function in a package can't
+	have the same name, _$func instead.
+
+2002-11-04 20:12  glade-perl
+
+	* Gtk2/: Curve.pm, FontSelection.pm, GammaCurve.pm, Layout.pm,
+	Viewport.pm, src/Curve.c, src/FontSelection.c, src/GammaCurve.c,
+	src/Layout.c, src/Calendar.c, src/ColorSelection.c,
+	src/Container.c, src/Gdk.c, src/Viewport.c, src/Window.c: New
+	widgets Curve, GammaCurve, Layout, FontSelection, Viewport Some
+	more methods added
+
+2002-11-04 02:13  glade-perl
+
+	* Gtk2/: RadioMenuItem.pm, src/AccelGroup.c, src/Button.c,
+	src/CheckMenuItem.c, src/Entry.c, src/MenuItem.c, src/Notebook.c,
+	src/RadioMenuItem.c, src/ScrolledWindow.c, src/ToggleButton.c: Some
+	more methods
+
+2002-11-04 00:35  gthyni
+
+	* Gtk2/src/Widget.c: hack hack
+
+2002-11-03 23:32  gthyni
+
+	* Gtk2/: Invisible.pm, src/Invisible.c: new class needed by
+	selection2.pl
+
+2002-11-03 23:31  gthyni
+
+	* Gtk2/src/Widget.c: add a couple of selection functions
+
+2002-11-03 23:30  gthyni
+
+	* Gtk2/src/SelectionData.c: no class string to gdkperl_autom_new()
+
+2002-11-03 23:29  gthyni
+
+	* Gtk2/include/gtk2-perl-gdk.h: new prototype
+
+2002-11-03 23:29  gthyni
+
+	* tutorial-examples/selection2.pl: new examples, needs a bit more
+	hacking
+
+2002-11-03 23:28  gthyni
+
+	* Gtk2/Gdk/src/Atom.c: new() don't need class argument
+
+2002-11-03 22:42  gthyni
+
+	* Gtk2/src/Gtk2.c: main return value
+
+2002-11-03 22:29  gthyni
+
+	* tutorial-examples/selection.pl: remove unused NULL()
+
+2002-11-03 22:20  gthyni
+
+	* tutorial-examples/selection.pl: finally works OK
+
+2002-11-03 22:16  gthyni
+
+	* Gtk2/: SelectionData.pm, src/SelectionData.c: add data() and
+	type() access methods
+
+2002-11-03 22:14  gthyni
+
+	* Gtk2/src/Widget.c: gtkperl_widget_selection_convert() takes
+	string instead of atoms
+
+2002-11-03 22:13  gthyni
+
+	* Gtk2/Gdk/src/Atom.c: added new() method, interna (C) usage only
+
+2002-11-03 19:23  gthyni
+
+	* misc-examples/idle.pl: idle example/test
+
+2002-11-03 19:17  gthyni
+
+	* Gtk2/src/Gtk2.c: removed duplicated (and not working anyway)
+	idle_* functions
+
+2002-11-03 08:39  glade-perl
+
+	* Gtk2/: AccelLabel.pm, Bin.pm, src/AccelLabel.c, src/Bin.c,
+	src/Button.c, src/Frame.c, src/Image.c, src/ImageMenuItem.c,
+	src/Label.c, src/MenuItem.c, src/Misc.c, src/Notebook.c,
+	src/Widget.c: Many added methods and new AccelLabel widget
+
+2002-11-03 00:27  glade-perl
+
+	* Gtk2/: include/gtk2-perl-helpers-gtk-autogen.h, Combo.pm,
+	ImageMenuItem.pm, src/Combo.c, src/ImageMenuItem.c: New widgets
+	ImageMenuItem and Combo
+
+2002-11-02 16:27  gthyni
+
+	* misc-examples/utf-textentry.pl: new example/test
+
+2002-11-02 02:26  gthyni
+
+	* fast-compile.pl: a little update of structure
+
+2002-11-02 02:25  gthyni
+
+	* Gtk2/src/Gtk2.c: removed duplicated function
+
+2002-11-01 16:06  dlacroix
+
+	* Gtk2/src/: Gtk2.c, _Helpers.c: - added idle_add in Gtk2.c - added
+	Gnome2::Font case in _Helper.c
+
+2002-10-31 16:52  gthyni
+
+	* tutorial-examples/selection.pl: hacks and bits
+
+2002-10-31 16:51  gthyni
+
+	* Gtk2/src/GSignal.c: hmmm
+
+2002-10-31 16:50  gthyni
+
+	* Gtk2/: src/SelectionData.c, SelectionData.pm: get length
+
+2002-10-31 15:56  gthyni
+
+	* Gtk2/SelectionData.pm: import
+
+2002-10-31 15:53  gthyni
+
+	* tutorial-examples/selection.pl: changed order of signal arguments
+
+2002-10-31 15:52  gthyni
+
+	* Gtk2/src/GSignal.c: more signal hacks
+
+2002-10-31 01:34  glade-perl
+
+	* i_test.pl:  new script to run automatic tests interactively
+	 eg run like perl i_test.pl ./t/000_Gtk_Test.t
+
+2002-10-30 22:57  gthyni
+
+	* misc-examples/latin1.pl: Adjust for Christian's work on string
+	conversion
+
+2002-10-30 22:34  gthyni
+
+	* Gtk2/src/Widget.c: added selection_convert
+
+2002-10-30 22:33  gthyni
+
+	* Gtk2/Gdk/src/Atom.c: removed NONE intern is in .pm so rename to
+	_intern
+
+2002-10-30 22:32  gthyni
+
+	* Gtk2/Gdk/Atom.pm: added intern method
+
+2002-10-30 22:32  gthyni
+
+	* Gtk2/Gdk.pm: added a couple of magic constants
+
+2002-10-30 22:30  gthyni
+
+	* tutorial-examples/selection.pl: updated
+
+2002-10-30 21:47  borup
+
+	* Gtk2/src/ListStore.c: 
+	Added UTF8 mojo to Gtk2::ListStore->set() - sv_utf8_upgrade(value).
+
+2002-10-30 21:30  borup
+
+	* Gtk2/: TreeView.pm, _config.pm, typemap, src/AspectFrame.c,
+	src/Button.c, src/CheckButton.c, src/CheckMenuItem.c,
+	src/ColorSelectionDialog.c, src/Editable.c, src/Entry.c,
+	src/FileSelection.c, src/FontSelectionDialog.c, src/Frame.c,
+	src/GObject.c, src/GSignal.c, src/Image.c, src/ItemFactory.c,
+	src/ItemFactoryEntry.c, src/Label.c, src/ListItem.c,
+	src/MenuItem.c, src/ProgressBar.c, src/RadioButton.c,
+	src/Statusbar.c, src/TextBuffer.c, src/ToggleButton.c,
+	src/Toolbar.c, src/Tooltips.c, src/TreeViewColumn.c, src/Widget.c,
+	src/Window.c, src/_Helpers.c: Added Gtk2/typemap and made
+	Gtk2/_config.pm use it.  The typemap ensures that gchar* is
+	interpreted as UTF8 by perl.  Most char* changed gchar* (char*
+	class beeing the big exception - may be a problem) Problems remain
+	in Gtk2/src/TextBuffer.c and Gtk2/src/TreeViewColumn.c
+	(new_with_attributes).
+
+2002-10-30 19:17  ggc
+
+	* Gtk2/src/Frame.c: allow creating frames with no label
+
+2002-10-30 18:44  ggc
+
+	* Gtk2.pm, Gtk2/src/GSignal.c: add idle add and idle remove
+	functions
+
+2002-10-30 17:54  ggc
+
+	* Gtk2/Gdk/Pixbuf.pm: a gdk pixbuf is a gobject
+
+2002-10-30 12:41  gthyni
+
+	* fast-compile.pl: light weight version of compile-widgets.pl
+
+2002-10-29 22:48  gthyni
+
+	* Gtk2/: Widget.pm, Window.pm, src/Widget.c: properties should be
+	handled by perl new Gtk2::GObject::get_set function helps
+
+2002-10-29 22:47  gthyni
+
+	* Gtk2/GObject.pm: add get_set utility function for all objects
+
+2002-10-29 22:34  ggc
+
+	* Gtk2/ItemFactory.pm, Gtk2/src/ItemFactory.c, docs/porting,
+	tutorial-examples/itemfactory.pl: allow item factory to be created
+	with hashes as well as arrays (compat with gtk-perl, better
+	readability maybe) use undef instead of NULL/0 in fields we don't
+	want to use, more perlish allow use-strict to be ok
+
+2002-10-29 21:39  ggc
+
+	* Gtk2/Test.pm, Gtk2/Window.pm, t/000_Gtk2_Test.t,
+	t/041_Gtk2_Window.t: remove concurrent functions, do use string
+	enums
+
+2002-10-29 21:36  ggc
+
+	* Gtk2/Window.pm: add modality functions
+
+2002-10-29 21:28  ggc
+
+	* Gtk2/Container.pm, Gtk2/Widget.pm, Gtk2/Window.pm,
+	Gtk2/src/Widget.c, tutorial-examples/calendar.pl,
+	tutorial-examples/radio.pl, tutorial-examples/textentry.pl: add
+	functions to widget and clean up a bit
+
+2002-10-29 20:35  gthyni
+
+	* tutorial-examples/menu.pl: fix event handler, new syntax this
+	must have been missed when we fixed this
+
+2002-10-29 20:32  gthyni
+
+	* Gtk2/src/GSignal.c: hack a fix, it works but should be subject
+	for a closer study.
+
+2002-10-29 20:27  ggc
+
+	* Gtk2/src/Notebook.c, tutorial-examples/notebook.pl: use enums for
+	tab_pos of Notebook
+
+2002-10-29 20:20  gthyni
+
+	* Gtk2/src/CellRendererToggle.c: fix typo
+
+2002-10-29 19:26  ggc
+
+	* misc-examples/background-color.pl: a gc needs unref'ing after use
+
+2002-10-29 19:24  ggc
+
+	* Gtk2/Gdk/GC.pm: a GC is a GObject
+
+2002-10-29 19:04  gthyni
+
+	* Gtk2/: Window.pm, src/Window.c: more generic access methods, old
+	C hacks removed
+
+2002-10-29 17:26  ggc
+
+	* Gtk2/: Widget.pm, src/Widget.c: gtk_widget_set_usize is
+	deprecated in favor of gtk_widget_set_size_request
+
+2002-10-29 16:53  ggc
+
+	* Gtk2/Pango/Layout.pm, Gtk2/Pango/src/Layout.c,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h,
+	genscripts/castmacros-autogen.pl: add most easy/useful functions of
+	PangoLayout
+
+2002-10-29 16:30  ggc
+
+	* docs/porting: document the drawing of text
+
+2002-10-29 16:26  ggc
+
+	* Gtk2/Gdk/src/Drawable.c, Gtk2/Pango/Layout.pm,
+	Gtk2/include/gtk2-perl-gdk.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h, Gtk2/src/Widget.c,
+	genscripts/castmacros-autogen.pl,
+	misc-examples/test-pixbuf-drawing.pl: add pango layout stuff so
+	that i can draw text on gdk-drawable's
+
+2002-10-29 13:18  ggc
+
+	* Gtk2/: Widget.pm, src/Widget.c: better FLAGS, add STATE
+
+2002-10-29 13:07  ggc
+
+	* Gtk2/Gdk/Drawable.pm: draw_pixmap and draw_bitmap are deprecated
+	functions for draw_drawable
+
+2002-10-29 00:31  ggc
+
+	* Gtk2/: Style.pm, src/Style.c: more gc stuff
+
+2002-10-28 23:40  ggc
+
+	* Gtk2/Style.pm, Gtk2/Gdk/Pixbuf.pm, Gtk2/Gdk/src/Drawable.c,
+	Gtk2/Gdk/src/Pixbuf.c, Gtk2/src/Style.c, docs/porting,
+	misc-examples/test-pixbuf-drawing.pl, tutorial-examples/toolbar.pl:
+	add most of GdkPixbuf support
+
+2002-10-28 23:22  ggc
+
+	* genscripts/convert_funcs.pl: fix fixing of types
+
+2002-10-28 23:17  ggc
+
+	* Gtk2/src/Image.c: use _nullok casters
+
+2002-10-28 22:41  gthyni
+
+	* misc-examples/latin1.pl: added test of latin1 to UTF-8 needed by
+	Gtk+ 2.0
+
+2002-10-28 20:58  ggc
+
+	* Gtk2/src/GSignal.c: define gdkperl_event_make
+
+2002-10-28 20:56  ggc
+
+	* Gtk2/: src/Widget.c, Widget.pm: add allocation/requisition
+	getters
+
+2002-10-28 18:01  gthyni
+
+	* Gtk2/src/TreeSelection.c: new function: patch by Christian Borup
+
+2002-10-28 17:56  gthyni
+
+	* Gtk2/ListStore.pm, misc-examples/liststore.pl,
+	tutorial-examples/panedwindow.pl: refactored ListStore new to be
+	more perlish fixed examples
+
+2002-10-28 16:48  ggc
+
+	* Gtk2/src/Gtk2.c: provide events_pendiing and main_iteration
+	(people will certainly try to find them anyway)
+
+2002-10-28 14:14  ggc
+
+	* Gtk2/: Pango.pm, src/Pango.c: have Gtk2::Pango::PANGO_PIXELS
+
+2002-10-28 13:49  ggc
+
+	* Gtk2/Pango/Context.pm, Gtk2/Pango/FontMetrics.pm,
+	Gtk2/Pango/Language.pm, Gtk2/Pango/src/Context.c,
+	Gtk2/Pango/src/FontMetrics.c,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h,
+	Gtk2/include/gtk2-perl-pango.h, Gtk2/src/Style.c,
+	Gtk2/src/Widget.c, genscripts/castmacros-autogen.pl: add a few
+	stuff so that I can get font metrics from a widget (inspired from
+	gtkentry.c from gtk+ sources)
+
+2002-10-28 13:45  ggc
+
+	* genscripts/convert_funcs.pl: fix for int return type
+
+2002-10-28 12:03  ggc
+
+	* Gtk2/src/GObject.c: shorter way to get an object's class
+
+2002-10-28 11:54  ggc
+
+	* Gtk2/Pango/FontDescription.pm: PangoFontDescription seems to not
+	be a GObject
+
+2002-10-28 08:35  gthyni
+
+	* Gtk2/: ScrolledWindow.pm, src/ScrolledWindow.c: allow new without
+	arguments if they just (undef,undef) anyway
+
+2002-10-28 08:34  gthyni
+
+	* misc-examples/liststore.pl: don't use NULL (= 0), use undef since
+	it is more perlish used a new feature of ScrolledWindow->new(), no
+	arguments if we just want (undef,undef)
+
+2002-10-27 23:04  ggc
+
+	* Gtk2/src/Container.c: add a bunch of functions
+
+2002-10-27 23:02  ggc
+
+	* genscripts/convert_funcs.pl: fix for guint return type
+
+2002-10-27 22:49  ggc
+
+	* Gtk2/include/gtk2-perl-helpers-atk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl.h, genscripts/castmacros-autogen.pl,
+	misc-examples/list.pl, tutorial-examples/panedwindow.pl,
+	tutorial-examples/scrolledwin.pl,
+	Gtk2/include/gtk2-perl-helpers-glib-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h,
+	Gtk2/src/ScrolledWindow.c: add _nullok casters and use it in
+	ScrolledWindow.c
+
+2002-10-27 22:38  numessiah
+
+	* Gtk2.pm: 
+	
+	GtkSelectionMode added.
+
+2002-10-27 22:34  numessiah
+
+	* Gtk2/CellRendererToggle.pm, Gtk2/TreeSelection.pm,
+	Gtk2/src/CellRendererToggle.c, Gtk2/src/TreeSelection.c,
+	misc-examples/liststore.pl: 
+	
+	ListStore new files added.
+
+2002-10-27 22:29  numessiah
+
+	* Gtk2/src/: ListStore.c, ScrolledWindow.c, TreeView.c,
+	TreeViewColumn.c, Window.c: 
+	
+	TreeView used with ListStore example and needed changes. The
+	example is immitation of gtk+-2.0.6 demos/gtk-demo/list_store.c.
+
+2002-10-27 21:43  ggc
+
+	* Gtk2/src/: Tooltips.c, Widget.c: add tooltips_set_delay and
+	tooltips_data_get (in the widget class, so it's called
+	get_tooltip_data)
+
+2002-10-27 21:27  ggc
+
+	* genscripts/convert_funcs.pl: take care of uint etc
+
+2002-10-27 21:24  ggc
+
+	* Gtk2/Tooltips.pm, Gtk2/src/Tooltips.c,
+	tutorial-examples/tooltips.pl: allow two forms of calling set_tip,
+	allow using undef rather than 0 to specify we don't want private
+	data
+
+2002-10-27 20:57  ggc
+
+	* Gtk2/: Button.pm, Entry.pm, RadioButton.pm, _Helpers.pm,
+	src/RadioButton.c: add the ability to call RadioButton::new in two
+	forms; add a generic check_usage function which will print out
+	problems when we call perl wrappers for multiple forms incorrectly
+
+2002-10-27 19:32  ggc
+
+	* Gtk2/src/Editable.c, Gtk2/Editable.pm,
+	tutorial-examples/textentry.pl: add all missing functions for
+	Gtk2::Editable, change behaviour of insert_text to reflect more the
+	perl way
+
+2002-10-27 19:04  ggc
+
+	* Gtk2/: src/Entry.c, Entry.pm: provide two ways of using
+	Entry::new (like for Button::new)
+
+2002-10-27 18:46  ggc
+
+	* Gtk2/: Object.pm, src/Object.c: add gtk_object_sink
+
+2002-10-27 16:12  ggc
+
+	* Gtk2/src/Container.c: add gtk_container_remove
+
+2002-10-27 16:00  ggc
+
+	* Gtk2/HPaned.pm: fix pkg name
+
+2002-10-26 23:21  ggc
+
+	* Gtk2/: Widget.pm, src/Widget.c: add set_sensitive, set_uposition
+	and set_usize
+
+2002-10-26 23:20  ggc
+
+	* Gtk2/include/gtk2-perl-common.h: need that for GType.c
+
+2002-10-26 22:43  ggc
+
+	* Gtk2/: GObject.pm, src/GObject.c: add GObject::find_property,
+	support flags in GObject::list_properties
+
+2002-10-26 22:39  ggc
+
+	* Gtk2/src/GType.c: add type getter for objects fix bug of flags
+	getter better msg when fixme-type-not-yet-supported
+
+2002-10-26 21:35  ggc
+
+	* Gtk2/GObject.pm: add "get" and "set" methods
+
+2002-10-26 20:05  ggc
+
+	* Gtk2/src/GObject.c, Gtk2/GObject.pm,
+	misc-examples/textview-with-tags.pl: add 'list_properties' to
+	GObject
+
+2002-10-25 22:19  ggc
+
+	* Gtk2/src/GType.c: remove useless breaks
+
+2002-10-25 21:49  ggc
+
+	* misc-examples/textview-with-tags.pl, Gtk2/include/glib2-perl.h,
+	Gtk2/src/GType.c, Gtk2/src/GObject.c: add property getter
+	(Gtk2::GObject::get_property and GType::gperl_object_from_value)
+
+2002-10-25 21:02  ggc
+
+	* Gtk2/: src/GObject.c, src/GType.c, include/gtk2-perl-common.h: -
+	allow Gtk2::GObject::set_property to work for any type (ripping
+	some pygtk code) - allow gperl_value_from_object to work with enum
+	and flags types using the helpers stuff
+
+2002-10-25 11:38  gthyni
+
+	* Gtk2/src/GSignal.c, tutorial-examples/colorsel.pl,
+	tutorial-examples/hello1.pl, tutorial-examples/hello2.pl,
+	tutorial-examples/itemfactory.pl, tutorial-examples/pack1.pl,
+	tutorial-examples/pack2.pl, tutorial-examples/radio.pl,
+	tutorial-examples/rulers.pl, tutorial-examples/toolbar.pl: changed
+	order on arguments to event signal handler
+
+2002-10-24 22:50  gthyni
+
+	* Gtk2/Gdk/Atom.pm, Gtk2/Gdk/src/Atom.c,
+	tutorial-examples/selection.pl: new class, new example
+
+2002-10-24 21:22  gthyni
+
+	* Gtk2/Object.pm: include main module here
+
+2002-10-24 04:04  glade-perl
+
+	* t/i_test.pl: A script to make test scripts interactive
+
+2002-10-23 22:36  ggc
+
+	* Gtk2/src/TextBuffer.c: allows the creation of anonymous tags
+
+2002-10-23 21:55  ggc
+
+	* Gtk2/TextTag.pm, Gtk2/Gdk/src/Color.c, Gtk2/src/GObject.c,
+	Gtk2/src/TextBuffer.c, Gtk2/src/Widget.c,
+	misc-examples/textview-with-tags.pl: add tag stuff in TextView
+
+2002-10-23 16:47  ggc
+
+	* Gtk2/Calendar.pm: make it possible to use it in list or scalar
+	context
+
+2002-10-23 16:43  ggc
+
+	* Gtk2/TextBuffer.pm: make it possible to use it in scalar or list
+	context
+
+2002-10-23 16:42  ggc
+
+	* Gtk2/src/: Calendar.c, TextBuffer.c: fix memory leak when
+	returning multiple values
+
+2002-10-23 15:42  gthyni
+
+	* tutorial-examples/itemfactory.pl: now works as well as the c
+	example
+
+2002-10-23 15:18  gthyni
+
+	* Gtk2/ItemFactory.pm: remove underscores before asking calling
+	get_widget()
+
+2002-10-23 14:03  ggc
+
+	* misc-examples/test-memoryleak.pl: add this to ease tests for
+	memory leaks
+
+2002-10-23 13:59  gthyni
+
+	* Gtk2/: CheckMenuItem.pm, src/CheckMenuItem.c: added active
+	(set/get) functions
+
+2002-10-23 13:53  ggc
+
+	* Gtk2/include/gtk2-perl-common.h, Gtk2/src/TextBuffer.c,
+	Gtk2/src/_Helpers.c, genscripts/convert_funcs.pl: - add newSVgchar
+	in _Helpers, an handy function to not leak memory when returning
+	non-const gchar* from gtk calls - fix gtkperl_text_buffer_get_text
+	to not leak memory - fix genscripts/convert_funcs.pl to use
+	newSVgchar when necessary
+
+2002-10-23 13:51  gthyni
+
+	* Gtk2/GSignal.pm: remove debugging printout
+
+2002-10-23 13:49  gthyni
+
+	* Gtk2/src/ItemFactory.c: simplified, callbacks move to perl module
+	and GSignal
+
+2002-10-23 13:48  gthyni
+
+	* Gtk2/ItemFactory.pm: a few more line for simpler debugging
+
+2002-10-23 13:47  gthyni
+
+	* Gtk2/GSignal.pm: added connect_menu() for menu callbacks
+
+2002-10-23 13:46  gthyni
+
+	* Gtk2/src/GSignal.c: refactored added _connect_menu() for menu
+	callbacks
+
+2002-10-23 12:50  gthyni
+
+	* Gtk2/ItemFactory.pm: finally fixed create_item, signal shndler
+	still not OK
+
+2002-10-23 12:47  gthyni
+
+	* Gtk2/: CheckMenuItem.pm, RadioMenuItem.pm, src/CheckMenuItem.c,
+	src/RadioMenuItem.c: new classes
+
+2002-10-23 12:45  gthyni
+
+	* tutorial-examples/itemfactory.pl: small fixes
+
+2002-10-23 11:54  ggc
+
+	* Gtk2/Gdk/Drawable.pm: get_size uses wantarray to decide whether
+	it should return an array or an arrayref
+
+2002-10-23 11:13  gthyni
+
+	* Gtk2/src/: Menu.c, MenuBar.c, OptionMenu.c:  use macros for
+	future safety
+
+2002-10-23 11:12  gthyni
+
+	* Gtk2/src/ItemFactory.c: use closure for callback
+
+2002-10-23 10:41  gthyni
+
+	* Gtk2/src/ItemFactory.c: wow, stupid error: arg type dead wrong!
+
+2002-10-23 09:48  gthyni
+
+	* Gtk2/src/OptionMenu.c: class argument needed
+
+2002-10-23 09:37  gthyni
+
+	* Gtk2/: ItemFactory.pm, src/ItemFactory.c: finish create_item(),
+	callback must be handled better still
+
+2002-10-23 00:04  gthyni
+
+	* tutorial-examples/itemfactory.pl: some updates
+
+2002-10-23 00:04  gthyni
+
+	* Gtk2/src/: Menu.c, MenuBar.c, OptionMenu.c: add get_type()
+
+2002-10-23 00:02  gthyni
+
+	* Gtk2/ItemFactory.pm: a couple of functions
+
+2002-10-23 00:02  gthyni
+
+	* Gtk2/src/ItemFactory.c: mess around
+
+2002-10-22 23:58  gthyni
+
+	* Gtk2/src/ItemFactoryEntry.c: experimental class
+
+2002-10-22 22:34  ggc
+
+	* docs/porting: document the inverting of width/height of
+	GdkWindow::get_size()
+
+2002-10-22 22:14  ggc
+
+	* docs/porting: add a short example about textview
+
+2002-10-22 22:11  ggc
+
+	* genscripts/convert_funcs.pl: add this script to help writing
+	simple functions
+
+2002-10-22 22:11  ggc
+
+	* Gtk2/TextBuffer.pm, Gtk2/src/TextBuffer.c, Gtk2/src/TextView.c,
+	tutorial-examples/panedwindow.pl: add a few functions to TextView
+	and TextBuffer
+
+2002-10-22 21:53  ggc
+
+	* docs/porting: add a note on ctree, clist and text being obsolete
+
+2002-10-22 18:58  ggc
+
+	* Gtk2/Gdk/Window.pm, Gtk2/Gdk/src/Window.c,
+	misc-examples/background-color.pl: gdk function is foreign_new,
+	change it (but provide new_foreign as a deprecated function)
+
+2002-10-22 18:44  ggc
+
+	* docs/porting: add specialized GdkEvent structure example
+
+2002-10-22 18:37  ggc
+
+	* misc-examples/background-color.pl: perlish oo style
+
+2002-10-22 17:36  ggc
+
+	* Gtk2/Gdk/Event/src/Button.c,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	genscripts/castmacros-autogen.pl, tutorial-examples/colorsel.pl:
+	add nearly all functions to Gtk2::Gdk::Event::Button (missing
+	GdkDevice stuff) add macros for the new Gtk2::Gdk::Event::
+	subclasses
+
+2002-10-22 17:17  ggc
+
+	* Gtk2/src/_Helpers.c: make Gtk2::Gdk::Event subclasses objects
+	type checking work better error message when object type check
+	fails
+
+2002-10-22 16:39  gthyni
+
+	* Gtk2/AccelGroup.pm, Gtk2/ItemFactory.pm, Gtk2/src/AccelGroup.c,
+	Gtk2/src/ItemFactory.c, tutorial-examples/itemfactory.pl:
+	ItemFactory: new example and new classes
+
+2002-10-22 16:39  gthyni
+
+	* Gtk2/src/Window.c: added gtkperl_window_add_accel_group()
+
+2002-10-22 13:52  gthyni
+
+	* Gtk2/Gdk/: Event.pm, Event/Client.pm, Event/Configure.pm,
+	Event/DND.pm, Event/Key.pm, Event/Motion.pm, Event/NoExpose.pm,
+	Event/Property.pm, Event/Proximity.pm, Event/Scroll.pm,
+	Event/Selection.pm, Event/Setting.pm, Event/Visibility.pm,
+	Event/WindowState.pm: add stubs for all event types
+
+2002-10-22 13:51  gthyni
+
+	* Gtk2/src/Menu.c: added popup() added out-commented prototypes
+
+2002-10-22 13:40  gthyni
+
+	* Gtk2/src/Frame.c: float -> double in args
+
+2002-10-22 13:27  ggc
+
+	* docs/porting: let's only use the perlish oo style, to not
+	obfuscate the document too much :)
+
+2002-10-22 13:23  gthyni
+
+	* Gtk2/src/AspectFrame.c: change argument from float -> double so
+	that standard Inline can catch the function
+
+2002-10-22 13:22  gthyni
+
+	* compile-widgets.pl: really compile the widgets eval { use .. }
+	dose not work
+
+2002-10-22 13:21  gthyni
+
+	* docs/porting: added comment :-)
+
+2002-10-22 13:06  ggc
+
+	* docs/porting: write down things as long as they are fresh in my
+	mind
+
+2002-10-22 12:29  ggc
+
+	* Gtk2/src/Widget.c: add add_events and get_events
+
+2002-10-22 12:21  gthyni
+
+	* Gtk2/src/GSignal.c: move function to Gdk where it belongs
+
+2002-10-22 12:20  gthyni
+
+	* Gtk2/GSignal.pm: include GdkEvents
+
+2002-10-22 12:20  gthyni
+
+	* Gtk2/_config.pm: updated to handle Gdk::Event subclasses
+
+2002-10-22 12:19  gthyni
+
+	* tutorial-examples/menu.pl: updated
+
+2002-10-22 12:18  gthyni
+
+	* Gtk2/Gdk/: Event.pm, Event/Button.pm, Event/Crossing.pm,
+	Event/Expose.pm, Event/Focus.pm, Event/src/Button.c, src/Event.c:
+	new event subclasses added
+
+2002-10-22 12:06  ggc
+
+	* misc-examples/background-color.pl: add this test, tests the
+	change of background color with a few Gtk2::Gdk classes
+
+2002-10-22 11:42  ggc
+
+	* Gtk2/: _Helpers.pm, Gdk/Colormap.pm, Gdk/GC.pm: - write a nice
+	mechanism to support deprecated functions while printing on STDERR
+	that it's deprecated - support deprecated
+	Gtk2::Gdk::Colormap::color_alloc (rgb_find_color) and
+	Gtk2::Gdk::GC::set_foreground (set_rgb_fg_color)
+
+2002-10-22 09:27  gthyni
+
+	* Gtk2.pm: return success from init()
+
+2002-10-22 09:27  gthyni
+
+	* Gtk2/src/Gtk2.c: return value from _init()
+
+2002-10-22 08:58  gthyni
+
+	* Gtk2/src/Button.c: rename new -> _new all prototypes (in
+	comments)
+
+2002-10-22 08:48  gthyni
+
+	* Gtk2/Button.pm: autoselect between new() and new_with_label()
+
+2002-10-22 05:33  glade-perl
+
+	* t/: 000_Gtk2_Test.t, 041_Gtk2_Window.t: Tests made uninteractive
+
+2002-10-22 03:46  glade-perl
+
+	* t/041_Gtk2_Window.t: Fixed Gtk->quit call
+
+2002-10-22 03:41  glade-perl
+
+	* Gtk2/Test.pm, t/000_Gtk2_Test.t: Fixes to tests and messages
+
+2002-10-21 22:04  gthyni
+
+	* Gtk2/Menu.pm, Gtk2/MenuBar.pm, Gtk2/Gdk/Event.pm,
+	Gtk2/src/MenuBar.c, Gtk2/src/MenuItem.c, tutorial-examples/menu.pl:
+	menu example and new/updated menu classes
+
+2002-10-21 20:30  ggc
+
+	* Gtk2.pm, Gtk2/Gdk.pm, Gtk2/_config.pm, Gtk2/Gdk/Colormap.pm,
+	Gtk2/Gdk/Drawable.pm, Gtk2/Gdk/GC.pm, Gtk2/Gdk/Window.pm,
+	Gtk2/Gdk/src/Colormap.c, Gtk2/Gdk/src/Drawable.c,
+	Gtk2/Gdk/src/GC.c, Gtk2/Gdk/src/Window.c,
+	Gtk2/include/gtk2-perl-gdk.h,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h, Gtk2/src/Gdk.c,
+	Gtk2/src/Gtk2.c, genscripts/castmacros-autogen.pl: add GdkColormap,
+	GdkDrawable, and GdkGC and add a few functions to GdkWindow, so
+	that I have an initial support of mandrake gtk-perl tools (GC,
+	Window, and drawing work)
+
+2002-10-21 20:22  gthyni
+
+	* Gtk2/src/Notebook.c: handle both numeric and string enum in
+	gtkperl_notebook_set_tab_pos()
+
+2002-10-21 20:09  gthyni
+
+	* Gtk2/src/Frame.c: use string enum in set_shadow_type()
+
+2002-10-21 18:03  gthyni
+
+	* Gtk2/src/Widget.c: new functions add all prototypes (in comments)
+
+2002-10-21 18:02  gthyni
+
+	* Gtk2/Button.pm: include some classes Button uses
+
+2002-10-21 18:00  gthyni
+
+	* Gtk2/src/Notebook.c, Gtk2/Notebook.pm,
+	tutorial-examples/notebook.pl: new example, new class
+
+2002-10-21 17:00  ggc
+
+	* compile-widgets.pl: for the first objects, normal "use" doesn't
+	work since the compiling is made in the BEGIN now; so we muse use
+	an eval; also, list the objects and their dependencies so that we
+	have the real compilation instead of only 3 objects
+
+2002-10-21 16:23  gthyni
+
+	* compile-widgets.pl: make it usable even if we does not have an X
+	display
+
+2002-10-21 16:05  gthyni
+
+	* Gtk2/include/gtk2-perl-helpers-gdk-autogen.h: added a few thing
+	manually, how do I avoid this?
+
+2002-10-21 16:04  gthyni
+
+	* Gtk2.pm: new enum
+
+2002-10-21 16:03  gthyni
+
+	* Gtk2/src/Image.c: 2 new functions all prototypes (in comments)
+
+2002-10-21 16:02  gthyni
+
+	* Gtk2/Image.pm: new include of Gdk utility
+
+2002-10-21 16:01  gthyni
+
+	* Gtk2/Gdk/Bitmap.pm, Gtk2/Gdk/Pixmap.pm, Gtk2/Gdk/src/Bitmap.c,
+	Gtk2/Gdk/src/Pixmap.c, Gtk2/src/HandleBox.c, Gtk2/HandleBox.pm,
+	Gtk2/src/Toolbar.c, Gtk2/Toolbar.pm, tutorial-examples/toolbar.pl:
+	new classes new example
+
+2002-10-21 13:57  ggc
+
+	* misc-examples/enums-as-strings.pl: new enum failure msg
+
+2002-10-21 13:41  ggc
+
+	* Gtk2.pm, compile-widgets.pl, Gtk2/ButtonBox.pm, Gtk2/Gdk.pm,
+	Gtk2/Progress.pm, Gtk2/Widget.pm, Gtk2/Window.pm,
+	Gtk2/Gdk/src/Cursor.c, Gtk2/Gdk/src/Event.c,
+	Gtk2/include/gtk2-perl-common.h,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/include/gtk2-perl.h, Gtk2/src/Arrow.c, Gtk2/src/ButtonBox.c,
+	Gtk2/src/Dialog.c, Gtk2/src/Label.c, Gtk2/src/ProgressBar.c,
+	Gtk2/src/Range.c, Gtk2/src/Ruler.c, Gtk2/src/Scale.c,
+	Gtk2/src/ScrolledWindow.c, Gtk2/src/Table.c, Gtk2/src/Widget.c,
+	Gtk2/src/Window.c, Gtk2/src/_Helpers.c,
+	genscripts/castmacros-autogen.pl, genscripts/gdk-types.defs,
+	genscripts/gtk-types.defs, tutorial-examples/arrows.pl,
+	tutorial-examples/buttonbox.pl, tutorial-examples/calendar.pl,
+	tutorial-examples/colorsel.pl, tutorial-examples/container.pl,
+	tutorial-examples/frame.pl, tutorial-examples/label.pl,
+	tutorial-examples/panedwindow.pl, tutorial-examples/progressbar.pl,
+	tutorial-examples/range.pl, tutorial-examples/rulers.pl,
+	tutorial-examples/scrolledwin.pl: - write generic wrappers to
+	convert back and forth between enums and perl, and between flags
+	and perl,   auto-generate them with the help of 'defs' files found
+	in pygtk tarball - convert all internal uses of enums/flags to this
+	new stuff - convert all functions returning enums/flags to this new
+	stuff - convert all tutorial examples accordingly
+
+2002-10-21 12:27  gthyni
+
+	* Gtk2/: Window.pm, src/Window.c: added access function for
+	allow_shrink added prototypes (in comment)
+
+2002-10-21 11:42  gthyni
+
+	* tutorial-examples/buttonbox.pl: new example
+
+2002-10-21 11:40  gthyni
+
+	* Gtk2/src/HButtonBox.c: add prototypes (in comment)
+
+2002-10-21 11:38  gthyni
+
+	* Gtk2.pm: add use Gtk2::Window since it almost always used anyway
+
+2002-10-21 11:37  gthyni
+
+	* Gtk2/: VButtonBox.pm, src/VButtonBox.c: new class
+
+2002-10-21 11:07  gthyni
+
+	* Gtk2/src/Table.c: implemented spacings added all prototypes (in
+	comments)
+
+2002-10-21 11:06  gthyni
+
+	* tutorial-examples/scrolledwin.pl: updated
+
+2002-10-21 10:54  gthyni
+
+	* Gtk2/src/Dialog.c: 2 access function all prototypes added in
+	comments
+
+2002-10-21 10:53  gthyni
+
+	* tutorial-examples/scrolledwin.pl: new example
+
+2002-10-21 07:44  gthyni
+
+	* Gtk2/src/ListStore.c: remove debug printouts
+
+2002-10-21 05:09  glade-perl
+
+	* t/01_Gtk.t, compile-widgets.pl: [no log message]
+
+2002-10-21 00:46  ggc
+
+	* Gtk2/src/TextBuffer.c: fix my bug, GtkTextIter doesn't inherit
+	from GObject thus we need to build it with
+	gtk2_perl_new_object_from_pointer
+
+2002-10-20 22:24  gthyni
+
+	* Gtk2/src/GType.c: small fixes
+
+2002-10-20 22:22  gthyni
+
+	* Gtk2/TreeModel.pm: added
+
+2002-10-20 22:20  gthyni
+
+	* Gtk2/ListStore.pm: ListStore also is a TreeModel
+
+2002-10-20 22:18  gthyni
+
+	* Gtk2/GType.pm: correct FUNDAMENTAL type
+
+2002-10-20 22:12  gthyni
+
+	* Gtk2/src/_Helpers.c: check that name arg to
+	get_class_from_classname() != NULL
+
+2002-10-20 19:59  gthyni
+
+	* Gtk2/: ScrolledWindow.pm, src/ScrolledWindow.c: fix constructor
+	so we can send in a NULL without being catched by type checking
+
+2002-10-20 19:39  gthyni
+
+	* tutorial-examples/filesel.pl: with new argument checking, we need
+	to know about Gtk2::Button
+
+2002-10-20 19:36  gthyni
+
+	* Gtk2/src/GSignal.c: GtkObject -> GObject in GSignal (knows
+	nothing about Gtk+)
+
+2002-10-20 19:28  glade-perl
+
+	* Gtk2/Test.pm: [no log message]
+
+2002-10-20 18:58  gthyni
+
+	* Gtk2/GSignal.pm: added comment/warning about connect* functions
+
+2002-10-20 17:54  ggc
+
+	* Gtk2/include/gtk2-perl-helpers-common-autogen.h: add
+
+2002-10-20 17:53  ggc
+
+	* Gtk2/Gdk/src/Color.c, Gtk2/Gdk/src/Cursor.c,
+	Gtk2/Pango/src/FontDescription.c, Gtk2/include/glib2-perl.h,
+	Gtk2/include/gtk2-perl-common.h, Gtk2/include/gtk2-perl-gdk.h,
+	Gtk2/include/gtk2-perl-helpers-atk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-glib-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h,
+	Gtk2/include/gtk2-perl-pango.h, Gtk2/include/gtk2-perl.h,
+	Gtk2/src/Adjustment.c, Gtk2/src/Alignment.c, Gtk2/src/Arrow.c,
+	Gtk2/src/AspectFrame.c, Gtk2/src/Button.c, Gtk2/src/Calendar.c,
+	Gtk2/src/CellRendererText.c, Gtk2/src/CheckButton.c,
+	Gtk2/src/ColorSelection.c, Gtk2/src/ColorSelectionDialog.c,
+	Gtk2/src/Dialog.c, Gtk2/src/DrawingArea.c, Gtk2/src/Entry.c,
+	Gtk2/src/EventBox.c, Gtk2/src/FileSelection.c, Gtk2/src/Fixed.c,
+	Gtk2/src/FontSelectionDialog.c, Gtk2/src/Frame.c,
+	Gtk2/src/GSignal.c, Gtk2/src/HBox.c, Gtk2/src/HButtonBox.c,
+	Gtk2/src/HPaned.c, Gtk2/src/HRuler.c, Gtk2/src/HScale.c,
+	Gtk2/src/HScrollbar.c, Gtk2/src/HSeparator.c, Gtk2/src/Image.c,
+	Gtk2/src/Item.c, Gtk2/src/Label.c, Gtk2/src/List.c,
+	Gtk2/src/ListItem.c, Gtk2/src/ListStore.c, Gtk2/src/Menu.c,
+	Gtk2/src/MenuItem.c, Gtk2/src/MenuShell.c, Gtk2/src/Misc.c,
+	Gtk2/src/OptionMenu.c, Gtk2/src/ProgressBar.c,
+	Gtk2/src/RadioButton.c, Gtk2/src/Range.c,
+	Gtk2/src/ScrolledWindow.c, Gtk2/src/SpinButton.c,
+	Gtk2/src/Statusbar.c, Gtk2/src/Style.c, Gtk2/src/Table.c,
+	Gtk2/src/TextBuffer.c, Gtk2/src/TextView.c,
+	Gtk2/src/ToggleButton.c, Gtk2/src/Tooltips.c, Gtk2/src/TreeIter.c,
+	Gtk2/src/TreeView.c, Gtk2/src/TreeViewColumn.c, Gtk2/src/VBox.c,
+	Gtk2/src/VPaned.c, Gtk2/src/VRuler.c, Gtk2/src/VScale.c,
+	Gtk2/src/VScrollbar.c, Gtk2/src/VSeparator.c, Gtk2/src/Widget.c,
+	Gtk2/src/Window.c, Gtk2/src/_Helpers.c,
+	genscripts/castmacros-autogen.pl, misc-examples/typecheck.pl,
+	tutorial-examples/rulers.pl: - add type check when casting a Perl
+	object to a Gtk object - factorize Perl object creation by using
+	functions
+
+2002-10-20 17:35  glade-perl
+
+	* t/000_Gtk2_Test.t: Test script for Gtk2::Test - use as examples
+
+2002-10-20 14:14  gthyni
+
+	* Gtk2.pm, Gtk2/Adjustment.pm, Gtk2/Alignment.pm, Gtk2/Arrow.pm,
+	Gtk2/AspectFrame.pm, Gtk2/Box.pm, Gtk2/Button.pm,
+	Gtk2/ButtonBox.pm, Gtk2/Calendar.pm, Gtk2/CellRenderer.pm,
+	Gtk2/CellRendererText.pm, Gtk2/CheckButton.pm,
+	Gtk2/ColorSelection.pm, Gtk2/ColorSelectionDialog.pm,
+	Gtk2/Container.pm, Gtk2/Dialog.pm, Gtk2/DrawingArea.pm,
+	Gtk2/Editable.pm, Gtk2/Entry.pm, Gtk2/EventBox.pm,
+	Gtk2/FileSelection.pm, Gtk2/Fixed.pm, Gtk2/FontSelectionDialog.pm,
+	Gtk2/Frame.pm, Gtk2/GObject.pm, Gtk2/GSignal.pm, Gtk2/GType.pm,
+	Gtk2/HBox.pm, Gtk2/HButtonBox.pm, Gtk2/HPaned.pm, Gtk2/HRuler.pm,
+	Gtk2/HScale.pm, Gtk2/HScrollBar.pm, Gtk2/HScrollbar.pm,
+	Gtk2/HSeparator.pm, Gtk2/Image.pm, Gtk2/Item.pm, Gtk2/Label.pm,
+	Gtk2/List.pm, Gtk2/ListItem.pm, Gtk2/ListStore.pm, Gtk2/Menu.pm,
+	Gtk2/MenuItem.pm, Gtk2/MenuShell.pm, Gtk2/Misc.pm,
+	Gtk2/OptionMenu.pm, Gtk2/Paned.pm, Gtk2/Progress.pm,
+	Gtk2/ProgressBar.pm, Gtk2/RadioButton.pm, Gtk2/Range.pm,
+	Gtk2/Ruler.pm, Gtk2/Scale.pm, Gtk2/ScrollBar.pm, Gtk2/Scrollbar.pm,
+	Gtk2/ScrolledWindow.pm, Gtk2/SpinButton.pm, Gtk2/Statusbar.pm,
+	Gtk2/Style.pm, Gtk2/Table.pm, Gtk2/TextBuffer.pm, Gtk2/TextView.pm,
+	Gtk2/ToggleButton.pm, Gtk2/Tooltips.pm, Gtk2/TreeIter.pm,
+	Gtk2/TreeView.pm, Gtk2/TreeViewColumn.pm, Gtk2/VBox.pm,
+	Gtk2/VPaned.pm, Gtk2/VRuler.pm, Gtk2/VScale.pm, Gtk2/VScrollbar.pm,
+	Gtk2/VSeparator.pm, Gtk2/Widget.pm, Gtk2/Window.pm,
+	Gtk2/_Helpers.pm, Gtk2/_config.pm, Gtk2/Gdk/Color.pm,
+	Gtk2/Gdk/Cursor.pm, Gtk2/Gdk/Event.pm, Gtk2/Gdk/Window.pm,
+	Gtk2/Pango/FontDescription.pm, Gtk2/src/HScrollBar.c,
+	Gtk2/src/HScrollbar.c, Gtk2/src/ScrollBar.c, Gtk2/src/Scrollbar.c,
+	Gtk2/src/VScrollbar.c, tutorial-examples/range.pl: finished
+	cenralized Inline configuration, rename [VH]?ScrollBar.(c|pm) to
+	[VH]?Scrollbar.(c|pm) to be in line with libgtk+ name
+	(Gtk[HV]?Scrollbar)
+
+2002-10-20 11:50  gthyni
+
+	* Gtk2/_config.pm: remove -Werror which caused problems in some
+	environments, add dynamic setting of OPTIMIZE (CFLAGS)
+
+2002-10-20 02:30  gthyni
+
+	* Gtk2/src/ListStore.c: more hacking, but still not working
+	correctly
+
+2002-10-20 02:29  gthyni
+
+	* Gtk2/: include/glib2-perl.h, GType.pm, include/gtk2-perl.h,
+	src/GType.c: add function gperl_value_from_object() to create
+	GValue from SV
+
+2002-10-20 00:09  gthyni
+
+	* Gtk2/_config.pm: add -Wstrict-prototype remove debug printout
+
+2002-10-19 23:52  gthyni
+
+	* Gtk2.pm, Gtk2/Adjustment.pm, Gtk2/Alignment.pm, Gtk2/Arrow.pm,
+	Gtk2/AspectFrame.pm, Gtk2/Box.pm, Gtk2/Button.pm,
+	Gtk2/ButtonBox.pm, Gtk2/Calendar.pm, Gtk2/CellRenderer.pm,
+	Gtk2/CellRendererText.pm, Gtk2/CheckButton.pm,
+	Gtk2/ColorSelection.pm, Gtk2/ColorSelectionDialog.pm,
+	Gtk2/Container.pm, Gtk2/Dialog.pm, Gtk2/DrawingArea.pm,
+	Gtk2/Editable.pm, Gtk2/Entry.pm, Gtk2/EventBox.pm,
+	Gtk2/FileSelection.pm, Gtk2/Fixed.pm, Gtk2/FontSelectionDialog.pm,
+	Gtk2/Frame.pm, Gtk2/GObject.pm, Gtk2/GSignal.pm, Gtk2/HBox.pm,
+	Gtk2/HButtonBox.pm, Gtk2/HPaned.pm, Gtk2/HRuler.pm, Gtk2/HScale.pm,
+	Gtk2/HScrollBar.pm, Gtk2/HSeparator.pm, Gtk2/Image.pm,
+	Gtk2/Item.pm, Gtk2/Label.pm, Gtk2/List.pm, Gtk2/ListItem.pm,
+	Gtk2/ListStore.pm, Gtk2/Menu.pm, Gtk2/MenuItem.pm,
+	Gtk2/MenuShell.pm, Gtk2/Misc.pm, Gtk2/OptionMenu.pm, Gtk2/Paned.pm,
+	Gtk2/Progress.pm, Gtk2/ProgressBar.pm, Gtk2/RadioButton.pm,
+	Gtk2/Range.pm, Gtk2/Ruler.pm, Gtk2/Scale.pm,
+	Gtk2/ScrolledWindow.pm, Gtk2/SpinButton.pm, Gtk2/Statusbar.pm,
+	Gtk2/Style.pm, Gtk2/Table.pm, Gtk2/TextBuffer.pm, Gtk2/TextView.pm,
+	Gtk2/ToggleButton.pm, Gtk2/Tooltips.pm, Gtk2/TreeIter.pm,
+	Gtk2/TreeView.pm, Gtk2/TreeViewColumn.pm, Gtk2/VBox.pm,
+	Gtk2/VPaned.pm, Gtk2/VRuler.pm, Gtk2/VScale.pm, Gtk2/VSeparator.pm,
+	Gtk2/Widget.pm, Gtk2/Window.pm, Gtk2/_Helpers.pm, Gtk2/_config.pm,
+	Gtk2/Gdk/Color.pm, Gtk2/Gdk/Cursor.pm, Gtk2/Gdk/Event.pm,
+	Gtk2/Gdk/Window.pm, Gtk2/Pango/FontDescription.pm,
+	Gtk2/src/ListStore.c, Gtk2/src/TreeViewColumn.c,
+	tutorial-examples/panedwindow.pl: centralize most Inline
+	configuration to one file (Gtk2/_config.pm)
+
+2002-10-19 19:26  gthyni
+
+	* Gtk2/Item.pm: correct INC when using internal include files
+
+2002-10-19 19:22  gthyni
+
+	* Gtk2/: Item.pm, src/Item.c: 20021018 PMC <Marin Purgar
+	numessiah@users.sourceforge.net> - added select, deselect and
+	toggle to Gtk2/src/Item.c
+
+2002-10-19 19:09  ggc
+
+	* t/010_Gtk2_main.t: reflect Gtk2::timeout_remove prototype change
+
+2002-10-19 18:32  ggc
+
+	* Gtk2/src/ProgressBar.c: add Gtk::ProgressBar::set_pulse_step
+
+2002-10-19 16:58  dlacroix
+
+	* Gtk2/src/_Helpers.c: - correct a statis table size allocation
+	error
+
+2002-10-19 16:26  dlacroix
+
+	* Gtk2/src/_Helpers.c: - added Gnome2::Print and Gnome2::Canvas
+	dynamic type cast
+
+2002-10-19 12:19  gthyni
+
+	* Gtk2/Test.pm: update Test.pm from Dermot, with POD (wow)
+
+2002-10-19 00:34  ggc
+
+	* Gtk2/Gdk/src/Color.c, Gtk2/Gdk/src/Cursor.c,
+	Gtk2/Gdk/src/Event.c, Gtk2/Gdk/src/Window.c,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-glib-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h,
+	Gtk2/src/Adjustment.c, Gtk2/src/Alignment.c, Gtk2/src/Arrow.c,
+	Gtk2/src/Box.c, Gtk2/src/Button.c, Gtk2/src/ButtonBox.c,
+	Gtk2/src/Calendar.c, Gtk2/src/ColorSelection.c,
+	Gtk2/src/Container.c, Gtk2/src/Dialog.c, Gtk2/src/Entry.c,
+	Gtk2/src/FileSelection.c, Gtk2/src/Fixed.c,
+	Gtk2/src/FontSelectionDialog.c, Gtk2/src/Frame.c,
+	Gtk2/src/HScrollBar.c, Gtk2/src/Label.c, Gtk2/src/List.c,
+	Gtk2/src/ListStore.c, Gtk2/src/MenuShell.c, Gtk2/src/Misc.c,
+	Gtk2/src/OptionMenu.c, Gtk2/src/Paned.c, Gtk2/src/ProgressBar.c,
+	Gtk2/src/RadioButton.c, Gtk2/src/Range.c, Gtk2/src/Ruler.c,
+	Gtk2/src/Scale.c, Gtk2/src/ScrolledWindow.c, Gtk2/src/SpinButton.c,
+	Gtk2/src/Statusbar.c, Gtk2/src/Style.c, Gtk2/src/Table.c,
+	Gtk2/src/TextBuffer.c, Gtk2/src/TextView.c,
+	Gtk2/src/ToggleButton.c, Gtk2/src/Tooltips.c, Gtk2/src/TreeView.c,
+	Gtk2/src/TreeViewColumn.c, Gtk2/src/VScale.c, Gtk2/src/Widget.c,
+	Gtk2/src/Window.c, genscripts/castmacros-autogen.pl: - use the
+	casting macros (from SV* perl object to Gtk Object) everywhere -
+	needs to tweak the autogeneration of casters since some needed
+	casters,   which are not Gtk Objects, need to be manually
+	enumerated - allows to prevent from using temp variables at some
+	places
+
+2002-10-18 20:52  ggc
+
+	* Gtk2/include/gtk2-perl-helpers-autogen.h: hum, forgot to remove
+	this file as well (part of commit which splits the
+	gtk2-perl-helpers-autogen.h into per-category files)
+
+2002-10-18 20:43  ggc
+
+	* Gtk2.pm, Gtk2/Adjustment.pm, Gtk2/Alignment.pm, Gtk2/Arrow.pm,
+	Gtk2/AspectFrame.pm, Gtk2/Box.pm, Gtk2/Button.pm,
+	Gtk2/ButtonBox.pm, Gtk2/Calendar.pm, Gtk2/CellRenderer.pm,
+	Gtk2/CellRendererText.pm, Gtk2/CheckButton.pm,
+	Gtk2/ColorSelection.pm, Gtk2/ColorSelectionDialog.pm,
+	Gtk2/Container.pm, Gtk2/Dialog.pm, Gtk2/DrawingArea.pm,
+	Gtk2/Editable.pm, Gtk2/Entry.pm, Gtk2/EventBox.pm,
+	Gtk2/FileSelection.pm, Gtk2/Fixed.pm, Gtk2/FontSelectionDialog.pm,
+	Gtk2/Frame.pm, Gtk2/GObject.pm, Gtk2/GSignal.pm, Gtk2/HBox.pm,
+	Gtk2/HButtonBox.pm, Gtk2/HPaned.pm, Gtk2/HRuler.pm, Gtk2/HScale.pm,
+	Gtk2/HScrollBar.pm, Gtk2/HSeparator.pm, Gtk2/Image.pm,
+	Gtk2/Label.pm, Gtk2/List.pm, Gtk2/ListItem.pm, Gtk2/ListStore.pm,
+	Gtk2/Menu.pm, Gtk2/MenuItem.pm, Gtk2/MenuShell.pm, Gtk2/Misc.pm,
+	Gtk2/OptionMenu.pm, Gtk2/Paned.pm, Gtk2/Progress.pm,
+	Gtk2/ProgressBar.pm, Gtk2/RadioButton.pm, Gtk2/Range.pm,
+	Gtk2/Ruler.pm, Gtk2/Scale.pm, Gtk2/ScrolledWindow.pm,
+	Gtk2/SpinButton.pm, Gtk2/Statusbar.pm, Gtk2/Style.pm,
+	Gtk2/Table.pm, Gtk2/TextBuffer.pm, Gtk2/TextView.pm,
+	Gtk2/ToggleButton.pm, Gtk2/Tooltips.pm, Gtk2/TreeIter.pm,
+	Gtk2/TreeView.pm, Gtk2/TreeViewColumn.pm, Gtk2/VBox.pm,
+	Gtk2/VPaned.pm, Gtk2/VRuler.pm, Gtk2/VScale.pm, Gtk2/VSeparator.pm,
+	Gtk2/Widget.pm, Gtk2/Window.pm, Gtk2/_Helpers.pm,
+	Gtk2/Gdk/Color.pm, Gtk2/Gdk/Cursor.pm, Gtk2/Gdk/Event.pm,
+	Gtk2/Gdk/Window.pm, Gtk2/Gdk/src/Color.c, Gtk2/Gdk/src/Cursor.c,
+	Gtk2/Gdk/src/Event.c, Gtk2/Gdk/src/Window.c,
+	Gtk2/Pango/FontDescription.pm, Gtk2/Pango/src/FontDescription.c,
+	Gtk2/include/gtk2-perl-gdk.h,
+	Gtk2/include/gtk2-perl-helpers-atk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gdk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-glib-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-gtk-autogen.h,
+	Gtk2/include/gtk2-perl-helpers-pango-autogen.h,
+	Gtk2/include/gtk2-perl-helpers.h, Gtk2/include/gtk2-perl-pango.h,
+	Gtk2/include/gtk2-perl.h, Gtk2/src/Adjustment.c,
+	Gtk2/src/Alignment.c, Gtk2/src/Arrow.c, Gtk2/src/AspectFrame.c,
+	Gtk2/src/Bin.c, Gtk2/src/Box.c, Gtk2/src/Button.c,
+	Gtk2/src/ButtonBox.c, Gtk2/src/Calendar.c, Gtk2/src/CellRenderer.c,
+	Gtk2/src/CellRendererText.c, Gtk2/src/CheckButton.c,
+	Gtk2/src/ColorSelection.c, Gtk2/src/ColorSelectionDialog.c,
+	Gtk2/src/Container.c, Gtk2/src/Dialog.c, Gtk2/src/DrawingArea.c,
+	Gtk2/src/Editable.c, Gtk2/src/Entry.c, Gtk2/src/EventBox.c,
+	Gtk2/src/FileSelection.c, Gtk2/src/Fixed.c,
+	Gtk2/src/FontSelectionDialog.c, Gtk2/src/Frame.c,
+	Gtk2/src/GObject.c, Gtk2/src/GSignal.c, Gtk2/src/Gtk2.c,
+	Gtk2/src/HBox.c, Gtk2/src/HButtonBox.c, Gtk2/src/HPaned.c,
+	Gtk2/src/HRuler.c, Gtk2/src/HScale.c, Gtk2/src/HScrollBar.c,
+	Gtk2/src/HSeparator.c, Gtk2/src/Image.c, Gtk2/src/Item.c,
+	Gtk2/src/Label.c, Gtk2/src/List.c, Gtk2/src/ListItem.c,
+	Gtk2/src/ListStore.c, Gtk2/src/Menu.c, Gtk2/src/MenuItem.c,
+	Gtk2/src/MenuShell.c, Gtk2/src/Misc.c, Gtk2/src/OptionMenu.c,
+	Gtk2/src/Paned.c, Gtk2/src/Progress.c, Gtk2/src/ProgressBar.c,
+	Gtk2/src/RadioButton.c, Gtk2/src/Range.c, Gtk2/src/Ruler.c,
+	Gtk2/src/Scale.c, Gtk2/src/ScrollBar.c, Gtk2/src/ScrolledWindow.c,
+	Gtk2/src/SpinButton.c, Gtk2/src/Statusbar.c, Gtk2/src/Style.c,
+	Gtk2/src/Table.c, Gtk2/src/TextBuffer.c, Gtk2/src/TextView.c,
+	Gtk2/src/ToggleButton.c, Gtk2/src/Tooltips.c, Gtk2/src/TreeIter.c,
+	Gtk2/src/TreeView.c, Gtk2/src/TreeViewColumn.c, Gtk2/src/VBox.c,
+	Gtk2/src/VPaned.c, Gtk2/src/VRuler.c, Gtk2/src/VScale.c,
+	Gtk2/src/VSeparator.c, Gtk2/src/Widget.c, Gtk2/src/Window.c,
+	Gtk2/src/_Helpers.c, genscripts/castmacros-autogen.pl,
+	tutorial-examples/rulers.pl: - use -Wall and -Werror compilation
+	flags everywhere, helped fixing quite a bunch of real bugs - each
+	source file includes gtk2-perl.h or friends, so that they get gtk
+	includes but also helpers and autogen stuff - autogenerated headers
+	split between gtk, gdk, pango, atk, glib to allow the previous item
+	in gdk/pango stuff
+
+2002-10-18 20:36  ggc
+
+	* compile-widgets.pl: fix compilation of subdirectories (Gdk,
+	Pango)
+
+2002-10-18 18:46  ggc
+
+	* compile-widgets.pl: seems we need to explicitely die with $@ when
+	a module compilation fails to get the error message and halt
+	correctly
+
+2002-10-18 15:13  dlacroix
+
+	* Gtk2/src/_Helpers.c: - change function order into _Helpers.c
+
+2002-10-18 14:45  ggc
+
+	* Gtk2/: GSignal.pm, src/GSignal.c: remove compiler warnings
+	(remove one unused variable and fix the call of
+	g_signal_connect_closure with first arg not being a gpointer) use
+	cast macros
+
+2002-10-18 14:27  ggc
+
+	* Gtk2/: GSignal.pm, src/GSignal.c: revert back to _connect and
+	_connect_swapped since it provides for free the connect call
+	without the data field set
+
+2002-10-18 14:10  ggc
+
+	* Gtk2/include/gtk2-perl-helpers-autogen.h, Gtk2/src/GObject.c,
+	genscripts/castmacros-autogen.pl: better use SvGtkWidget instead of
+	pGtkWidget, etc, for the casters, for consistency
+
+2002-10-18 14:06  gthyni
+
+	* Gtk2/Test.pm, t/010_Gtk2_main.t, t/041_Gtk2_Window.t,
+	tools/write_test_scripts.pl: test module, scripts and test
+	generator contributed by Dermot Musgrove
+
+2002-10-18 13:41  ggc
+
+	* compile-widgets.pl, Gtk2/Window.pm, misc-examples/hello5.pl,
+	misc-examples/list.pl, tutorial-examples/arrows.pl,
+	tutorial-examples/aspectframe.pl, tutorial-examples/button.pl,
+	tutorial-examples/calendar.pl, tutorial-examples/colorsel.pl,
+	tutorial-examples/container.pl, tutorial-examples/fixed.pl,
+	tutorial-examples/frame.pl, tutorial-examples/hello1.pl,
+	tutorial-examples/hello2.pl, tutorial-examples/hello5.pl,
+	tutorial-examples/label.pl, tutorial-examples/pack1.pl,
+	tutorial-examples/pack2.pl, tutorial-examples/panedwindow.pl,
+	tutorial-examples/progressbar.pl, tutorial-examples/radio.pl,
+	tutorial-examples/range.pl, tutorial-examples/rulers.pl,
+	tutorial-examples/spinbutton.pl, tutorial-examples/statusbar.pl,
+	tutorial-examples/textentry.pl, tutorial-examples/tooltips.pl: make
+	that everyone uses string versions of the GtkWindowType enum
+
+2002-10-18 13:39  dlacroix
+
+	* Gtk2/src/_Helpers.c: - added function to dynically find a GObject
+	class (example in gnome2-perl/tutorial-examples/fontpicker.pl)
+
+2002-10-18 13:21  ggc
+
+	* Gtk2/: GSignal.pm, src/GSignal.c: hum, using wrappers without any
+	code except calling the C function is mostly unneeded
+
+2002-10-18 12:32  ggc
+
+	* Gtk2/src/_Helpers.c: pedantically check if vals->value_name is a
+	valid pointer before using it; set Emacs' c-basic-offset to 4 so
+	that my default 8 doesn't mess with existing code using 4
+
+2002-10-18 12:18  ggc
+
+	* misc-examples/enums-as-strings.pl: make it a better testcase
+
+2002-10-18 12:07  gthyni
+
+	* misc-examples/enums-as-strings.pl: eval reinstated
+
+2002-10-18 11:57  ggc
+
+	* Gtk2/src/_Helpers.c: seens g_type_name should be preferred over
+	gtk_type_name
+
+2002-10-18 11:54  gthyni
+
+	* Gtk2.pm, Gtk2/Calendar.pm, Gtk2/GObject.pm, Gtk2/GSignal.pm,
+	Gtk2/src/Calendar.c, Gtk2/src/GObject.c, Gtk2/src/GSignal.c,
+	Gtk2/src/Gtk2.c: cleanup passthough naming as suggested by Dermot
+
+2002-10-18 11:51  gthyni
+
+	* Gtk2/src/_Helpers.c: remove debug printf
+
+2002-10-18 11:37  gthyni
+
+	* Gtk2/Window.pm, Gtk2/_Helpers.pm, Gtk2/src/Window.c,
+	Gtk2/src/_Helpers.c, misc-examples/enums-as-strings.pl,
+	tutorial-examples/hello5.pl: better enums handling in Gtk2::Window
+	contributed by Guillaume Cottenceau, additional hacks by me
+
+2002-10-17 22:47  gthyni
+
+	* Gtk2/src/GObject.c: typo, always test compile before committing
+	:-(
+
+2002-10-17 22:34  gthyni
+
+	* Gtk2/GObject.pm, Gtk2/include/gtk2-perl-helpers-autogen.h,
+	Gtk2/include/gtk2-perl-helpers.h, Gtk2/src/GObject.c,
+	genscripts/castmacros-autogen.pl: macros for casting contributed by
+	Guillaume Cottenceau
+
+2002-10-17 16:54  gthyni
+
+	* Gtk2/List.pm, Gtk2/ListItem.pm, Gtk2/src/List.c,
+	Gtk2/src/ListItem.c, misc-examples/list.pl: List, ListItem: new
+	example and classes, contributed by Marin Purgar
+
+2002-10-17 13:24  gthyni
+
+	* Gtk2/src/GSignal.c: clean up calls to perl in signalhandling,
+	contributed by Guillaume Cottenceau
+
+2002-10-17 11:49  gthyni
+
+	* compile-widgets.pl: now quit on click during compiling, patch
+	contributed by: Guillaume Cottenceau <gc at mandrakesoft.com>
+
+2002-10-17 11:04  gthyni
+
+	* Gtk2/GObject.pm, misc-examples/hello5.pl: add
+	$object->signal_connect(...) syntax
+
+2002-10-16 23:19  gthyni
+
+	* compile-widgets.pl: fix display of nested directores, sort
+	modules
+
+2002-10-16 22:34  gthyni
+
+	* Makefile.PL: change to Inlien::MakeMaker still does not work
+
+2002-10-16 21:26  gthyni
+
+	* Gtk2.pm: VERSION added
+
+2002-10-15 23:47  gthyni
+
+	* CONTRIBUTE.txt: updated after import to CVS
+
+2002-10-15 23:45  gthyni
+
+	* .cvsignore: added
+
+2002-10-15 23:29  gthyni
+
+	* tutorial-examples/panedwindow.pl: added copyright etc
+
+2002-10-15 23:28  gthyni
+
+	* tutorial-examples/: panedwindow.pl, viewport.pl: renamed example
+	to match tutorial chapter
+
+2002-10-15 23:00  gthyni
+
+	* CONTRIBUTE.txt, Changelog, Gtk2.pm, MANIFEST.SKIP, Makefile.PL,
+	README.txt, TODO.txt, compile-widgets.pl, snapshot.sh,
+	tutorial-examples/spinbutton.pl, tutorial-examples/statusbar.pl,
+	tutorial-examples/textentry.pl, Gtk2/ButtonBox.pm,
+	Gtk2/CellRenderer.pm, Gtk2/ColorSelection.pm, Gtk2/Dialog.pm,
+	Gtk2/DrawingArea.pm, Gtk2/FileSelection.pm, Gtk2/GType.pm,
+	Gtk2/HRuler.pm, Gtk2/HScale.pm, Gtk2/Image.pm, Gtk2/MenuItem.pm,
+	Gtk2/Misc.pm, Gtk2/Progress.pm, Gtk2/Range.pm, Gtk2/Tooltips.pm,
+	Gtk2/TreeView.pm, Gtk2/Window.pm, t/01_Gtk.t,
+	tutorial-examples/arrows.pl, tutorial-examples/aspectframe.pl,
+	tutorial-examples/button.pl, tutorial-examples/calendar.pl,
+	tutorial-examples/colorsel.pl, tutorial-examples/container.pl,
+	tutorial-examples/filesel.pl, tutorial-examples/fixed.pl,
+	tutorial-examples/frame.pl, tutorial-examples/hello1.pl,
+	tutorial-examples/hello2.pl, tutorial-examples/hello5.pl,
+	tutorial-examples/label.pl, tutorial-examples/pack1.pl,
+	tutorial-examples/pack2.pl, tutorial-examples/progressbar.pl,
+	tutorial-examples/radio.pl, tutorial-examples/range.pl,
+	tutorial-examples/rulers.pl, tutorial-examples/tooltips.pl,
+	tutorial-examples/viewport.pl, Gtk2/Adjustment.pm,
+	Gtk2/Alignment.pm, Gtk2/Arrow.pm, Gtk2/AspectFrame.pm, Gtk2/Bin.pm,
+	Gtk2/Box.pm, Gtk2/Button.pm, Gtk2/Calendar.pm,
+	Gtk2/CellRendererText.pm, Gtk2/CheckButton.pm,
+	Gtk2/ColorSelectionDialog.pm, Gtk2/Container.pm, Gtk2/Editable.pm,
+	Gtk2/Entry.pm, Gtk2/EventBox.pm, Gtk2/Fixed.pm,
+	Gtk2/FontSelectionDialog.pm, Gtk2/Frame.pm, Gtk2/GLib.pm,
+	Gtk2/GObject.pm, Gtk2/GSignal.pm, Gtk2/Gdk.pm, Gtk2/HBox.pm,
+	Gtk2/HButtonBox.pm, Gtk2/HPaned.pm, Gtk2/HScrollBar.pm,
+	Gtk2/HSeparator.pm, Gtk2/Item.pm, Gtk2/Label.pm, Gtk2/ListStore.pm,
+	Gtk2/Menu.pm, Gtk2/MenuShell.pm, Gtk2/Object.pm,
+	Gtk2/OptionMenu.pm, Gtk2/Paned.pm, Gtk2/ProgressBar.pm,
+	Gtk2/RadioButton.pm, Gtk2/Ruler.pm, Gtk2/Scale.pm,
+	Gtk2/ScrollBar.pm, Gtk2/ScrolledWindow.pm, Gtk2/Separator.pm,
+	Gtk2/Signal.pm, Gtk2/SpinButton.pm, Gtk2/Statusbar.pm,
+	Gtk2/Stock.pm, Gtk2/Style.pm, Gtk2/Table.pm, Gtk2/TextBuffer.pm,
+	Gtk2/TextView.pm, Gtk2/ToggleButton.pm, Gtk2/TreeIter.pm,
+	Gtk2/TreeViewColumn.pm, Gtk2/Type.pm, Gtk2/VBox.pm, Gtk2/VPaned.pm,
+	Gtk2/VRuler.pm, Gtk2/VScale.pm, Gtk2/VSeparator.pm, Gtk2/Widget.pm,
+	Gtk2/Gdk/Color.pm, Gtk2/Gdk/Cursor.pm, Gtk2/Gdk/Event.pm,
+	Gtk2/Gdk/Window.pm, Gtk2/Gdk/src/Color.c, Gtk2/Gdk/src/Cursor.c,
+	Gtk2/Gdk/src/Event.c, Gtk2/Gdk/src/Window.c,
+	Gtk2/Pango/FontDescription.pm, Gtk2/Pango/src/FontDescription.c,
+	Gtk2/src/Adjustment.c, Gtk2/src/Alignment.c, Gtk2/src/Arrow.c,
+	Gtk2/src/AspectFrame.c, Gtk2/src/Bin.c, Gtk2/src/Box.c,
+	Gtk2/src/Button.c, Gtk2/src/ButtonBox.c, Gtk2/src/Calendar.c,
+	Gtk2/src/CellRenderer.c, Gtk2/src/CellRendererText.c,
+	Gtk2/src/CheckButton.c, Gtk2/src/ColorSelection.c,
+	Gtk2/src/ColorSelectionDialog.c, Gtk2/src/Container.c,
+	Gtk2/src/Dialog.c, Gtk2/src/DrawingArea.c, Gtk2/src/Editable.c,
+	Gtk2/src/Entry.c, Gtk2/src/EventBox.c, Gtk2/src/FileSelection.c,
+	Gtk2/src/Fixed.c, Gtk2/src/FontSelectionDialog.c, Gtk2/src/Frame.c,
+	Gtk2/src/GObject.c, Gtk2/src/GSignal.c, Gtk2/src/Gtk2.c,
+	Gtk2/src/HBox.c, Gtk2/src/HButtonBox.c, Gtk2/src/HPaned.c,
+	Gtk2/src/HRuler.c, Gtk2/src/HScale.c, Gtk2/src/HScrollBar.c,
+	Gtk2/src/HSeparator.c, Gtk2/src/Image.c, Gtk2/src/Item.c,
+	Gtk2/src/Label.c, Gtk2/src/ListStore.c, Gtk2/src/Menu.c,
+	Gtk2/src/MenuItem.c, Gtk2/src/MenuShell.c, Gtk2/src/Misc.c,
+	Gtk2/src/OptionMenu.c, Gtk2/src/Paned.c, Gtk2/src/Progress.c,
+	Gtk2/src/ProgressBar.c, Gtk2/src/RadioButton.c, Gtk2/src/Range.c,
+	Gtk2/src/Ruler.c, Gtk2/src/Scale.c, Gtk2/src/ScrollBar.c,
+	Gtk2/src/ScrolledWindow.c, Gtk2/src/SpinButton.c,
+	Gtk2/src/Statusbar.c, Gtk2/src/Style.c, Gtk2/src/Table.c,
+	Gtk2/src/TextBuffer.c, Gtk2/src/TextView.c,
+	Gtk2/src/ToggleButton.c, Gtk2/src/Tooltips.c, Gtk2/src/TreeIter.c,
+	Gtk2/src/TreeView.c, Gtk2/src/TreeViewColumn.c, Gtk2/src/VBox.c,
+	Gtk2/src/VPaned.c, Gtk2/src/VRuler.c, Gtk2/src/VScale.c,
+	Gtk2/src/VSeparator.c, Gtk2/src/Widget.c, Gtk2/src/Window.c: import
+
+2002-10-15 23:00  gthyni
+
+	* CONTRIBUTE.txt, Changelog, Gtk2.pm, MANIFEST.SKIP, Makefile.PL,
+	README.txt, TODO.txt, compile-widgets.pl, snapshot.sh,
+	tutorial-examples/spinbutton.pl, tutorial-examples/statusbar.pl,
+	tutorial-examples/textentry.pl, Gtk2/ButtonBox.pm,
+	Gtk2/CellRenderer.pm, Gtk2/ColorSelection.pm, Gtk2/Dialog.pm,
+	Gtk2/DrawingArea.pm, Gtk2/FileSelection.pm, Gtk2/GType.pm,
+	Gtk2/HRuler.pm, Gtk2/HScale.pm, Gtk2/Image.pm, Gtk2/MenuItem.pm,
+	Gtk2/Misc.pm, Gtk2/Progress.pm, Gtk2/Range.pm, Gtk2/Tooltips.pm,
+	Gtk2/TreeView.pm, Gtk2/Window.pm, t/01_Gtk.t,
+	tutorial-examples/arrows.pl, tutorial-examples/aspectframe.pl,
+	tutorial-examples/button.pl, tutorial-examples/calendar.pl,
+	tutorial-examples/colorsel.pl, tutorial-examples/container.pl,
+	tutorial-examples/filesel.pl, tutorial-examples/fixed.pl,
+	tutorial-examples/frame.pl, tutorial-examples/hello1.pl,
+	tutorial-examples/hello2.pl, tutorial-examples/hello5.pl,
+	tutorial-examples/label.pl, tutorial-examples/pack1.pl,
+	tutorial-examples/pack2.pl, tutorial-examples/progressbar.pl,
+	tutorial-examples/radio.pl, tutorial-examples/range.pl,
+	tutorial-examples/rulers.pl, tutorial-examples/tooltips.pl,
+	tutorial-examples/viewport.pl, Gtk2/Adjustment.pm,
+	Gtk2/Alignment.pm, Gtk2/Arrow.pm, Gtk2/AspectFrame.pm, Gtk2/Bin.pm,
+	Gtk2/Box.pm, Gtk2/Button.pm, Gtk2/Calendar.pm,
+	Gtk2/CellRendererText.pm, Gtk2/CheckButton.pm,
+	Gtk2/ColorSelectionDialog.pm, Gtk2/Container.pm, Gtk2/Editable.pm,
+	Gtk2/Entry.pm, Gtk2/EventBox.pm, Gtk2/Fixed.pm,
+	Gtk2/FontSelectionDialog.pm, Gtk2/Frame.pm, Gtk2/GLib.pm,
+	Gtk2/GObject.pm, Gtk2/GSignal.pm, Gtk2/Gdk.pm, Gtk2/HBox.pm,
+	Gtk2/HButtonBox.pm, Gtk2/HPaned.pm, Gtk2/HScrollBar.pm,
+	Gtk2/HSeparator.pm, Gtk2/Item.pm, Gtk2/Label.pm, Gtk2/ListStore.pm,
+	Gtk2/Menu.pm, Gtk2/MenuShell.pm, Gtk2/Object.pm,
+	Gtk2/OptionMenu.pm, Gtk2/Paned.pm, Gtk2/ProgressBar.pm,
+	Gtk2/RadioButton.pm, Gtk2/Ruler.pm, Gtk2/Scale.pm,
+	Gtk2/ScrollBar.pm, Gtk2/ScrolledWindow.pm, Gtk2/Separator.pm,
+	Gtk2/Signal.pm, Gtk2/SpinButton.pm, Gtk2/Statusbar.pm,
+	Gtk2/Stock.pm, Gtk2/Style.pm, Gtk2/Table.pm, Gtk2/TextBuffer.pm,
+	Gtk2/TextView.pm, Gtk2/ToggleButton.pm, Gtk2/TreeIter.pm,
+	Gtk2/TreeViewColumn.pm, Gtk2/Type.pm, Gtk2/VBox.pm, Gtk2/VPaned.pm,
+	Gtk2/VRuler.pm, Gtk2/VScale.pm, Gtk2/VSeparator.pm, Gtk2/Widget.pm,
+	Gtk2/Gdk/Color.pm, Gtk2/Gdk/Cursor.pm, Gtk2/Gdk/Event.pm,
+	Gtk2/Gdk/Window.pm, Gtk2/Gdk/src/Color.c, Gtk2/Gdk/src/Cursor.c,
+	Gtk2/Gdk/src/Event.c, Gtk2/Gdk/src/Window.c,
+	Gtk2/Pango/FontDescription.pm, Gtk2/Pango/src/FontDescription.c,
+	Gtk2/src/Adjustment.c, Gtk2/src/Alignment.c, Gtk2/src/Arrow.c,
+	Gtk2/src/AspectFrame.c, Gtk2/src/Bin.c, Gtk2/src/Box.c,
+	Gtk2/src/Button.c, Gtk2/src/ButtonBox.c, Gtk2/src/Calendar.c,
+	Gtk2/src/CellRenderer.c, Gtk2/src/CellRendererText.c,
+	Gtk2/src/CheckButton.c, Gtk2/src/ColorSelection.c,
+	Gtk2/src/ColorSelectionDialog.c, Gtk2/src/Container.c,
+	Gtk2/src/Dialog.c, Gtk2/src/DrawingArea.c, Gtk2/src/Editable.c,
+	Gtk2/src/Entry.c, Gtk2/src/EventBox.c, Gtk2/src/FileSelection.c,
+	Gtk2/src/Fixed.c, Gtk2/src/FontSelectionDialog.c, Gtk2/src/Frame.c,
+	Gtk2/src/GObject.c, Gtk2/src/GSignal.c, Gtk2/src/Gtk2.c,
+	Gtk2/src/HBox.c, Gtk2/src/HButtonBox.c, Gtk2/src/HPaned.c,
+	Gtk2/src/HRuler.c, Gtk2/src/HScale.c, Gtk2/src/HScrollBar.c,
+	Gtk2/src/HSeparator.c, Gtk2/src/Image.c, Gtk2/src/Item.c,
+	Gtk2/src/Label.c, Gtk2/src/ListStore.c, Gtk2/src/Menu.c,
+	Gtk2/src/MenuItem.c, Gtk2/src/MenuShell.c, Gtk2/src/Misc.c,
+	Gtk2/src/OptionMenu.c, Gtk2/src/Paned.c, Gtk2/src/Progress.c,
+	Gtk2/src/ProgressBar.c, Gtk2/src/RadioButton.c, Gtk2/src/Range.c,
+	Gtk2/src/Ruler.c, Gtk2/src/Scale.c, Gtk2/src/ScrollBar.c,
+	Gtk2/src/ScrolledWindow.c, Gtk2/src/SpinButton.c,
+	Gtk2/src/Statusbar.c, Gtk2/src/Style.c, Gtk2/src/Table.c,
+	Gtk2/src/TextBuffer.c, Gtk2/src/TextView.c,
+	Gtk2/src/ToggleButton.c, Gtk2/src/Tooltips.c, Gtk2/src/TreeIter.c,
+	Gtk2/src/TreeView.c, Gtk2/src/TreeViewColumn.c, Gtk2/src/VBox.c,
+	Gtk2/src/VPaned.c, Gtk2/src/VRuler.c, Gtk2/src/VScale.c,
+	Gtk2/src/VSeparator.c, Gtk2/src/Widget.c, Gtk2/src/Window.c:
+	Initial revision
+

@@ -14,13 +14,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: gtk2-perl-common.h,v 1.14 2002/12/06 20:44:48 ggc Exp $
+ * $Id: gtk2-perl-common.h,v 1.15 2002/12/16 14:29:24 ggc Exp $
  *
  */
 
 #ifndef GTK2_PERL_COMMON_H
 #define GTK2_PERL_COMMON_H
 
+#include <gtk/gtkversion.h>
 #include "gtk2-perl-helpers-common-autogen.h"
 
 /* check that <object> is of type <type> */

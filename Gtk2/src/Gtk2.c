@@ -1,4 +1,4 @@
-/* $Id: Gtk2.c,v 1.16 2002/12/09 22:00:17 ggc Exp $
+/* $Id: Gtk2.c,v 1.18 2003/01/08 19:02:23 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -81,11 +81,12 @@ int gtkperl_gtk2_main(char* class)
     gtk2_perl_trap_exceptions_in_callbacks++;
     gtk_main();
     gtk2_perl_trap_exceptions_in_callbacks--;
-    if (gtk2_perl_trap_exceptions_trapped) {
-	gtk2_perl_trap_exceptions_trapped = 0;
+    if (gtk2_perl_trap_exceptions_save_errsv) {
+	sv_setsv(ERRSV, gtk2_perl_trap_exceptions_save_errsv);
+	SvREFCNT_dec(gtk2_perl_trap_exceptions_save_errsv);
+	gtk2_perl_trap_exceptions_save_errsv = NULL;
 	croak(Nullch);
     }
-    gtk2_perl_trap_exceptions_trapped = 0;
     return 1;
 }
 
@@ -203,6 +204,13 @@ GtkWidget*  gtk_get_event_widget            (GdkEvent *event);
 void        gtk_propagate_event             (GtkWidget *widget,
                                              GdkEvent *event);
 */
+
+/* special functions */
+
+int gtkperl_gtk2_equals(char* class, SV* ptr1, SV* ptr2)
+{
+    return SvIV(SvRV(ptr1)) == SvIV(SvRV(ptr2));
+}
 
 /*
  * Local variables:

@@ -14,15 +14,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Layout.c,v 1.3 2002/11/14 21:31:56 gthyni Exp $
+ * $Id: Layout.c,v 1.4 2002/12/16 17:08:43 ggc Exp $
  */
 
 #include "gtk2-perl-pango.h"
+
+/* PangoLayout *pango_layout_new (PangoContext *context) */
+SV* pangoperl_layout_new(char* class, SV* context)
+{
+    return gtk2_perl_new_object(pango_layout_new(SvPangoContext(context)));
+}
+
+/* PangoLayout *pango_layout_copy (PangoLayout *src) */
+SV* pangoperl_layout_copy(SV* src)
+{
+    return gtk2_perl_new_object(pango_layout_copy(SvPangoLayout(src)));
+}
 
 SV* pangoperl_layout_get_context(SV* layout)
 {
     return gtk2_perl_new_object_from_pointer(pango_layout_get_context(SvPangoLayout(layout)),
 					     "Gtk2::Pango::Context");
+}
+
+/* void pango_layout_set_attributes (PangoLayout *layout, PangoAttrList *attrs) */
+void pangoperl_layout_set_attributes(SV* layout, SV* attrs)
+{
+    pango_layout_set_attributes(SvPangoLayout(layout), SvPangoAttrList(attrs));
+}
+
+/* PangoAttrList *pango_layout_get_attributes (PangoLayout *layout) */
+SV* pangoperl_layout_get_attributes(SV* layout)
+{
+    return gtk2_perl_new_object_from_pointer_nullok(pango_layout_get_attributes(SvPangoLayout(layout)),
+						    "Gtk2::Pango::AttrList");
 }
 
 void pangoperl_layout_set_text(SV* layout, char* text, int length)
@@ -33,6 +58,12 @@ void pangoperl_layout_set_text(SV* layout, char* text, int length)
 SV* pangoperl_layout_get_text(SV* layout)
 {
     return newSVpv(pango_layout_get_text(SvPangoLayout(layout)), 0);
+}
+
+/* void pango_layout_set_markup (PangoLayout *layout, const char *markup, int length) */
+void pangoperl_layout_set_markup(SV* layout, char* markup, int length)
+{
+    pango_layout_set_markup(SvPangoLayout(layout), markup, length);
 }
 
 void pangoperl_layout_set_font_description(SV* layout, SV* desc)
@@ -108,6 +139,12 @@ void pangoperl_layout_set_single_paragraph_mode(SV* layout, int setting)
 int pangoperl_layout_get_single_paragraph_mode(SV* layout)
 {
     return pango_layout_get_single_paragraph_mode(SvPangoLayout(layout));
+}
+
+/* void pango_layout_context_changed (PangoLayout *layout) */
+void pangoperl_layout_context_changed(SV* layout)
+{
+    pango_layout_context_changed(SvPangoLayout(layout));
 }
 
 SV* pangoperl_layout__get_size(SV* layout)

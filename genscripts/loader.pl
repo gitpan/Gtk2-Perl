@@ -1,4 +1,6 @@
 #!/usr/bin/perl -w
+#
+# $Id: loader.pl,v 1.2 2002/12/13 14:28:06 ggc Exp $
 
 use IO::File;
 
@@ -7,7 +9,7 @@ my $lfile = IO::File->new("> Gtk2/_loader.pm");
 print $lfile 
   "# Autogenerate file, do not edit\n",
   "# run genscripts/loader.pl instead\n",
-  "# \$Id: loader.pl,v 1.1 2002/11/12 20:29:20 gthyni Exp $\n\n";
+  '# $'.'Id$'."\n\n";
 
 for my $dir qw(Gtk2 Gtk2/Gdk Gtk2/Gdk/Event Gtk2/Pango Gtk2/Atk)
   {

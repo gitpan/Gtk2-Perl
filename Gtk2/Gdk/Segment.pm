@@ -16,19 +16,19 @@ package Gtk2::Gdk::Segment;
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: Segment.pm,v 1.3 2002/11/12 16:20:54 ggc Exp $
+# $Id: Segment.pm,v 1.5 2002/12/16 17:24:23 ggc Exp $
 #
 
-our $rcsid = '$Id: Segment.pm,v 1.3 2002/11/12 16:20:54 ggc Exp $';
+our $rcsid = '$Id: Segment.pm,v 1.5 2002/12/16 17:24:23 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::_Boxed;
 @ISA = qw(Gtk2::_Boxed);
 
 sub values {
-    my $values = shift->_values();
+    my $values = shift->_values;
     return wantarray ? @$values : $values;
 }
 

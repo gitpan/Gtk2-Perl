@@ -1,4 +1,4 @@
-/* $Id: GClosure.c,v 1.15 2002/12/09 22:10:08 ggc Exp $
+/* $Id: GClosure.c,v 1.16 2003/01/08 19:02:23 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -88,13 +88,20 @@ perl_closure_marshal(GClosure *closure,
 	perl_call_sv(pc->callback, G_DISCARD|G_EVAL);
 	if (SvTRUE(ERRSV)) {
 	    if (!gtk2_perl_trap_exceptions_in_callbacks)
-		fprintf(stderr, "Gtk2-Perl: callback throwed a perl exception (a die) but I can't recover\n"
-			        "correctly from it, sorry (only handled when callbacks are called from within\n"
-			        "a gtk_main), continuing normal execution; try to not use exceptions in\n"
-			        "this callback.\n\tException: %s\n", SvPV_nolen(ERRSV));
+		fprintf(stderr, "\tGtk2-Perl: callback throwed a perl exception (a die) but I can't recover\n"
+			        "\tcorrectly from it, sorry (only handled when callbacks are called from within\n"
+			        "\ta gtk_main), continuing normal execution; try to not use exceptions in\n"
+			        "\tthis callback. Exception:\n%s\n", SvPV_nolen(ERRSV));
 	    else {
-		gtk2_perl_trap_exceptions_trapped = 1;
-		gtk_main_quit();
+		if (!gtk2_perl_trap_exceptions_save_errsv) {
+		    gtk2_perl_trap_exceptions_save_errsv = newSVsv(ERRSV);
+		    gtk_main_quit();
+		} else {
+		    fprintf(stderr, "\tGtk2-Perl: callback throwed a perl exception (a die) but there is\n"
+			            "\talready a pending exception originating from another callback that\n"
+			            "\tneeds to be re-launched; this one will then be ignored; FYI, the\n"
+			            "\texception throwed by this callback is:\n%s\n", SvPV_nolen(ERRSV));
+		}
 	    }
 	}
 	for (i=0; i<=av_len(supp_args); i++)

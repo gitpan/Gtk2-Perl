@@ -1,4 +1,4 @@
-/* $Id: Dialog.c,v 1.8 2002/11/12 20:29:23 gthyni Exp $
+/* $Id: Dialog.c,v 1.9 2002/12/16 10:24:27 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -67,7 +67,7 @@ void gtkperl_dialog_set_response_sensitive(SV* dialog, int response_id, int sett
 
 /* Access functions */
 
-SV* gtkperl_dialog__vbox(SV* dialog)
+SV* gtkperl_dialog_vbox(SV* dialog)
 {
     return gtk2_perl_new_object(SvGtkDialog(dialog)->vbox);
 }

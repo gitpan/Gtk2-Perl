@@ -14,18 +14,18 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: TreePath.pm,v 1.4 2002/11/26 13:46:12 ggc Exp $
+# $Id: TreePath.pm,v 1.6 2002/12/16 17:23:22 ggc Exp $
 #
 
 package Gtk2::TreePath;
 
-our $rcsid = '$Id: TreePath.pm,v 1.4 2002/11/26 13:46:12 ggc Exp $';
+our $rcsid = '$Id: TreePath.pm,v 1.6 2002/12/16 17:23:22 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 sub get_indices {
-    my $v = shift->_get_indices();
+    my $v = shift->_get_indices;
     return wantarray ? @$v : $v;
 }
 

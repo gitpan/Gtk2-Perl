@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# $Id: treeview.pl,v 1.8 2002/11/22 11:09:21 ggc Exp $
+# $Id: treeview.pl,v 1.9 2003/01/08 17:15:30 ggc Exp $
 # Copyright 2002, Christian Borup <borup@users.sourceforge.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -41,6 +41,7 @@ $window->signal_connect("destroy", sub { Gtk2->quit }, undef);
 
 my $tree_view = Gtk2::TreeView->new;
 $tree_view->set_model($model);
+$tree_view->signal_connect(button_press_event => \&button_press_handler);
 
 # And now this works too - Martin rocks also :-)
 my $selection= $tree_view->get_selection();
@@ -87,3 +88,13 @@ sub changed_handler_single {
 
 }
 
+sub button_press_handler {
+    printf "button pressed on treeview, coordinates x:%d y:%d\n", $_[1]->x, $_[1]->y;
+    my ($returns, $path, $col) = $tree_view->get_path_at_pos($_[1]->x, $_[1]->y);
+    if ($returns) {
+	printf "\ton the row of path: %s\n", $path->to_string;
+	print  "\ton first column\n" if Gtk2->equals($col, $column);
+	print  "\ton second column\n" if Gtk2->equals($col, $column1);
+	$path->free;
+    }
+}

@@ -15,13 +15,13 @@ package Gtk2::Gdk::Pixbuf;
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: Pixbuf.pm,v 1.3 2002/11/09 16:23:15 gthyni Exp $
+# $Id: Pixbuf.pm,v 1.4 2002/12/16 17:24:19 ggc Exp $
 #
 
-our $rcsid = '$Id: Pixbuf.pm,v 1.3 2002/11/09 16:23:15 gthyni Exp $';
+our $rcsid = '$Id: Pixbuf.pm,v 1.4 2002/12/16 17:24:19 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::GObject;
 @ISA = qw(Gtk2::GObject);

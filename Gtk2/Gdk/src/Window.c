@@ -1,4 +1,4 @@
-/* $Id: Window.c,v 1.11 2002/12/09 10:36:23 ggc Exp $
+/* $Id: Window.c,v 1.13 2003/01/21 12:19:28 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -38,11 +38,156 @@ SV* gdkperl_window_new(char* class, SV* parent, SV* attrs, int mask)
     return gtk2_perl_new_object_from_pointer(gdk_window_new(SvGdkWindow(parent), &attributes, mask), class);
 }
 
-SV* gdkperl_window_foreign_new(char* class, int anid)
+/* void gdk_window_destroy (GdkWindow *window) */
+void gdkperl_window_destroy(SV* window)
 {
-    return gtk2_perl_new_object(gdk_window_foreign_new(anid));
+    gdk_window_destroy(SvGdkWindow(window));
 }
 
+/* GdkWindowType gdk_window_get_window_type (GdkWindow *window) */
+SV* gdkperl_window_get_window_type(SV* window)
+{
+    return newSVGdkWindowType(gdk_window_get_window_type(SvGdkWindow(window)));
+}
+
+/* GdkWindow* gdk_window_at_pointer (gint *win_x, gint *win_y) */
+SV* gdkperl_window__at_pointer(char* class)
+{
+    gint win_x, win_y;
+    AV* values = newAV();
+    GdkWindow* window = gdk_window_at_pointer(&win_x, &win_y);
+    av_push(values, gtk2_perl_new_object_from_pointer_nullok(window, "Gtk2::Gdk::Window"));
+    av_push(values, newSViv(win_x));
+    av_push(values, newSViv(win_y));
+    return newRV_noinc((SV*) values);
+}
+
+/* void gdk_window_show (GdkWindow *window) */
+void gdkperl_window_show(SV* window)
+{
+    gdk_window_show(SvGdkWindow(window));
+}
+
+/* void gdk_window_hide (GdkWindow *window) */
+void gdkperl_window_hide(SV* window)
+{
+    gdk_window_hide(SvGdkWindow(window));
+}
+
+/* void gdk_window_withdraw (GdkWindow *window) */
+void gdkperl_window_withdraw(SV* window)
+{
+    gdk_window_withdraw(SvGdkWindow(window));
+}
+
+/* void gdk_window_show_unraised (GdkWindow *window) */
+void gdkperl_window_show_unraised(SV* window)
+{
+    gdk_window_show_unraised(SvGdkWindow(window));
+}
+
+/* void gdk_window_move (GdkWindow *window, gint x, gint y) */
+void gdkperl_window_move(SV* window, int x, int y)
+{
+    gdk_window_move(SvGdkWindow(window), x, y);
+}
+
+/* void gdk_window_resize (GdkWindow *window, gint width, gint height) */
+void gdkperl_window_resize(SV* window, int width, int height)
+{
+    gdk_window_resize(SvGdkWindow(window), width, height);
+}
+
+/* void gdk_window_move_resize (GdkWindow *window, gint x, gint y, gint width, gint height) */
+void gdkperl_window_move_resize(SV* window, int x, int y, int width, int height)
+{
+    gdk_window_move_resize(SvGdkWindow(window), x, y, width, height);
+}
+
+/* void gdk_window_reparent (GdkWindow *window, GdkWindow *new_parent, gint x, gint y) */
+void gdkperl_window_reparent(SV* window, SV* new_parent, int x, int y)
+{
+    gdk_window_reparent(SvGdkWindow(window), SvGdkWindow(new_parent), x, y);
+}
+
+/* void gdk_window_clear (GdkWindow *window) */
+void gdkperl_window_clear(SV* window)
+{
+    gdk_window_clear(SvGdkWindow(window));
+}
+
+/* void gdk_window_clear_area (GdkWindow *window, gint x, gint y, gint width, gint height) */
+void gdkperl_window_clear_area(SV* window, int x, int y, int width, int height)
+{
+    gdk_window_clear_area(SvGdkWindow(window), x, y, width, height);
+}
+
+/* void gdk_window_clear_area_e (GdkWindow *window, gint x, gint y, gint width, gint height) */
+void gdkperl_window_clear_area_e(SV* window, int x, int y, int width, int height)
+{
+    gdk_window_clear_area_e(SvGdkWindow(window), x, y, width, height);
+}
+
+/* void gdk_window_raise (GdkWindow *window) */
+void gdkperl_window_raise(SV* window)
+{
+    gdk_window_raise(SvGdkWindow(window));
+}
+
+/* void gdk_window_lower (GdkWindow *window) */
+void gdkperl_window_lower(SV* window)
+{
+    gdk_window_lower(SvGdkWindow(window));
+}
+
+/* void gdk_window_focus (GdkWindow *window, guint32 timestamp) */
+void gdkperl_window_focus(SV* window, int timestamp)
+{
+    gdk_window_focus(SvGdkWindow(window), timestamp);
+}
+
+/* void gdk_window_set_override_redirect (GdkWindow *window, gboolean override_redirect) */
+void gdkperl_window_set_override_redirect(SV* window, int override_redirect)
+{
+    gdk_window_set_override_redirect(SvGdkWindow(window), override_redirect);
+}
+
+/* void gdk_window_scroll (GdkWindow *window, gint dx, gint dy) */
+void gdkperl_window_scroll(SV* window, int dx, int dy)
+{
+    gdk_window_scroll(SvGdkWindow(window), dx, dy);
+}
+
+/* void gdk_window_set_child_shapes (GdkWindow *window) */
+void gdkperl_window_set_child_shapes(SV* window)
+{
+    gdk_window_set_child_shapes(SvGdkWindow(window));
+}
+
+/* void gdk_window_merge_child_shapes (GdkWindow *window) */
+void gdkperl_window_merge_child_shapes(SV* window)
+{
+    gdk_window_merge_child_shapes(SvGdkWindow(window));
+}
+
+/* gboolean gdk_window_set_static_gravities (GdkWindow *window, gboolean use_static) */
+int gdkperl_window_set_static_gravities(SV* window, int use_static)
+{
+    return gdk_window_set_static_gravities(SvGdkWindow(window), use_static);
+}
+
+#ifndef GDK_MULTIHEAD_SAFE
+SV* gdkperl_window_foreign_new(char* class, int anid)
+{
+    return gtk2_perl_new_object_nullok(gdk_window_foreign_new(anid));
+}
+
+/* GdkWindow* gdk_window_lookup (GdkNativeWindow anid) */
+SV* gdkperl_window_lookup(char* class, int anid)
+{
+    return gtk2_perl_new_object(gdk_window_lookup(anid));
+}
+#endif
 
 /* gboolean gdk_window_is_visible (GdkWindow *window) */
 int gdkperl_window_is_visible(SV* window)
@@ -165,6 +310,29 @@ SV* gdkperl_window__get_root_origin(SV* window)
     return newRV_noinc((SV*) values);
 }
 
+/* void gdk_window_get_frame_extents (GdkWindow *window, GdkRectangle *rect) */
+SV* gdkperl_window_get_frame_extents(SV* window)
+{
+    GdkRectangle* rect = g_malloc0(sizeof(GdkRectangle));
+    gdk_window_get_frame_extents(SvGdkWindow(window), rect);
+    return gtk2_perl_new_object_from_pointer(rect, "Gtk2::Gdk::Rectangle");
+}
+
+/* GdkWindow* gdk_window_get_pointer (GdkWindow *window, gint *x, gint *y, GdkModifierType *mask) */
+SV* gdkperl_window__get_pointer(SV* window)
+{
+    gint x, y;
+    GdkModifierType mask;
+    AV* values = newAV();
+    GdkWindow* return_window = gdk_window_get_pointer(SvGdkWindow(window), &x, &y, &mask);
+    av_push(values, gtk2_perl_new_object_from_pointer_nullok(return_window, "Gtk2::Gdk::Window"));
+    av_push(values, newSViv(x));
+    av_push(values, newSViv(y));
+    av_push(values, newSVGdkModifierType(mask));
+    return newRV_noinc((SV*) values);
+}
+
+
 /* GdkWindow * gdk_window_get_parent (GdkWindow *window) */
 SV* gdkperl_window_get_parent(SV* window)
 {
@@ -260,10 +428,52 @@ void gdkperl_window_unmaximize(SV* window)
     gdk_window_unmaximize(SvGdkWindow(window));
 }
 
+/* void gdk_window_fullscreen (GdkWindow *window) */
+void gdkperl_window_fullscreen(SV* window)
+{
+    gdk_window_fullscreen(SvGdkWindow(window));
+}
+
+/* void gdk_window_unfullscreen (GdkWindow *window) */
+void gdkperl_window_unfullscreen(SV* window)
+{
+    gdk_window_unfullscreen(SvGdkWindow(window));
+}
+
 /* void gdk_window_register_dnd (GdkWindow *window) */
 void gdkperl_window_register_dnd(SV* window)
 {
     gdk_window_register_dnd(SvGdkWindow(window));
+}
+
+/* void gdk_window_invalidate_rect (GdkWindow *window, GdkRectangle *rect, gboolean invalidate_children) */
+void gdkperl_window_invalidate_rect(SV* window, SV* rect, int invalidate_children)
+{
+    gdk_window_invalidate_rect(SvGdkWindow(window), SvGdkRectangle(rect), invalidate_children);
+}
+
+/* void gdk_window_freeze_updates (GdkWindow *window) */
+void gdkperl_window_freeze_updates(SV* window)
+{
+    gdk_window_freeze_updates(SvGdkWindow(window));
+}
+
+/* void gdk_window_thaw_updates (GdkWindow *window) */
+void gdkperl_window_thaw_updates(SV* window)
+{
+    gdk_window_thaw_updates(SvGdkWindow(window));
+}
+
+/* void gdk_window_process_all_updates (void) */
+void gdkperl_window_process_all_updates(char* class)
+{
+    gdk_window_process_all_updates();
+}
+
+/* void gdk_window_process_updates (GdkWindow *window, gboolean update_children) */
+void gdkperl_window_process_updates(SV* window, int update_children)
+{
+    gdk_window_process_updates(SvGdkWindow(window), update_children);
 }
 
 
@@ -272,3 +482,8 @@ void gdkperl_window_register_dnd(SV* window)
 
 // int gdkperl_window_get_type(SV* ge) { return (SvGdkWindow(ge))->type; }
 
+/*
+ * Local variables:
+ *  c-basic-offset: 4
+ * End:
+ */

@@ -7,7 +7,7 @@
 #==============================================================================
 require 5.000; use strict 'vars', 'refs', 'subs';
 
-our $rcsid = '$Id: 045_Gtk2_FontSelectionDialog.t,v 1.5 2002/11/15 04:13:58 glade-perl Exp $';
+our $rcsid = '$Id: 045_Gtk2_FontSelectionDialog.t,v 1.6 2003/01/21 18:57:50 gthyni Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 BEGIN { 
@@ -19,7 +19,7 @@ BEGIN {
             ["new('Test Title')"],
             [$GET_SET, 'preview_text', "'abcdefghijk ABCDEFGHIJK'", "'New preview text'"],
             ["set_font_name('serif 12')", "== $TRUE"],
-            [$GET_SET, 'font_name', "'serif 12'", "'sans 12'"],
+            [$GET_SET, 'font_name', "'Serif 12'", "'Sans 12'"],
             ["signal_connect('delete_event', 'quit')"],
             ["signal_connect('destroy', 'quit')"],
 

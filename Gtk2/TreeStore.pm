@@ -15,10 +15,10 @@ package Gtk2::TreeStore;
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-our $rcsid = '$Id: TreeStore.pm,v 1.4 2002/11/13 20:53:13 ggc Exp $';
+our $rcsid = '$Id: TreeStore.pm,v 1.6 2002/12/16 17:23:30 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::TreeModel;
 @ISA = qw(Gtk2::TreeModel);
@@ -40,7 +40,7 @@ sub new {
 # Append a new row, set the values, return the TreeIter
 sub append_set {
     my ($model, $parent, $values) = @_;
-    my $iter = Gtk2::TreeIter->new();
+    my $iter = Gtk2::TreeIter->new;
     $model->append($iter, $parent);
     $model->set($iter, $values);
     return $iter;

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $Id: hello5.pl,v 1.4 2002/11/26 16:38:21 ggc Exp $
+# $Id: hello5.pl,v 1.5 2002/12/11 13:10:18 gthyni Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
@@ -10,7 +10,7 @@
 use Gtk2;
 
 Gtk2->init(\@ARGV);
-my $window = Gtk2::Window->new('toplevel');
+my $window = Gtk2::Window->new(-toplevel);
 my $button = Gtk2::Button->new();
 my $label = Gtk2::Label->new("Hello world!");
 $button->add($label);

@@ -1,4 +1,4 @@
-/* $Id: Widget.c,v 1.43 2002/12/01 20:32:41 gthyni Exp $
+/* $Id: Widget.c,v 1.45 2003/01/09 17:14:35 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -202,28 +202,37 @@ void gtkperl_widget_add_accelerator(SV* widget, gchar* accel_signal,
                                     SV* accel_group, int accel_key,
                                     SV* accel_mods, SV* accel_flags)
 {
-    gtk_widget_add_accelerator      (SvGtkWidget(widget),
-                                     accel_signal,
-                                     SvGtkAccelGroup(accel_group),
-                                     accel_key,
-                                     SvGdkModifierType(accel_mods),
-                                     SvGtkAccelFlags(accel_flags));
+    gtk_widget_add_accelerator(SvGtkWidget(widget), accel_signal,
+			       SvGtkAccelGroup(accel_group), accel_key,
+			       SvGdkModifierType(accel_mods), SvGtkAccelFlags(accel_flags));
 }
+
+/* gboolean gtk_widget_remove_accelerator (GtkWidget *widget, GtkAccelGroup *accel_group,
+                                           guint accel_key, GdkModifierType accel_mods) */
+int gtkperl_widget_remove_accelerator(SV* widget, SV* accel_group,
+				      int accel_key, SV* accel_mods)
+{
+    return gtk_widget_remove_accelerator(SvGtkWidget(widget), SvGtkAccelGroup(accel_group),
+					 accel_key, SvGdkModifierType(accel_mods));
+}
+
+/* void gtk_widget_size_request (GtkWidget *widget, GtkRequisition *requisition) */
+SV* gtkperl_widget_size_request(SV* widget)
+{
+    GtkRequisition* req = g_malloc0(sizeof(GtkRequisition));
+    gtk_widget_size_request(SvGtkWidget(widget), req);
+    return gtk2_perl_new_object_from_pointer(req, "Gtk2::Requisition");
+}
+
 /*
 void        gtk_widget_queue_resize         (GtkWidget *widget);
 void        gtk_widget_draw                 (GtkWidget *widget,
                                              GdkRectangle *area);
-void        gtk_widget_size_request         (GtkWidget *widget,
-                                             GtkRequisition *requisition);
 void        gtk_widget_get_child_requisition
                                             (GtkWidget *widget,
                                              GtkRequisition *requisition);
 void        gtk_widget_size_allocate        (GtkWidget *widget,
                                              GtkAllocation *allocation);
-gboolean    gtk_widget_remove_accelerator   (GtkWidget *widget,
-                                             GtkAccelGroup *accel_group,
-                                             guint accel_key,
-                                             GdkModifierType accel_mods);
 void        gtk_widget_set_accel_path       (GtkWidget *widget,
                                              const gchar *accel_path,
                                              GtkAccelGroup *accel_group);

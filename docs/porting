@@ -17,7 +17,7 @@ message, change your code.
 As for the rest:
 
 Old                                                        New
-Gtk->main_iteration() while Gtk->events_pending()          Gtk2->update_ui()
+Gtk->main_iteration while Gtk->events_pending          Gtk2->update_ui
 
 
     [*] GdkColor
@@ -32,10 +32,10 @@ $color = Gtk2::Gdk::Color->new($r, $g, $b);
     [*] GdkWindow
 
 Old:
-($height, $width) = $window->get_size()
+($height, $width) = $window->get_size
 
 This was broken because sending back data in the wrong order. New:
-($width, $height) = $window->get_size()
+($width, $height) = $window->get_size
 
 
     [*] Images and Pixbufs
@@ -53,8 +53,8 @@ my $pixbuf = Gtk2::Gdk::Pixbuf->new_from_file('/usr/share/icons/emacs.png');
 
 And in the expose_event of your $drawingarea:
 
-$pixbuf->render_to_drawable($drawingarea->window(),
-                            $drawingarea->style()->white_gc(),
+$pixbuf->render_to_drawable($drawingarea->window,
+                            $drawingarea->style->white_gc,
 			    0, 0, 0, 0, -1, -1, 'none', 0, 0);
 
 
@@ -70,8 +70,8 @@ $drawingarea->modify_font(Gtk2::Pango::FontDescription->from_string('Sans Bold 2
 In the expose_event of the DrawingArea:
 
 my $layout = $drawingarea->create_pango_layout("My very important text");
-$drawingarea->window()->draw_layout($drawingarea->style()->fg_gc('normal'), 5, 5, $layout);
-$layout->unref();
+$drawingarea->window->draw_layout($drawingarea->style->fg_gc('normal'), 5, 5, $layout);
+$layout->unref;
 
 
     [*] Specialized GdkEvent's
@@ -82,15 +82,15 @@ $evt_time    = $button_evt->{time};
 $keyval      = $key_evt->{keyval};
 
 New: using methods just like normal objects:
-$butt_number = $button_evt->button();
-$evt_time    = $button_evt->time();
-$keyval      = $key_evt->keyval();
+$butt_number = $button_evt->button;
+$evt_time    = $button_evt->time;
+$keyval      = $key_evt->keyval;
 
 
     [*] GdkEventKey
 
-Old: {state} was an int following C things
-New: ->state() is like all the gtk flags, e.g. an arrayref of
+Old: $evt->{state} was an int following C things
+New: $evt->state is like all the gtk flags, e.g. an arrayref of
      strings
 
 
@@ -158,8 +158,8 @@ it goes:
   * GtkText -> GtkTextView:
 
 -=-=---=-=---=-=---=-=---=-=---=-=---=-=--
-$textview = Gtk2::TextView->new();
-$textview->get_buffer()->set_text("Very interesting text", -1);
+$textview = Gtk2::TextView->new;
+$textview->get_buffer->set_text("Very interesting text", -1);
 -=-=---=-=---=-=---=-=---=-=---=-=---=-=--
 
   * GtkCList -> GtkTreeView with a GtkListStore model:

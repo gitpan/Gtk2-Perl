@@ -1,14 +1,14 @@
 package Gtk2::GType;
 
-# $Id: GType.pm,v 1.5 2002/11/09 16:23:15 gthyni Exp $
+# $Id: GType.pm,v 1.6 2002/12/16 17:17:24 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: GType.pm,v 1.5 2002/11/09 16:23:15 gthyni Exp $';
+our $rcsid = '$Id: GType.pm,v 1.6 2002/12/16 17:17:24 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 
 sub FUNDAMENTAL_SHIFT	{2}

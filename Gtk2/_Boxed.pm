@@ -21,10 +21,10 @@
 
 package Gtk2::_Boxed;
 
-our $rcsid = '$Id: _Boxed.pm,v 1.1 2002/11/12 16:20:50 ggc Exp $';
+our $rcsid = '$Id: _Boxed.pm,v 1.2 2002/12/16 17:07:20 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 
 1;

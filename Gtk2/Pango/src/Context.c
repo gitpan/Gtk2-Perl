@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Context.c,v 1.3 2002/11/14 21:31:56 gthyni Exp $
+ * $Id: Context.c,v 1.4 2003/01/03 15:30:05 ggc Exp $
  */
 
 #include "gtk2-perl-pango.h"
@@ -23,7 +23,7 @@ SV* pangoperl_context_get_metrics(SV* context, SV* desc, SV* language)
 {
     return gtk2_perl_new_object_from_pointer(pango_context_get_metrics(SvPangoContext(context),
 								       SvPangoFontDescription(desc),
-								       SvPangoLanguage(language)),
+								       SvPangoLanguage_nullok(language)),
 					     "Gtk2::Pango::FontMetrics");
 }
 

@@ -4,10 +4,10 @@ package Gtk2::TreeModelSort;
 # licensed under Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: TreeModelSort.pm,v 1.2 2002/11/11 20:06:35 gthyni Exp $';
+our $rcsid = '$Id: TreeModelSort.pm,v 1.3 2002/12/16 17:23:19 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-#BEGIN { do 'Gtk2/_config.pm'; }
+#BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::GObject;
 @ISA=qw(Gtk2::GObject);

@@ -1,4 +1,4 @@
-/* $Id: GObject.c,v 1.15 2002/11/25 17:28:19 ggc Exp $
+/* $Id: GObject.c,v 1.16 2003/01/03 15:10:22 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -6,11 +6,15 @@
 
 #include "gtk2-perl.h"
 
+static void destroy_data_notifier(gpointer data)
+{
+    SvREFCNT_dec((SV*) data);
+}
 
 void gperl_object__set_data(SV* object, gchar* key, SV* data)
 {
     SvREFCNT_inc(data);
-    g_object_set_data(SvGObject(object), key, data);
+    g_object_set_data_full(SvGObject(object), key, data, destroy_data_notifier);
 }
 
 SV* gperl_object__get_data(SV* object, gchar* key)
@@ -174,3 +178,9 @@ void        gtk_object_remove_no_notify_by_id
 #define     gtk_object_data_force_id
 
 */
+
+/*
+ * Local variables:
+ *  c-basic-offset: 4
+ * End:
+ */

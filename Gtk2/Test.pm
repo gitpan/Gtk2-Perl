@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 require 5.000; use strict 'vars', 'refs', 'subs';
 
-our $rcsid = '$Id: Test.pm,v 1.16 2002/11/16 07:56:49 glade-perl Exp $';
+our $rcsid = '$Id: Test.pm,v 1.17 2002/12/16 14:40:06 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 # Copyright (c) 2002 Dermot Musgrove <dermot.musgrove@virgin.net>
@@ -251,7 +251,7 @@ I<BYPRODUCT> - C<$ret> is set to the value returned from the eval
 The widget specified or the last constructed is added to the test HBox in the
 test window.
 
-I<BYPRODUCT> - The widget has C<$widget->show()> called for it.
+I<BYPRODUCT> - The widget has C<$widget->show> called for it.
 
 =back
 
@@ -746,7 +746,7 @@ sub make_test_box {
     $w->{'Test'}{'HBox'}[0]->add($w->{'Test'}{'Button'}[1]);
 #    $w->{'Test'}{'HBox'}[0]->set_child_packing($w->{'Test'}{'Button'}[1], 0, 1, 0, 'start');
     $w->{'Test'}{'Button'}[1]->grab_focus;
-    $w->{'Test'}{'Window'}[0]->show_all();
+    $w->{'Test'}{'Window'}[0]->show_all;
     return $OK;
 }
 
@@ -755,7 +755,7 @@ sub add_to_test_box {
     return $OK if ($ENV{HARNESS_ACTIVE});
     $widget ||= $o;
 
-    $widget->show();
+    $widget->show;
     $w->{'Test'}{'VBox'}[0]->add($widget);
     return $OK;
 }

@@ -1,14 +1,14 @@
 package Gtk2::Gdk::Gdk;
 
-# $Id: Gdk.pm,v 1.1 2002/11/20 18:06:07 gthyni Exp $
+# $Id: Gdk.pm,v 1.2 2002/12/16 17:24:15 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Gdk.pm,v 1.1 2002/11/20 18:06:07 gthyni Exp $';
+our $rcsid = '$Id: Gdk.pm,v 1.2 2002/12/16 17:24:15 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 # Event types.
 # *   Nothing: No event occurred.

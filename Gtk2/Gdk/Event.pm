@@ -1,14 +1,14 @@
 package Gtk2::Gdk::Event;
 
-# $Id: Event.pm,v 1.10 2002/11/19 16:46:53 ggc Exp $
+# $Id: Event.pm,v 1.12 2002/12/16 17:24:12 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Event.pm,v 1.10 2002/11/19 16:46:53 ggc Exp $';
+our $rcsid = '$Id: Event.pm,v 1.12 2002/12/16 17:24:12 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::Gdk;
 
@@ -30,15 +30,15 @@ use Gtk2::Gdk::Event::Setting;
 use Gtk2::Gdk::Event::WindowState;
 use Gtk2::Gdk::Event::Visibility;
 
-sub get_type { shift->type(); }
+sub get_type { shift->type; }
 
 sub get_coords {
-    my $values = shift->_get_coords();
+    my $values = shift->_get_coords;
     return wantarray ? (defined $values && ref($values) eq 'ARRAY' ? @$values : undef) : $values;
 }
 
 sub get_root_coords {
-    my $values = shift->_get_root_coords();
+    my $values = shift->_get_root_coords;
     return wantarray ? (defined $values && ref($values) eq 'ARRAY' ? @$values : undef) : $values;
 }
 

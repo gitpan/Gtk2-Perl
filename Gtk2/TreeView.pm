@@ -1,14 +1,14 @@
 package Gtk2::TreeView;
 
-# $Id: TreeView.pm,v 1.11 2002/11/26 14:54:06 ggc Exp $
+# $Id: TreeView.pm,v 1.14 2003/01/08 17:03:30 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: TreeView.pm,v 1.11 2002/11/26 14:54:06 ggc Exp $';
+our $rcsid = '$Id: TreeView.pm,v 1.14 2003/01/08 17:03:30 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::Container;
 @ISA=qw(Gtk2::Container);
@@ -20,7 +20,12 @@ use Gtk2::TreePath;
 
 
 sub get_cursor {
-    my $values = shift->_get_cursor();
+    my $values = shift->_get_cursor;
+    return wantarray ? @$values : $values;
+}
+
+sub get_path_at_pos {
+    my $values = shift->_get_path_at_pos(@_);
     return wantarray ? @$values : $values;
 }
 

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: _Helpers.c,v 1.28 2002/12/09 22:10:08 ggc Exp $
+ * $Id: _Helpers.c,v 1.31 2003/01/08 19:02:23 ggc Exp $
  */
 
 #include "gtk2-perl.h"
@@ -44,8 +44,9 @@ ClassLevel pango_level     = {"Pango", "Gtk2::Pango", NULL};
 ClassLevel gdk_event_level = {"GdkEvent", "Gtk2::Gdk::Event", NULL};   /* allows for GdkEventWhatever to work */
 ClassLevel gdk_level       = {"Gdk", "Gtk2::Gdk", NULL};
 ClassLevel glib_level      = {"G", "Gtk2", NULL};                      /* glib objects are Gtk2::GObject etc */
+ClassLevel art_level       = {"Art", "Gnome2::Art", NULL};
 
-#define nb_levels 6
+#define nb_levels 7
 ClassLevel *levels[nb_levels] = {
   &gtk_level,
   &gnome_level,
@@ -53,6 +54,7 @@ ClassLevel *levels[nb_levels] = {
   &gdk_event_level,
   &gdk_level,
   &glib_level,
+  &art_level,
 };
 
 /*
@@ -158,8 +160,10 @@ static int streq_gtkenums(register char* a, register char *b) {
 gint gtk2_perl_convert_enum(GType type, SV* val)
 {
     SV *r;
+    GEnumValue * vals;
     char *val_p = SvPV_nolen(val);
-    GEnumValue * vals = gtk_type_enum_get_values(type);
+    if (*val_p == '-') val_p++;
+    vals = gtk_type_enum_get_values(type);
     // fprintf(stderr, "VAL: %x (%s), %d\n", val_p, val_p, SvIV(val));
     while (vals && vals->value_nick && vals->value_name) {
 	if (streq_gtkenums(val_p, vals->value_name) || 
@@ -382,8 +386,7 @@ void gtk2_perl_marshal_GtkCallback(GtkWidget *widget, gpointer data)
  * propagate as usual, else it will mess up the gtk C stack call
  */
 int gtk2_perl_trap_exceptions_in_callbacks = 0;
-int gtk2_perl_trap_exceptions_trapped = 0;
-
+SV* gtk2_perl_trap_exceptions_save_errsv = NULL;
 
 
 /*

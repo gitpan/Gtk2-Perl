@@ -1,14 +1,14 @@
 package Gtk2::Gdk::Pixmap;
 
-# $Id: Pixmap.pm,v 1.7 2002/11/27 13:18:16 gthyni Exp $
+# $Id: Pixmap.pm,v 1.8 2002/12/16 17:24:19 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Pixmap.pm,v 1.7 2002/11/27 13:18:16 gthyni Exp $';
+our $rcsid = '$Id: Pixmap.pm,v 1.8 2002/12/16 17:24:19 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::Gdk::Drawable;
 @ISA = qw(Gtk2::Gdk::Drawable);

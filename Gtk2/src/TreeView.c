@@ -1,4 +1,4 @@
-/* $Id: TreeView.c,v 1.13 2002/11/26 14:54:04 ggc Exp $
+/* $Id: TreeView.c,v 1.15 2003/01/08 17:03:39 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -118,6 +118,36 @@ int gtkperl_tree_view_row_expanded(SV* tree_view, SV* path)
     return gtk_tree_view_row_expanded(SvGtkTreeView(tree_view), SvGtkTreePath(path));
 }
 
+/* void gtk_tree_view_columns_autosize (GtkTreeView *tree_view) */
+void gtkperl_tree_view_columns_autosize(SV* tree_view)
+{
+    gtk_tree_view_columns_autosize(SvGtkTreeView(tree_view));
+}
+
+/* void gtk_tree_view_set_headers_clickable (GtkTreeView *tree_view, gboolean setting) */
+void gtkperl_tree_view_set_headers_clickable(SV* tree_view, int setting)
+{
+    gtk_tree_view_set_headers_clickable(SvGtkTreeView(tree_view), setting);
+}
+
+/* gint gtk_tree_view_remove_column (GtkTreeView *tree_view, GtkTreeViewColumn *column) */
+int gtkperl_tree_view_remove_column(SV* tree_view, SV* column)
+{
+    return gtk_tree_view_remove_column(SvGtkTreeView(tree_view), SvGtkTreeViewColumn(column));
+}
+
+/* gint gtk_tree_view_insert_column (GtkTreeView *tree_view, GtkTreeViewColumn *column, gint position) */
+int gtkperl_tree_view_insert_column(SV* tree_view, SV* column, int position)
+{
+    return gtk_tree_view_insert_column(SvGtkTreeView(tree_view), SvGtkTreeViewColumn(column), position);
+}
+
+/* GtkTreeViewColumn *gtk_tree_view_get_column (GtkTreeView *tree_view, gint n) */
+SV* gtkperl_tree_view_get_column(SV* tree_view, int n)
+{
+    return gtk2_perl_new_object(gtk_tree_view_get_column(SvGtkTreeView(tree_view), n));
+}
+
 /* NOT IMPLEMENTED YET 
 // Accessors 
 
@@ -127,17 +157,6 @@ void                   gtk_tree_view_set_hadjustment               (GtkTreeView 
 GtkAdjustment         *gtk_tree_view_get_vadjustment               (GtkTreeView               *tree_view);
 void                   gtk_tree_view_set_vadjustment               (GtkTreeView               *tree_view,
 								    GtkAdjustment             *adjustment);
-void                   gtk_tree_view_columns_autosize              (GtkTreeView               *tree_view);
-void                   gtk_tree_view_set_headers_clickable         (GtkTreeView               *tree_view,
-								    gboolean                   setting);
-*/
-
-/* NOT IMPLEMENTED YET
-gint                   gtk_tree_view_remove_column                 (GtkTreeView               *tree_view,
-								    GtkTreeViewColumn         *column);
-gint                   gtk_tree_view_insert_column                 (GtkTreeView               *tree_view,
-								    GtkTreeViewColumn         *column,
-								    gint                       position);
 gint                   gtk_tree_view_insert_column_with_attributes (GtkTreeView               *tree_view,
 								    gint                       position,
 								    const gchar               *title,
@@ -150,8 +169,6 @@ gint                   gtk_tree_view_insert_column_with_data_func  (GtkTreeView 
                                                                     GtkTreeCellDataFunc        func,
                                                                     gpointer                   data,
                                                                     GDestroyNotify             dnotify);
-GtkTreeViewColumn     *gtk_tree_view_get_column                    (GtkTreeView               *tree_view,
-								    gint                       n);
 GList                 *gtk_tree_view_get_columns                   (GtkTreeView               *tree_view);
 void                   gtk_tree_view_move_column_after             (GtkTreeView               *tree_view,
 								    GtkTreeViewColumn         *column,
@@ -205,6 +222,27 @@ SV* gtkperl_tree_view__get_cursor(SV* tree_view)
     gtk_tree_view_get_cursor(SvGtkTreeView(tree_view), &path, &col);
     av_push(values, gtk2_perl_new_object_from_pointer_nullok(path, "Gtk2::TreePath"));
     av_push(values, gtk2_perl_new_object_nullok(col));
+    return newRV_noinc((SV*) values);
+}
+
+/* gboolean gtk_tree_view_get_path_at_pos (GtkTreeView *tree_view,
+                                           gint x, gint y,
+                                           GtkTreePath **path, GtkTreeViewColumn **column,
+                                           gint *cell_x, gint *cell_y) */
+SV* gtkperl_tree_view__get_path_at_pos(SV* tree_view, int x, int y)
+{
+    int returns;
+    GtkTreePath* path = gtk_tree_path_new();
+    GtkTreeViewColumn* column = gtk_tree_view_column_new();
+    gint cell_x;
+    gint cell_y;
+    AV* values = newAV();
+    returns = gtk_tree_view_get_path_at_pos(SvGtkTreeView(tree_view), x, y, &path, &column, &cell_x, &cell_y);
+    av_push(values, newSViv(returns));
+    av_push(values, gtk2_perl_new_object_from_pointer_nullok(path,   "Gtk2::TreePath"));
+    av_push(values, gtk2_perl_new_object_from_pointer_nullok(column, "Gtk2::TreeViewColumn"));
+    av_push(values, newSViv(cell_x));
+    av_push(values, newSViv(cell_y));
     return newRV_noinc((SV*) values);
 }
 

@@ -14,16 +14,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: _Helpers.pm,v 1.10 2002/11/11 17:49:44 ggc Exp $
+# $Id: _Helpers.pm,v 1.11 2002/12/16 17:18:38 ggc Exp $
 #
 
 package Gtk2::_Helpers;
 
 
-our $rcsid = '$Id: _Helpers.pm,v 1.10 2002/11/11 17:49:44 ggc Exp $';
+our $rcsid = '$Id: _Helpers.pm,v 1.11 2002/12/16 17:18:38 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 
 # ``Gtk2::_Helpers::deprecated('new_func_name', @_)''

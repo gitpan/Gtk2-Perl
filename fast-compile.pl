@@ -1,5 +1,9 @@
-#!/usr/bin/perl -w
-require 5.000; use strict 'vars', 'refs', 'subs';
+#!/usr/bin/perl
+
+use 5.006;
+use strict 'vars', 'refs', 'subs';
+use warnings;
+use lib '.';
 
 # Copyright 2002, Dermot Musgrove, Göran Thyni
 #
@@ -15,7 +19,7 @@ require 5.000; use strict 'vars', 'refs', 'subs';
 #
 # b) the Artistic License.
 #
-# $Id: fast-compile.pl,v 1.12 2002/11/18 17:30:11 gthyni Exp $
+# $Id: fast-compile.pl,v 1.14 2002/12/11 12:42:07 gthyni Exp $
 #
 
 use Carp;

@@ -15,15 +15,15 @@ package Gtk2::BoxChild;
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: BoxChild.pm,v 1.1 2002/11/28 13:55:27 ggc Exp $
+# $Id: BoxChild.pm,v 1.3 2002/12/16 17:07:11 ggc Exp $
 
-our $rcsid = '$Id: BoxChild.pm,v 1.1 2002/11/28 13:55:27 ggc Exp $';
+our $rcsid = '$Id: BoxChild.pm,v 1.3 2002/12/16 17:07:11 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 sub values {
-    my $values = shift->_values();
+    my $values = shift->_values;
     return wantarray ? @$values : $values;
 }
 

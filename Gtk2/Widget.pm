@@ -1,14 +1,14 @@
 package Gtk2::Widget;
 
-# $Id: Widget.pm,v 1.25 2002/11/21 15:35:51 ggc Exp $
+# $Id: Widget.pm,v 1.27 2002/12/16 17:23:56 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Widget.pm,v 1.25 2002/11/21 15:35:51 ggc Exp $';
+our $rcsid = '$Id: Widget.pm,v 1.27 2002/12/16 17:23:56 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::Object;
 @ISA=qw(Gtk2::Object);
@@ -26,7 +26,7 @@ sub FLAGS {
     if (defined($set)) {
 	$self->SET_FLAGS($set);
     } else {
-	return $self->GET_FLAGS();
+	return $self->GET_FLAGS;
     }
 }
 
@@ -35,7 +35,7 @@ sub STATE {
     if (defined($set)) {
 	$self->set_state($set);
     } else {
-	return $self->get_state();
+	return $self->get_state;
     }
 }
 

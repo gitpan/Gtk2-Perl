@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Pixbuf.c,v 1.1 2002/10/28 22:40:15 ggc Exp $
+ * $Id: Pixbuf.c,v 1.2 2002/12/12 16:41:53 ggc Exp $
  */
 
 #include "gtk2-perl-gdk.h"
@@ -167,6 +167,40 @@ SV* gdkperl_pixbuf_composite_color_simple(SV* src,
 								  SvGdkInterpType(interp_type), overall_alpha,
 								  check_size, color1, color2));
 }
+
+
+/** Utilities */
+
+/* void gdk_pixbuf_fill (GdkPixbuf *pixbuf, guint32 pixel) */
+void gdkperl_pixbuf_fill(SV* pixbuf, int pixel)
+{
+    gdk_pixbuf_fill(SvGdkPixbuf(pixbuf), pixel);
+}
+
+/* GdkPixbuf *gdk_pixbuf_add_alpha (const GdkPixbuf *pixbuf, gboolean substitute_color,
+                                    guchar r, guchar g, guchar b) */
+SV* gdkperl_pixbuf_add_alpha(SV* pixbuf, int substitute_color,
+			     int r, int g, int b)
+{
+    return gtk2_perl_new_object(gdk_pixbuf_add_alpha(SvGdkPixbuf(pixbuf), substitute_color,
+						     r, g, b));
+}
+
+/* void gdk_pixbuf_copy_area (const GdkPixbuf *src_pixbuf, int src_x, int src_y, int width, int height,
+                              GdkPixbuf *dest_pixbuf, int dest_x, int dest_y) */
+void gdkperl_pixbuf_copy_area(SV* src_pixbuf, int src_x, int src_y, int width, int height,
+			      SV* dest_pixbuf, int dest_x, int dest_y)
+{
+    gdk_pixbuf_copy_area(SvGdkPixbuf(src_pixbuf), src_x, src_y, width, height,
+			 SvGdkPixbuf(dest_pixbuf), dest_x, dest_y);
+}
+
+/* void gdk_pixbuf_saturate_and_pixelate (const GdkPixbuf *src, GdkPixbuf *dest, gfloat saturation, gboolean pixelate) */
+void gdkperl_pixbuf_saturate_and_pixelate(SV* src, SV* dest, double saturation, int pixelate)
+{
+    gdk_pixbuf_saturate_and_pixelate(SvGdkPixbuf(src), SvGdkPixbuf(dest), saturation, pixelate);
+}
+
 
 /*
  * Local variables:

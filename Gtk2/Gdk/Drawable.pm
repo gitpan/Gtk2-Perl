@@ -16,14 +16,14 @@ package Gtk2::Gdk::Drawable;
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: Drawable.pm,v 1.8 2002/11/14 21:31:56 gthyni Exp $
+# $Id: Drawable.pm,v 1.10 2002/12/16 17:24:12 ggc Exp $
 #
 
 
-our $rcsid = '$Id: Drawable.pm,v 1.8 2002/11/14 21:31:56 gthyni Exp $';
+our $rcsid = '$Id: Drawable.pm,v 1.10 2002/12/16 17:24:12 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::GObject;
 @ISA=qw(Gtk2::GObject);
@@ -31,7 +31,7 @@ use Gtk2::_Helpers;
 
 sub get_size {
     my ($o) = @_;
-    my $s = $o->_get_size();
+    my $s = $o->_get_size;
     return wantarray ? @$s : $s;
 }
 

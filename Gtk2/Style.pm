@@ -1,14 +1,14 @@
 package Gtk2::Style;
 
-# $Id: Style.pm,v 1.12 2002/11/26 16:30:14 gthyni Exp $
+# $Id: Style.pm,v 1.14 2002/12/16 17:22:27 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Style.pm,v 1.12 2002/11/26 16:30:14 gthyni Exp $';
+our $rcsid = '$Id: Style.pm,v 1.14 2002/12/16 17:22:27 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::GObject;
 @ISA =qw(Gtk2::GObject);
@@ -101,7 +101,7 @@ sub white_gc {
     if (defined($set)) {
 	$self->set_white_gc($set);
     } else {
-	return $self->get_white_gc();
+	return $self->get_white_gc;
     }
 }
 
@@ -110,7 +110,7 @@ sub black_gc {
     if (defined($set)) {
 	$self->set_black_gc($set);
     } else {
-	return $self->get_black_gc();
+	return $self->get_black_gc;
     }
 }
 

@@ -1,4 +1,4 @@
-/* $Id: Image.c,v 1.9 2002/12/06 20:44:48 ggc Exp $
+/* $Id: Image.c,v 1.10 2002/12/13 14:28:04 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -17,10 +17,11 @@ SV* gtkperl_image_new_from_stock(char* class, gchar* stock_id, SV* size)
                                         SvGtkIconSize(size)));
 }
 
-/* NOT IMPLEMENTED YET
-GtkWidget*  gtk_image_new_from_icon_set     (GtkIconSet *icon_set,
-                                             GtkIconSize size);
-*/
+/* GtkWidget* gtk_image_new_from_icon_set (GtkIconSet *icon_set, GtkIconSize size) */
+SV* gtkperl_image_new_from_icon_set(char* class, SV* icon_set, SV* size)
+{
+    return gtk2_perl_new_object(gtk_image_new_from_icon_set(SvGtkIconSet(icon_set), SvGtkIconSize(size)));
+}
 
 /* GtkWidget* gtk_image_new_from_image (GdkImage *image, GdkBitmap *mask) */
 SV* gtkperl_image_new_from_image(char* class, SV* image, SV* mask)
@@ -39,12 +40,23 @@ SV* gtkperl_image_new_from_pixmap(char* class, SV* pixmap, SV* mask)
 							  SvGdkBitmap_nullok(mask)));
 }
 
+/* void gtk_image_get_icon_set (GtkImage *image, GtkIconSet **icon_set, GtkIconSize *size) */
+SV* gtkperl_image__get_icon_set(SV* image)
+{
+    AV* values = newAV();
+    GtkIconSet* icon_set;
+    GtkIconSize size;
+    gtk_image_get_icon_set(SvGtkImage(image), &icon_set, &size);
+    if (icon_set) {
+	av_push(values, gtk2_perl_new_object_from_pointer(icon_set, "Gtk2::IconSet"));
+	av_push(values, newSVGtkIconSize(size));
+    }
+    return newRV_noinc((SV*) values);
+}
+
 /*
 GtkWidget*  gtk_image_new_from_animation    (GdkPixbufAnimation *animation);
 
-void        gtk_image_get_icon_set          (GtkImage *image,
-                                             GtkIconSet **icon_set,
-                                             GtkIconSize *size);
 void        gtk_image_get_image             (GtkImage *image,
                                              GdkImage **gdk_image,
                                              GdkBitmap **mask);
@@ -64,8 +76,8 @@ SV* gtkperl_image__get_pixmap(SV* image)
     GdkBitmap* bitmap;
     gtk_image_get_pixmap(SvGtkImage(image), &pixmap, &bitmap);
     if (pixmap && bitmap) {
-	    av_push(values, gtk2_perl_new_object(pixmap));
-	    av_push(values, gtk2_perl_new_object(bitmap));
+	av_push(values, gtk2_perl_new_object(pixmap));
+	av_push(values, gtk2_perl_new_object(bitmap));
     }
     return newRV_noinc((SV*) values);
 }
@@ -78,8 +90,8 @@ SV* gtkperl_image__get_stock(SV* image)
     GtkIconSize size;
     gtk_image_get_stock(SvGtkImage(image), &stock_id, &size);
     if (stock_id) {
-	    av_push(values, newSVgchar_nofree(stock_id));
-	    av_push(values, newSVGtkIconSize(size));
+	av_push(values, newSVgchar_nofree(stock_id));
+	av_push(values, newSVGtkIconSize(size));
     }
     return newRV_noinc((SV*) values);
 }
@@ -147,3 +159,10 @@ void        gtk_image_get                   (GtkImage *image,
                                              GdkImage **val,
                                              GdkBitmap **mask);
 */
+
+
+/*
+ * Local variables:
+ *  c-basic-offset: 4
+ * End:
+ */

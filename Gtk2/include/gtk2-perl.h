@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: gtk2-perl.h,v 1.8 2002/12/09 22:10:08 ggc Exp $
+ * $Id: gtk2-perl.h,v 1.9 2003/01/08 19:02:16 ggc Exp $
  *
  */
 
@@ -44,6 +44,6 @@ void gtk2_perl_destroy_notify(gpointer user_data);
 
 /* from Gtk2/src/_Helpers.c, for Gtk2.c and GClosure.c */
 int gtk2_perl_trap_exceptions_in_callbacks;
-int gtk2_perl_trap_exceptions_trapped;
+SV* gtk2_perl_trap_exceptions_save_errsv;
 
 #endif

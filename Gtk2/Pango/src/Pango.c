@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Pango.c,v 1.3 2002/11/27 16:12:48 ggc Exp $
+ * $Id: Pango.c,v 1.4 2002/12/16 17:56:05 ggc Exp $
  */
 
 #include "gtk2-perl-pango.h"
@@ -23,3 +23,40 @@ int pangoperl_pango_PANGO_PIXELS(char* class, int value)
 {
     return PANGO_PIXELS(value);
 }
+
+double pangoperl_pango_PANGO_SCALE_XX_SMALL(char* class)
+{
+    return PANGO_SCALE_XX_SMALL;
+}
+
+double pangoperl_pango_PANGO_SCALE_X_SMALL(char* class)
+{
+    return PANGO_SCALE_X_SMALL ;
+}
+
+double pangoperl_pango_PANGO_SCALE_SMALL(char* class)
+{
+    return PANGO_SCALE_SMALL   ;
+}
+
+double pangoperl_pango_PANGO_SCALE_MEDIUM(char* class)
+{
+    return PANGO_SCALE_MEDIUM  ;
+}
+
+double pangoperl_pango_PANGO_SCALE_LARGE(char* class)
+{
+    return PANGO_SCALE_LARGE   ;
+}
+
+double pangoperl_pango_PANGO_SCALE_X_LARGE(char* class)
+{
+    return PANGO_SCALE_X_LARGE ;
+}
+
+double pangoperl_pango_PANGO_SCALE_XX_LARGE(char* class)
+{
+    return PANGO_SCALE_XX_LARGE;
+}
+
+

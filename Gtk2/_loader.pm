@@ -1,6 +1,6 @@
 # Autogenerate file, do not edit
 # run genscripts/loader.pl instead
-# $Id: _loader.pm,v 1.1 2002/11/12 20:29:23 gthyni Exp $
+# $Id: _loader.pm,v 1.3 2002/12/16 18:12:31 ggc Exp $
 
 @Gtk2::AccelGroup::ISA=qw(Gtk2::_Object) unless @Gtk2::AccelGroup::ISA;
 @Gtk2::AccelLabel::ISA=qw(Gtk2::_Object) unless @Gtk2::AccelLabel::ISA;
@@ -14,6 +14,7 @@
 @Gtk2::Bin::ISA=qw(Gtk2::_Object) unless @Gtk2::Bin::ISA;
 @Gtk2::BindingSet::ISA=qw(Gtk2::_Object) unless @Gtk2::BindingSet::ISA;
 @Gtk2::Box::ISA=qw(Gtk2::_Object) unless @Gtk2::Box::ISA;
+@Gtk2::BoxChild::ISA=qw(Gtk2::_Object) unless @Gtk2::BoxChild::ISA;
 @Gtk2::Button::ISA=qw(Gtk2::_Object) unless @Gtk2::Button::ISA;
 @Gtk2::ButtonBox::ISA=qw(Gtk2::_Object) unless @Gtk2::ButtonBox::ISA;
 @Gtk2::CList::ISA=qw(Gtk2::_Object) unless @Gtk2::CList::ISA;
@@ -46,11 +47,14 @@
 @Gtk2::GC::ISA=qw(Gtk2::_Object) unless @Gtk2::GC::ISA;
 @Gtk2::GClosure::ISA=qw(Gtk2::_Object) unless @Gtk2::GClosure::ISA;
 @Gtk2::GLib::ISA=qw(Gtk2::_Object) unless @Gtk2::GLib::ISA;
+@Gtk2::GList::ISA=qw(Gtk2::_Object) unless @Gtk2::GList::ISA;
 @Gtk2::GObject::ISA=qw(Gtk2::_Object) unless @Gtk2::GObject::ISA;
+@Gtk2::GSList::ISA=qw(Gtk2::_Object) unless @Gtk2::GSList::ISA;
 @Gtk2::GSignal::ISA=qw(Gtk2::_Object) unless @Gtk2::GSignal::ISA;
 @Gtk2::GType::ISA=qw(Gtk2::_Object) unless @Gtk2::GType::ISA;
 @Gtk2::GammaCurve::ISA=qw(Gtk2::_Object) unless @Gtk2::GammaCurve::ISA;
 @Gtk2::Gdk::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::ISA;
+@Gtk2::Gtk2::ISA=qw(Gtk2::_Object) unless @Gtk2::Gtk2::ISA;
 @Gtk2::HBox::ISA=qw(Gtk2::_Object) unless @Gtk2::HBox::ISA;
 @Gtk2::HButtonBox::ISA=qw(Gtk2::_Object) unless @Gtk2::HButtonBox::ISA;
 @Gtk2::HPaned::ISA=qw(Gtk2::_Object) unless @Gtk2::HPaned::ISA;
@@ -65,6 +69,8 @@
 @Gtk2::IMModule::ISA=qw(Gtk2::_Object) unless @Gtk2::IMModule::ISA;
 @Gtk2::IMMultiContext::ISA=qw(Gtk2::_Object) unless @Gtk2::IMMultiContext::ISA;
 @Gtk2::IconFactory::ISA=qw(Gtk2::_Object) unless @Gtk2::IconFactory::ISA;
+@Gtk2::IconSet::ISA=qw(Gtk2::_Object) unless @Gtk2::IconSet::ISA;
+@Gtk2::IconSource::ISA=qw(Gtk2::_Object) unless @Gtk2::IconSource::ISA;
 @Gtk2::Image::ISA=qw(Gtk2::_Object) unless @Gtk2::Image::ISA;
 @Gtk2::ImageMenuItem::ISA=qw(Gtk2::_Object) unless @Gtk2::ImageMenuItem::ISA;
 @Gtk2::InputDialog::ISA=qw(Gtk2::_Object) unless @Gtk2::InputDialog::ISA;
@@ -122,6 +128,7 @@
 @Gtk2::Text::ISA=qw(Gtk2::_Object) unless @Gtk2::Text::ISA;
 @Gtk2::TextBTree::ISA=qw(Gtk2::_Object) unless @Gtk2::TextBTree::ISA;
 @Gtk2::TextBuffer::ISA=qw(Gtk2::_Object) unless @Gtk2::TextBuffer::ISA;
+@Gtk2::TextIter::ISA=qw(Gtk2::_Object) unless @Gtk2::TextIter::ISA;
 @Gtk2::TextLayout::ISA=qw(Gtk2::_Object) unless @Gtk2::TextLayout::ISA;
 @Gtk2::TextMark::ISA=qw(Gtk2::_Object) unless @Gtk2::TextMark::ISA;
 @Gtk2::TextTag::ISA=qw(Gtk2::_Object) unless @Gtk2::TextTag::ISA;
@@ -162,6 +169,7 @@
 @Gtk2::Gdk::Drawable::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Drawable::ISA;
 @Gtk2::Gdk::Event::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Event::ISA;
 @Gtk2::Gdk::GC::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::GC::ISA;
+@Gtk2::Gdk::Gdk::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Gdk::ISA;
 @Gtk2::Gdk::Keymap::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Keymap::ISA;
 @Gtk2::Gdk::Pixbuf::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Pixbuf::ISA;
 @Gtk2::Gdk::Pixmap::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Pixmap::ISA;
@@ -170,6 +178,7 @@
 @Gtk2::Gdk::Segment::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Segment::ISA;
 @Gtk2::Gdk::Selection::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Selection::ISA;
 @Gtk2::Gdk::Span::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Span::ISA;
+@Gtk2::Gdk::Visual::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Visual::ISA;
 @Gtk2::Gdk::Window::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Window::ISA;
 @Gtk2::Gdk::Event::Button::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Event::Button::ISA;
 @Gtk2::Gdk::Event::Client::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Event::Client::ISA;
@@ -188,9 +197,12 @@
 @Gtk2::Gdk::Event::Setting::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Event::Setting::ISA;
 @Gtk2::Gdk::Event::Visibility::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Event::Visibility::ISA;
 @Gtk2::Gdk::Event::WindowState::ISA=qw(Gtk2::_Object) unless @Gtk2::Gdk::Event::WindowState::ISA;
+@Gtk2::Pango::AttrList::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::AttrList::ISA;
+@Gtk2::Pango::Attribute::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::Attribute::ISA;
 @Gtk2::Pango::Context::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::Context::ISA;
 @Gtk2::Pango::FontDescription::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::FontDescription::ISA;
 @Gtk2::Pango::FontMetrics::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::FontMetrics::ISA;
 @Gtk2::Pango::Language::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::Language::ISA;
 @Gtk2::Pango::Layout::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::Layout::ISA;
+@Gtk2::Pango::Pango::ISA=qw(Gtk2::_Object) unless @Gtk2::Pango::Pango::ISA;
 @Gtk2::Atk::Object::ISA=qw(Gtk2::_Object) unless @Gtk2::Atk::Object::ISA;

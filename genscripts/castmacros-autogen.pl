@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: castmacros-autogen.pl,v 1.23 2002/11/28 13:55:28 ggc Exp $
+# $Id: castmacros-autogen.pl,v 1.25 2002/12/16 18:12:39 ggc Exp $
 #
 
 -d 'genscripts' && -d 'Gtk2' or die "This script should be run from the gtk2-perl topdir";
@@ -118,14 +118,22 @@ foreach (all_includes()) {
 }
 # enumerate the missing ones
 @additional_not_objects = qw(GSList
-                             GdkColor GdkWindow GdkEvent GdkCursor GdkPixbuf GdkPixmap GdkBitmap GdkRectangle GdkPoint GdkSegment GdkSpan
+                             GdkRectangle GdkPoint GdkSegment GdkSpan
+                             GdkAtom
                              GdkEventAny GdkEventButton GdkEventClient GdkEventConfigure GdkEventCrossing GdkEventDND GdkEventExpose
                              GdkEventFocus GdkEventKey GdkEventMotion GdkEventNoExpose GdkEventProperty GdkEventProximity
                              GdkEventScroll GdkEventSelection GdkEventSetting GdkEventWindowState GdkEventVisibility
-                             GdkAtom
-                             PangoFontDescription PangoFontMetrics PangoContext PangoLanguage PangoLayout PangoAttrList
-                             GtkRequisition GtkBoxChild
-                             GtkTreeIter GtkTreeModel GtkTreePath GtkTextIter GtkSelectionData
+                             GdkColor GdkWindow GdkEvent GdkCursor GdkPixbuf GdkPixmap GdkBitmap
+                             GdkVisual
+                             PangoFontDescription PangoFontMetrics PangoContext PangoLanguage PangoLayout
+                             PangoAttribute PangoAttrList
+                             PangoRectangle
+                             GtkRequisition
+                             GtkBoxChild
+                             GtkIconSet GtkIconSource
+                             GtkSelectionData
+                             GtkTextIter
+                             GtkTreeIter GtkTreeModel GtkTreePath
                             );
 add_object_caster_in_cat($_) foreach @additional_not_objects;
 
@@ -177,7 +185,14 @@ foreach $node (parse_lisp(cat_('genscripts/gtk-types.defs').cat_('genscripts/gdk
     process_node($node);
 }
 # enumerate the missing ones
-%additional_enums = (PangoDirection => PANGO_TYPE_DIRECTION, PangoWrapMode => PANGO_TYPE_WRAP_MODE, PangoAlignment => PANGO_TYPE_ALIGNMENT);
+%additional_enums = (PangoDirection => PANGO_TYPE_DIRECTION,
+		     PangoWrapMode  => PANGO_TYPE_WRAP_MODE,
+		     PangoAlignment => PANGO_TYPE_ALIGNMENT,
+		     PangoUnderline => PANGO_TYPE_UNDERLINE,
+		     PangoStyle     => PANGO_TYPE_STYLE,
+		     PangoStretch   => PANGO_TYPE_STRETCH,
+		     PangoVariant   => PANGO_TYPE_VARIANT,
+		    );
 while (my ($name, $type) = each %additional_enums) { add_enumflag($name, 'enum', $type) }
 
 

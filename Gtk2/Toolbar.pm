@@ -1,14 +1,14 @@
 package Gtk2::Toolbar;
 
-# $Id: Toolbar.pm,v 1.4 2002/11/21 15:35:15 ggc Exp $
+# $Id: Toolbar.pm,v 1.6 2003/01/16 21:24:02 joered Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Toolbar.pm,v 1.4 2002/11/21 15:35:15 ggc Exp $';
+our $rcsid = '$Id: Toolbar.pm,v 1.6 2003/01/16 21:24:02 joered Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
-BEGIN { do 'Gtk2/_config.pm'; }
+BEGIN { do 'Gtk2/_config.pm'; $@ and die }
 
 use Gtk2::Container;
 @ISA=qw(Gtk2::Container);
@@ -39,6 +39,7 @@ sub new {
     Gtk2::_Helpers::check_usage(\@_, [], [ 'string orientation', 'string style' ]);
     my $obj = shift->_new;
     @_ and $obj->set_orientation($_[0]), $obj->set_style($_[1]);
+    @_ or  $obj->set_orientation('horizontal'), $obj->set_style('both');
     return $obj;
 }
 

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Expose.c,v 1.2 2002/11/12 22:32:10 gthyni Exp $
+ * $Id: Expose.c,v 1.3 2002/12/12 17:12:25 ggc Exp $
  */
 
 #include "gtk2-perl-gdk.h"
@@ -23,7 +23,7 @@
 
 /* Note: type, window, send_event are gratuitous from Gtk2::Gdk::Event */
 
-SV* gdkperl_event_expose__area(SV* event)
+SV* gdkperl_event_expose_area(SV* event)
 {
     return gtk2_perl_new_object_from_pointer(&(SvGdkEventExpose(event)->area), "Gtk2::Gdk::Rectangle");
 }

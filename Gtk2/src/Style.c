@@ -1,4 +1,4 @@
-/* $Id: Style.c,v 1.10 2002/11/26 16:30:41 gthyni Exp $
+/* $Id: Style.c,v 1.11 2002/12/13 14:28:05 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -19,6 +19,13 @@ SV* gtkperl_style_new(char* class)
 SV* gtkperl_style_copy(SV *style)
 {
     return gtk2_perl_new_object(gtk_style_copy(SvGtkStyle(style)));
+}
+
+/* GtkIconSet* gtk_style_lookup_icon_set (GtkStyle *style, const gchar *stock_id) */
+SV* gtkperl_style_lookup_icon_set(SV* style, gchar* stock_id)
+{
+    return gtk2_perl_new_object_from_pointer(gtk_style_lookup_icon_set(SvGtkStyle(style), stock_id),
+					     "Gtk2::IconSet");
 }
 
 

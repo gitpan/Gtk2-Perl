@@ -108,6 +108,7 @@ Gtk2::TextView::get_buffer                         Gtk2::TextBuffer             
 Gtk2::Widget::create_pango_context                 Gtk2::Pango::Context             allocates
 Gtk2::Widget::create_pango_layout                  Gtk2::Pango::Layout              allocates
 Gtk2::Widget::get_pango_context                    Gtk2::Pango::Context             reference
+Gtk2::Widget::get_style                            Gtk2::Style                      reference
 Gtk2::Image::get_pixbuf                            Gtk2::Gdk::Pixbuf                reference
 Gtk2::Image::get_pixmap                [ Gtk2::Gdk::Pixmap, Gtk2::Gdk::Bitmap ]     reference, reference
 
