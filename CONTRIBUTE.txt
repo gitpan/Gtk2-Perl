@@ -1,0 +1,20 @@
+The plan was NOT to hack together wrappers for all functions
+in Gtk+ 2.x at once. Rather I want "use cases" so that all
+code gets tested.
+
+Most examples from the tutorial http://www.gtk.org/tutorial/
+is porting to gtk2-perl and needed functionality is implemented
+in the library. 
+Missing is the creation of new widgets, but that should probably
+wait until after 1.0 is released.
+
+Anyway we can accept code and patches:
+- examples (big or small) of working or not working perl/gtk+ code.
+- new wrappers and function should have "use cases" == test that use that code
+- patches should have a changelog entry explain the hows and whys
+
+Submit patches and contributions to the Patch Tracker at
+http://sourceforge.net/gtk2-perl/
+
+
+

@@ -1,0 +1,12 @@
+TYPEMAP
+gchar *	T_GCHAR
+
+INPUT
+T_GCHAR
+	sv_utf8_upgrade($arg);
+	$var = ($type)SvPV_nolen($arg)
+
+OUTPUT 
+T_GCHAR
+	sv_setpv((SV*)$arg, $var);
+	SvUTF8_on($arg);

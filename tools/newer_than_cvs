@@ -1,0 +1,83 @@
+#!/usr/bin/perl
+
+# $Id: newer_than_cvs,v 1.4 2002/11/15 04:13:59 glade-perl Exp $
+
+our $rcsid = '$Id: newer_than_cvs,v 1.4 2002/11/15 04:13:59 glade-perl Exp $';
+our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
+
+my ($cvs_commit, $cvs_add, $newer);
+my $ignore_files = " ".join(" ",
+    'pm_to_blib',
+    'Makefile',
+    'Makefile.old',
+    'MANIFEST.bak',
+    'MANIFEST',
+    'pod2htmi.x~~',
+    'pod2htmd.x~~',
+    )." ";
+my $ignore_dirs = " ".join(" ",
+    '.',
+    '..',
+    '_Inline',
+    'CVS',
+    'blib',
+    'xs',
+    )." ";
+    
+sub check_dir {
+    my $dir = shift || ".";
+
+    opendir(DIR, "$dir") || die "can't opendir $dir: $!";
+    $dir =~ s/^\.\///;
+    my $cvs_time = (stat "$dir/CVS")[9];
+    my $cvs_entries = &string_from_file("$dir/CVS/Entries");
+
+    foreach my $module (sort readdir DIR) {
+        if (-d "$dir/$module") {
+            next if $ignore_dirs =~ / $module /;
+            &check_dir("$dir/$module");
+        } else {
+            next if $ignore_files =~ / $module /;
+            next if $module =~ /\.tar.gz$/;
+            if ((stat "$dir/$module")[9] > $cvs_time) {
+                # We have a newer file
+                $newer++;
+                unless ($cvs_entries =~ m|/$module/|) {
+                    push @cvs_add, "$dir/$module";
+                }
+                push @cvs_commit, "$dir/$module";
+#                print "$dir/$module\n";
+            }
+        }
+    }
+    closedir DIR;
+}
+
+sub string_from_file {
+    my ($filename) = @_;
+    my $me = __PACKAGE__."->string_from_File";
+
+    my $save = $/;
+    undef $/;
+    open INFILE, $filename or 
+        die sprintf((
+            "error %s - can't open file '%s' for input"),
+            $me, $filename);    
+    undef $/;
+    my $string = <INFILE>;
+    close INFILE;
+    $/ = $save;
+
+    return $string;
+}
+
+check_dir();
+
+if ($newer) {
+    print "#!/bin/sh\n";
+    print "# There are $newer file(s) newer than the last 'cvs get'\n";
+    print "#    and you might want to run these commands\n\n";
+
+    print "cvs add    ",(join " \\\n    ", @cvs_add), "\n\n" if scalar @cvs_add;
+    print "cvs commit ",(join " \\\n    ", @cvs_commit), "\n" if scalar @cvs_commit;
+}

@@ -1,0 +1,149 @@
+-*- fundamental -*-
+
+This document explains how memory management works in Gtk2-Perl,
+and how to not create memory leaks in your programs.
+
+
+Of course, as in C code, memory leaks are not always important,
+and the safest and quickest is to ignore leaks when they are not
+important to you.
+
+Understanding this document needs a little background in gtk2, in
+particular the object hierarchy (having written a simple C
+program or rapidly browsing the documentation should be enough).
+
+
+    [*] Gtk background
+
+There are 3 classes of objects to distinguish:
+
+1. the GtkObject hierarchy
+
+2. the GObject hierarchy (that don't inherit from GtkObject as
+   well, of course)
+
+3. "boxed types"; these are structs that are not GObject (things
+  such as GdkColor, GdkRectangle or GtkTextIter for example)
+
+
+1. In the GtkObject hierarchy, objects that are not toplevel
+   widgets are created in the "floating" state (it indicates that
+   they don't have yet a parent). Then, when they become the
+   child of another object (when you "pack_start" or "add" them),
+   this floating state disappears. At that time, just forget
+   about it: when the "top" parent will get destroyed (the
+   GtkWindow), it will free up the associated memory of its whole
+   child tree.
+
+2. In the GObject hierarchy, objects use the normal refcounting
+   strategy, without the "floating" state. The user thus "ref"
+   and "unref" them to manipulate the reference counter. When the
+   reference counter drops down to zero, Gtk will release it.
+
+3. Boxed types are typical C structs. When we "malloc" one, we of
+   course need to "free" it, when done with it.
+
+
+    [*] From within Gtk2-Perl
+
+1. the GtkObject hierarchy:
+
+  - just call the "destroy" method on the toplevel widget; this
+    will free up the memory of this widget and all of its childs;
+
+  - if for any reason you create some non toplevel widgets you
+    don't make child of another widget, you need to clean them up
+    by calling "sink" on them
+
+2. the GObject hierarchy: if you allocated a GObject, you will
+   need to call "unref" on it to free it.
+
+   Now, of course, life is not always that simple. You will
+   manipulate some GObject's which are just references (for
+   example Gtk2::TextView::get_buffer), and of course if you ever
+   "unref" it, the actual owner of it will be unhappy when it
+   will try to unref it itself (you'll see a nice gtk critical
+   message on the console). However, of course, you will also
+   manipulate some GObject's which are new objects owner by you
+   only (for example Gtk2::Style::new).
+
+   So the question is, did you allocate a GObject, or did you
+   just obtain a reference on an existing one? The definitive
+   answer can only be found in the API documentation of Gtk, but
+   we try to maintain a list of those at the end of that
+   documentation. Please refer to the list to know if you need to
+   unref any GObject you manipulate. In any case, the only
+   authoritative answer is in the gtk API documentation.
+
+3. boxed types: if you allocated a boxed type, you will need to
+   call "free" on it.
+
+   Similarly to what happens with the GObject hierarchy,
+   sometimes you will have really allocated an object (for
+   example, Gtk2::Gdk::Color::new), and sometimes you will just
+   manipulate a reference on an existing one
+   (Gtk2::Gdk::Event::Expose::area).
+
+   If you'd have programmed in C, you'd have malloc'ed the struct
+   yourself, so you would have the answer easily. But here, the
+   Gtk2 Perl extension code hides the memory allocation;
+   therefore, we maintain a list of these at the end of that
+   file.
+
+
+
+    [*] The lists
+
+Here is the list of subroutines which return back a GObject, with
+the type of GObject it returns, and whether it allocates memory
+or not. If that's the case, call "unref" on it once you're
+finished with it, to free its associated memory.
+
+Gtk2::Gdk::Drawable::get_colormap                  Gtk2::Gdk::Colormap              reference
+Gtk2::Pango::Layout::get_context                   Gtk2::Pango::Context             reference
+Gtk2::Pango::Context::get_metrics                  Gtk2::Pango::FontMetrics         allocates (it's not a GObject, but use unref anyway)
+Gtk2::Style::new                                   Gtk2::Style                      allocates
+Gtk2::TextBuffer::create_tag                       Gtk2::TextTag                    reference
+Gtk2::TextView::get_buffer                         Gtk2::TextBuffer                 reference
+Gtk2::Widget::create_pango_context                 Gtk2::Pango::Context             allocates
+Gtk2::Widget::create_pango_layout                  Gtk2::Pango::Layout              allocates
+Gtk2::Widget::get_pango_context                    Gtk2::Pango::Context             reference
+Gtk2::Image::get_pixbuf                            Gtk2::Gdk::Pixbuf                reference
+Gtk2::Image::get_pixmap                [ Gtk2::Gdk::Pixmap, Gtk2::Gdk::Bitmap ]     reference, reference
+
+
+Here is the list of subroutines which return back a boxed type,
+with the type of boxed type it returns, and whether it allocates
+memory or not. If that's the case, call "free" on it once you're
+finished with it, to free its associated memory.
+
+Gtk2::Allocation::new                              Gtk2::Gdk::Rectangle             allocates
+Gtk2::ColorSelection::get_previous_color           Gtk2::Gdk::Color                 allocates
+Gtk2::ColorSelection::get_current_color            Gtk2::Gdk::Color                 allocates
+Gtk2::Gdk::Color::new                              Gtk2::Gdk::Color                 allocates
+Gtk2::Gdk::Color::parse                            Gtk2::Gdk::Color                 allocates
+Gtk2::Gdk::Event::Expose::area                     Gtk2::Gdk::Rectangle             reference
+Gtk2::Gdk::Point::new                              Gtk2::Gdk::Point                 allocates
+Gtk2::Gdk::Rectangle::new                          Gtk2::Gdk::Rectangle             allocates
+Gtk2::Gdk::Segment::new                            Gtk2::Gdk::Segment               allocates
+Gtk2::Gdk::Span::new                               Gtk2::Gdk::Span                  allocates
+Gtk2::Pango::Context::get_font_description         Gtk2::Pango::FontDescription     reference
+Gtk2::Pango::Context::get_language                 Gtk2::Pango::Language            reference
+Gtk2::Requisition::new                             Gtk2::Requisition                allocates
+Gtk2::TextBuffer::get_iter_at_offset               Gtk2::TextIter                   allocates
+Gtk2::TextBuffer::get_start_iter                   Gtk2::TextIter                   allocates
+Gtk2::TextBuffer::get_end_iter                     Gtk2::TextIter                   allocates
+Gtk2::TextBuffer::get_bounds                       [ Gtk2::TextIter x 2 ]           allocates
+Gtk2::TreeIter::new                                Gtk2::TreeIter                   allocates
+Gtk2::TreeModel::get_iter                          Gtk2::TreeIter                   allocates
+Gtk2::TreeModel::get_iter_first                    Gtk2::TreeIter                   allocates
+Gtk2::TreeModel::get_iter_from_string              Gtk2::TreeIter                   allocates
+Gtk2::TreeModel::iter_next                         Gtk2::TreeIter                   allocates
+Gtk2::TreeModel::get_path                          Gtk2::TreePath                   allocates (a TreePath is not really a boxed type but use free anyway)
+Gtk2::TreePath::new                                Gtk2::TreePath                   allocates
+Gtk2::TreePath::new_from_string                    Gtk2::TreePath                   allocates
+Gtk2::TreePath::new_first                          Gtk2::TreePath                   allocates
+Gtk2::TreeSelection::get_selected      [ Gtk2::TreeModel, Gtk2::TreeIter ]          allocates the TreeIter
+Gtk2::TreeView::get_cursor             [ Gtk2::TreePath, Gtk2::TreeViewColumn ]     allocates the TreePath (NOT the TreeViewColumn)
+Gtk2::Widget::allocation                           Gtk2::Allocation                 reference
+Gtk2::Widget::requisition                          Gtk2::Requisition                reference

@@ -1,0 +1,205 @@
+This document helps the process of porting gtk-perl apps to
+gtk2-perl.
+
+
+    [*] Namespace
+
+The top namespace is now Gtk2 instead of Gtk.
+
+
+    [*] Deprecated functions
+
+Most deprecated gtk functions, which were available in gtk-perl,
+are still available in gtk2-perl while printing on STDERR the
+name of the function you should use. When you see that kind of
+message, change your code.
+
+As for the rest:
+
+Old                                                        New
+Gtk->main_iteration() while Gtk->events_pending()          Gtk2->update_ui()
+
+
+    [*] GdkColor
+
+Old:
+$color = bless { red => $r, green => $g, blue => $b }, 'Gtk::Gdk::Color';
+
+New:
+$color = Gtk2::Gdk::Color->new($r, $g, $b);
+
+
+    [*] GdkWindow
+
+Old:
+($height, $width) = $window->get_size()
+
+This was broken because sending back data in the wrong order. New:
+($width, $height) = $window->get_size()
+
+
+    [*] Images and Pixbufs
+
+If you want to display an image in your GUI, use a GtkImage:
+
+my $img = Gtk2::Image->new_from_file('/usr/share/icons/emacs.png');
+$vbox->pack_start($img, 0, 0, 0);
+
+
+If you want to draw an image in a GtkDrawingArea, use a
+GdkPixbuf; create it when initing your GUI:
+
+my $pixbuf = Gtk2::Gdk::Pixbuf->new_from_file('/usr/share/icons/emacs.png');
+
+And in the expose_event of your $drawingarea:
+
+$pixbuf->render_to_drawable($drawingarea->window(),
+                            $drawingarea->style()->white_gc(),
+			    0, 0, 0, 0, -1, -1, 'none', 0, 0);
+
+
+    [*] Drawing text
+
+When you need to draw text on a GdkDrawable, replace the
+fontset_load and draw_string stuff with:
+
+After the DrawingArea creation:
+
+$drawingarea->modify_font(Gtk2::Pango::FontDescription->from_string('Sans Bold 25'));
+
+In the expose_event of the DrawingArea:
+
+my $layout = $drawingarea->create_pango_layout("My very important text");
+$drawingarea->window()->draw_layout($drawingarea->style()->fg_gc('normal'), 5, 5, $layout);
+$layout->unref();
+
+
+    [*] Specialized GdkEvent's
+
+Old: using hashes:
+$butt_number = $button_evt->{button};
+$evt_time    = $button_evt->{time};
+$keyval      = $key_evt->{keyval};
+
+New: using methods just like normal objects:
+$butt_number = $button_evt->button();
+$evt_time    = $button_evt->time();
+$keyval      = $key_evt->keyval();
+
+
+    [*] GdkEventKey
+
+Old: {state} was an int following C things
+New: ->state() is like all the gtk flags, e.g. an arrayref of
+     strings
+
+
+    [*] GtkAllocation, GtkRequisition, GdkRectangle, etc
+
+Old: "boxed types" such as GtkAllocation (e.g. GtkSomething but
+not a GtkObject), when returned from a function, were directly
+returned as a list of values
+
+New: "boxed types" are wrapped Perl objects just as the rest of
+the Gtk objects are; you then can extract one value with a method
+whose name is the same than the field you want, or extract all
+values with the method "values"; example:
+
+my $widget_width = $widget->allocation->width
+my @values       = $widget->allocation->values
+
+
+    [*] GtkWidget
+
+`set_usize' has been changed for `set_size_request', but also,
+when you want to only specify one dimension, don't forget to
+change the `0' of the other dimension to `-1', or else gtk will
+really try to request 0 for the other dimension.
+
+
+    [*] GtkWindow
+
+Old:
+$window->set_policy($allow_shrink, $allow_grow, $auto_shrink);
+
+New:
+$window->allow_shrink($allow_shrink);
+$window->allow_grow($allow_grow);
+
+Or, in a more gtk-2.x style, use the following, in order to
+specify if the user may resize the window:
+$window->set_resizable($may_resize);
+
+
+    [*] GtkItemFactory
+
+Old:
+$widget->create_items(@menu_items);
+
+New:
+$widget->create_items([ @menu_items ]);
+
+
+    [*] GtkProgressBar
+
+Old:
+$pbar->update($value);
+
+New:
+$pbar->set_fraction($value);
+
+
+    [*] GtkCTree, GtkCList, GtkText
+
+These widgets have been completely rewritten. Please refer to
+code examples to see how to use them now. Basically, here is how
+it goes:
+
+  * GtkText -> GtkTextView:
+
+-=-=---=-=---=-=---=-=---=-=---=-=---=-=--
+$textview = Gtk2::TextView->new();
+$textview->get_buffer()->set_text("Very interesting text", -1);
+-=-=---=-=---=-=---=-=---=-=---=-=---=-=--
+
+  * GtkCList -> GtkTreeView with a GtkListStore model:
+
+-=-=---=-=---=-=---=-=---=-=---=-=---=-=--
+$list_model = Gtk2::ListStore->new(Gtk2::GType->STRING);
+$list = Gtk2::TreeView->new_with_model($list_model);
+$list->append_column(Gtk2::TreeViewColumn->new_with_attributes(undef, Gtk2::CellRendererText->new, 'text' => 0));
+
+my $iter = Gtk2::TreeIter->new;
+foreach (@values) {
+    $list_model->append($iter);
+    $list_model->set($iter, [ 0 => $_ ]);
+}
+$iter->free;
+
+$list->get_selection->signal_connect(changed => sub {
+    my ($model, $iter) = $_[0]->get_selected;
+    $model && $iter or return;
+    print "Value ", $model->get($iter, 0), " was selected.\n";
+});
+-=-=---=-=---=-=---=-=---=-=---=-=---=-=--
+
+  * GtkCTree -> GtkTreeView with a GtkTreeStore model:
+
+-=-=---=-=---=-=---=-=---=-=---=-=---=-=--
+$tree_model = Gtk2::TreeStore->new(Gtk2::GType->STRING);
+$tree = Gtk2::TreeView->new_with_model($tree_model);
+$tree->append_column(Gtk2::TreeViewColumn->new_with_attributes(undef, Gtk2::CellRendererText->new, 'text' => 0));
+foreach (@parents) {
+    my $iter = Gtk2::TreeIter->new;
+    $tree_model->append($iter, undef);
+    $tree_model->set($iter, [ 0 => $_ ]);
+    $parents_iterators{$_} = $iter;
+}
+
+my $iter = Gtk2::TreeIter->new;
+foreach (@children) {
+    $tree_model->append($iter, $parents_iterators{$_->{parent}});
+    $tree_model->set($iter, [ 0 => $_->{value} ]);
+}
+$iter->free;
+-=-=---=-=---=-=---=-=---=-=---=-=---=-=--

@@ -1,0 +1,41 @@
+$Id: INSTALL,v 1.2 2002/11/18 15:22:27 gthyni Exp $
+
+To install Gtk2-perl, you need a few additional Perl modules; these can be
+found at CPAN. The modules are:
+
+Inline - http://search.cpan.org/author/INGY/Inline-0.44/
+ (PLS apply patch in "inline_0_44.diff" distributed with gtk2-perl)
+
+Inline::Files - http://search.cpan.org/author/DCONWAY/Inline-Files-0.60/
+
+Parse::RecDescent - http://search.cpan.org/author/DCONWAY/Parse-RecDescent-1.80/
+
+Each of these - and Gtk2-perl itself - are installed by unpacking them, then
+running:
+
+perl Makefile.PL
+make
+make test - if you want to make sure it's been built OK. note
+	    that due to the young age of gtk2-perl, it will be
+	    fairly common that some tests fail for it :)
+
+then, as root:
+
+make install
+
+or, as a user:
+
+make install PREFIX=/wherever/you/want
+
+this will require running the programs this way:
+
+perl -I/wherever/you/want/lib/perl5/site_perl/5.8.0 program_name
+
+(adapt to your version of perl)
+
+
+After having done this for each of the modules, you should be able to run most
+of the included examples. Note that it's early days yet for Gtk2-perl, so don't
+be surprised that there are still a lot of problems even with the included
+examples.
+

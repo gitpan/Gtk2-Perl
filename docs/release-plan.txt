@@ -1,0 +1,55 @@
+$Id: release-plan.txt,v 1.3 2002/12/09 20:40:31 gthyni Exp $
+This is a first draft of a release plan,
+needs to be filled with more precise goals
+
+Even mionor numbers is used for releases,
+odd minor number is just CVS code between releases.
+
+* prealpha release 0.02,
+  release date: Nov 2002
+	+ runs as Inline-tree
+	+ makes and installs OK with Makefile.PL
+	+ runs all examples
+
+* alpha release 0.04,
+  release date: Dec 9, 2002
+	+ first release uploaded to CPAN
+
+* alpha release 0.50
+  release date: Dec ??, 2002
+
+* more alphas ..... TBA
+
+* beta release 0.80
+  release date: Q1, 2003
+	+ feature complete = all commonly used classes and functions
+	+ regression test (make install)
+	+ interactive tests
+	+ Debian/Redhat/Mandrake package maintainers needed
+
+* RC1 release 0.96
+  release date: Q2, 2003
+	+ code freeze
+	+ feature freeze
+	+ documentations
+
+* stable release 1.00
+  release date: Q2, 2003
+	
+
+POST 1.00
+========
++ absolutely feature complete = *all* classes and functions
++ perl widget creation
++ add-ons:
+	+ Daniel's gnome2-perl
+	+ gtkhtml
+	+ gal2
+	+ gtk/mozilla
+
+
+
+
+
+  
+

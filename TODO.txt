@@ -1,0 +1,9 @@
+TODO
+====
+
++ test environment (like Gtk/perl 1.x)
++ regression test
++ autoselect new-function, like Gtk2::Button->new will call gtk_button_new_with_label if argument is present
+  - partially done (by hand)
++ gnome modules
+
