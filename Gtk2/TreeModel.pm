@@ -1,11 +1,11 @@
 package Gtk2::TreeModel;
 
-# $Id: TreeModel.pm,v 1.10 2002/12/16 17:23:16 ggc Exp $
+# $Id: TreeModel.pm,v 1.11 2003/02/11 12:05:50 ggc Exp $
 # Copyright 2002, Christian Borup <borup@users.sourceforge.net>
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: TreeModel.pm,v 1.10 2002/12/16 17:23:16 ggc Exp $';
+our $rcsid = '$Id: TreeModel.pm,v 1.11 2003/02/11 12:05:50 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 BEGIN { do 'Gtk2/_config.pm'; $@ and die }
@@ -14,14 +14,15 @@ use Gtk2::GObject;
 @ISA= qw(Gtk2::GObject);
 
 sub get {
-    my $model= shift;
-    my $iter= shift;
+    my ($model, $iter) = splice @_, 0, 2;
     my $free;
-    $free= $iter= $model->get_iter($iter) if $iter->isa("Gtk2::TreePath"); # mush be free'd
-    my @q= map { $model->_get($iter, $_) } @_; # this should be moved to C
+    $free = $iter = $model->get_iter($iter) if $iter->isa("Gtk2::TreePath"); # mush be free'd
+    my @q = map { $model->_get($iter, $_) } @_; # this should be moved to C
     $free->free if $free;
     return wantarray ? @q : $q[0];
 }
+
+sub get_iter_root { get_iter_first(@_) }
 
 
 # --- helper functions

@@ -148,6 +148,8 @@ $pbar->update($value);
 New:
 $pbar->set_fraction($value);
 
+(that's upstream API changes anyway, have a look at Gtk+ API doc)
+
 
     [*] GtkCTree, GtkCList, GtkText
 
@@ -203,3 +205,15 @@ foreach (@children) {
 }
 $iter->free;
 -=-=---=-=---=-=---=-=---=-=---=-=---=-=--
+
+
+    [*] Callbacks
+
+The following alternative syntax, which was available in
+gtk-perl, is no more authorized:
+
+$widget->signal_connect(signame => [ \&subroutine_name, @parameters ]);
+
+FYI the syntax is:
+
+$widget->signal_connect(signame => sub { subroutine_name(@parameters) });

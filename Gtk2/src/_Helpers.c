@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: _Helpers.c,v 1.34 2003/02/07 19:39:50 ggc Exp $
+ * $Id: _Helpers.c,v 1.36 2003/03/20 22:22:09 joered Exp $
  */
 
 #include "gtk2-perl.h"
@@ -288,7 +288,6 @@ SV* gtk2_perl_new_object_from_pointer(void *pointer, char *type)
     obj_ref = newSViv(0);
     obj = newSVrv(obj_ref, type);
     sv_setiv(obj, (IV) pointer);
-    SvREADONLY_on(obj);
     gtk2_perl_load_class(type);
     return obj_ref;
 }
@@ -319,16 +318,22 @@ SV* gtk2_perl_new_object_nullok(void *g_object)
 
 SV* newSVgchar_nofree(gchar * string)
 {
-    SV* string_sv = newSVpv(string, 0);
-    SvUTF8_on(string_sv);
-    return string_sv;
+    if (string) {
+	SV* string_sv = newSVpv(string, 0);
+	SvUTF8_on(string_sv);
+	return string_sv;
+    } else
+	return &PL_sv_undef;
 }
 
 SV* newSVgchar(gchar * string)
 {
-    SV* results = newSVgchar_nofree(string);
-    g_free(string);
-    return results;
+    if (string) {
+	SV* results = newSVgchar_nofree(string);
+	g_free(string);
+	return results;
+    } else
+	return &PL_sv_undef;
 }
 
 GList* SvGList_of_strings(SV* strings)

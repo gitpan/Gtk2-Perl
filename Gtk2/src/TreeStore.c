@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: TreeStore.c,v 1.1 2002/11/11 21:15:32 ggc Exp $
+ * $Id: TreeStore.c,v 1.3 2003/03/04 11:26:37 ggc Exp $
  */
 
 #include "gtk2-perl.h"
@@ -48,7 +48,8 @@ void gtkperl_tree_store_set(SV* tree_store, SV* iter, SV* argv_ref)
 	sv_utf8_upgrade(value);
 	g_value_init(&gval, gtk_tree_model_get_column_type(GTK_TREE_MODEL(ts), SvIV(column)));
 	if (gperl_value_from_object(&gval, value))
-	    fprintf(stderr, G_GNUC_FUNCTION ": value is of the wrong type for this column");
+	    fprintf(stderr, "%s: value is of the wrong type for column %d (expecting type %s)\n",
+		    __FUNCTION__, (int)SvIV(column), g_type_name(G_TYPE_FUNDAMENTAL(G_VALUE_TYPE(&gval)))); 
 	else
 	    gtk_tree_store_set_value(ts, giter, SvIV(column), &gval);
     }
@@ -109,6 +110,32 @@ void gtkperl_tree_store_clear(SV* tree_store)
 {
     gtk_tree_store_clear(SvGtkTreeStore(tree_store));
 }
+
+#if GTK_CHECK_VERSION(2,2,0)
+/* gboolean gtk_tree_store_iter_is_valid (GtkTreeStore *tree_store, GtkTreeIter *iter) */
+int gtkperl_tree_store_iter_is_valid(SV* tree_store, SV* iter)
+{
+    return gtk_tree_store_iter_is_valid(SvGtkTreeStore(tree_store), SvGtkTreeIter(iter));
+}
+
+/* void gtk_tree_store_swap (GtkTreeStore *tree_store, GtkTreeIter *a, GtkTreeIter *b) */
+void gtkperl_tree_store_swap(SV* tree_store, SV* a, SV* b)
+{
+    gtk_tree_store_swap(SvGtkTreeStore(tree_store), SvGtkTreeIter(a), SvGtkTreeIter(b));
+}
+
+/* void gtk_tree_store_move_before (GtkTreeStore *tree_store, GtkTreeIter *iter, GtkTreeIter *position) */
+void gtkperl_tree_store_move_before(SV* tree_store, SV* iter, SV* position)
+{
+    gtk_tree_store_move_before(SvGtkTreeStore(tree_store), SvGtkTreeIter(iter), SvGtkTreeIter_nullok(position));
+}
+
+/* void gtk_tree_store_move_after (GtkTreeStore *tree_store, GtkTreeIter *iter, GtkTreeIter *position) */
+void gtkperl_tree_store_move_after(SV* tree_store, SV* iter, SV* position)
+{
+    gtk_tree_store_move_after(SvGtkTreeStore(tree_store), SvGtkTreeIter(iter), SvGtkTreeIter_nullok(position));
+}
+#endif
 
 /*
  * Local variables:

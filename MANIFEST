@@ -131,6 +131,7 @@ Gtk2/src/Statusbar.c
 Gtk2/src/Style.c
 Gtk2/src/Table.c
 Gtk2/src/TextBuffer.c
+Gtk2/src/TextMark.c
 Gtk2/src/TextView.c
 Gtk2/src/ToggleButton.c
 Gtk2/src/Tooltips.c
@@ -189,6 +190,7 @@ Gtk2/src/Socket.c
 Gtk2/src/CList.c
 Gtk2/src/CTree.c
 Gtk2/src/CellRendererPixbuf.c
+Gtk2/src/MessageDialog.c
 Gtk2/include/gtk2-perl-pango.h
 Gtk2/include/gtk2-perl.h
 Gtk2/include/gtk2-perl-gdk.h

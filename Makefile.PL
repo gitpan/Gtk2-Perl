@@ -4,7 +4,7 @@
 # copyright 2002, Dermot Musgrove
 # parts copyright 2002,  Göran Thyni, kirra.net
 #
-# $Id: Makefile.PL,v 1.18 2002/12/10 10:09:26 gthyni Exp $
+# $Id: Makefile.PL,v 1.19 2003/03/12 15:40:53 ggc Exp $
 #
 
 use 5.006;
@@ -130,6 +130,30 @@ sub MY::c_o {	# many makes are too dumb to use xs_c then c_o
     '
 .c$(OBJ_EXT):
 	$(CCCMD) $(CCCDLFLAGS) "-I$(PERL_INC)" $(PASTHRU_DEFINE) $(DEFINE) $*.c -o $*.o
+';
+}
+
+#- contributed by <scott at asofyet.org>
+sub MY::postamble {
+    my @headers = `find Gtk2/include -name "*.h" -print`;
+    chomp @headers;
+    my $frag;
+    $frag  = "HEADERS =\\\n " . join("\\\n ", @headers) . "\n";
+    $frag .= '
+install :: install_headers
+
+headerdir = $(PREFIX)/include/Gtk2
+
+INSTALL = /usr/bin/install -c -m 644
+
+install_headers:
+	mkdir -p "$(headerdir)"
+	@for i in $(HEADERS) ; do \
+		p=`basename $$i` ; \
+		echo " $(INSTALL) $$i $(headerdir)/$$p" ; \
+		$(INSTALL) $$i "$(headerdir)/$$p" ; \
+	done
+
 ';
 }
 

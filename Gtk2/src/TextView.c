@@ -1,4 +1,4 @@
-/* $Id: TextView.c,v 1.6 2002/11/11 22:32:20 gthyni Exp $
+/* $Id: TextView.c,v 1.7 2003/03/04 13:16:39 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -32,33 +32,104 @@ int gtkperl_text_view_get_cursor_visible(SV* text_view)
     return gtk_text_view_get_cursor_visible(SvGtkTextView(text_view));
 }
 
+/* void gtk_text_view_scroll_to_mark (GtkTextView *text_view, GtkTextMark *mark,
+                                      gdouble within_margin, gboolean use_align, gdouble xalign, gdouble yalign) */
+void gtkperl_text_view_scroll_to_mark(SV* text_view, SV* mark,
+				      double within_margin, int use_align, double xalign, double yalign)
+{
+    gtk_text_view_scroll_to_mark(SvGtkTextView(text_view), SvGtkTextMark(mark),
+				 within_margin, use_align, xalign, yalign);
+}
+
+/* gboolean gtk_text_view_scroll_to_iter (GtkTextView *text_view, GtkTextIter *
+                                          gdouble within_margin, gboolean use_align, gdouble xalign, gdouble yalign) */
+int gtkperl_text_view_scroll_to_iter(SV* text_view, SV* iter,
+				     double within_margin, int use_align, double xalign, double yalign)
+{
+    return gtk_text_view_scroll_to_iter(SvGtkTextView(text_view), SvGtkTextIter(iter),
+					within_margin, use_align, xalign, yalign);
+}
+
+/* void gtk_text_view_scroll_mark_onscreen (GtkTextView *text_view, GtkTextMark *mark) */
+void gtkperl_text_view_scroll_mark_onscreen(SV* text_view, SV* mark)
+{
+    gtk_text_view_scroll_mark_onscreen(SvGtkTextView(text_view), SvGtkTextMark(mark));
+}
+
+/* gboolean gtk_text_view_move_mark_onscreen (GtkTextView *text_view, GtkTextMark *mark) */
+int gtkperl_text_view_move_mark_onscreen(SV* text_view, SV* mark)
+{
+    return gtk_text_view_move_mark_onscreen(SvGtkTextView(text_view), SvGtkTextMark(mark));
+}
+
+/* gboolean gtk_text_view_place_cursor_onscreen (GtkTextView *text_view) */
+int gtkperl_text_view_place_cursor_onscreen(SV* text_view)
+{
+    return gtk_text_view_place_cursor_onscreen(SvGtkTextView(text_view));
+}
+
+/* GdkWindow* gtk_text_view_get_window (GtkTextView *text_view, GtkTextWindowType win) */
+SV* gtkperl_text_view_get_window(SV* text_view, SV* win)
+{
+    return gtk2_perl_new_object_nullok(gtk_text_view_get_window(SvGtkTextView(text_view), SvGtkTextWindowType(win)));
+}
+
+/* GtkTextWindowType gtk_text_view_get_window_type (GtkTextView *text_view, GdkWindow *window) */
+SV* gtkperl_text_view_get_window_type(SV* text_view, SV* window)
+{
+    return newSVGtkTextWindowType(gtk_text_view_get_window_type(SvGtkTextView(text_view), SvGdkWindow(window)));
+}
+
+/* void gtk_text_view_set_border_window_size (GtkTextView *text_view, GtkTextWindowType type, gint size) */
+void gtkperl_text_view_set_border_window_size(SV* text_view, SV* type, int size)
+{
+    gtk_text_view_set_border_window_size(SvGtkTextView(text_view), SvGtkTextWindowType(type), size);
+}
+
+/* gint gtk_text_view_get_border_window_size (GtkTextView *text_view, GtkTextWindowType type) */
+int gtkperl_text_view_get_border_window_size(SV* text_view, SV* type)
+{
+    return gtk_text_view_get_border_window_size(SvGtkTextView(text_view), SvGtkTextWindowType(type));
+}
+
+/* gboolean gtk_text_view_forward_display_line (GtkTextView *text_view, GtkTextIter *iter) */
+int gtkperl_text_view_forward_display_line(SV* text_view, SV* iter)
+{
+    return gtk_text_view_forward_display_line(SvGtkTextView(text_view), SvGtkTextIter(iter));
+}
+
+/* gboolean gtk_text_view_backward_display_line (GtkTextView *text_view, GtkTextIter *iter) */
+int gtkperl_text_view_backward_display_line(SV* text_view, SV* iter)
+{
+    return gtk_text_view_backward_display_line(SvGtkTextView(text_view), SvGtkTextIter(iter));
+}
+
+/* gboolean gtk_text_view_forward_display_line_end (GtkTextView *text_view, GtkTextIter *iter) */
+int gtkperl_text_view_forward_display_line_end(SV* text_view, SV* iter)
+{
+    return gtk_text_view_forward_display_line_end(SvGtkTextView(text_view), SvGtkTextIter(iter));
+}
+
+/* gboolean gtk_text_view_backward_display_line_start (GtkTextView *text_view, GtkTextIter *iter) */
+int gtkperl_text_view_backward_display_line_start(SV* text_view, SV* iter)
+{
+    return gtk_text_view_backward_display_line_start(SvGtkTextView(text_view), SvGtkTextIter(iter));
+}
+
+/* gboolean gtk_text_view_starts_display_line (GtkTextView *text_view, const GtkTextIter *iter) */
+int gtkperl_text_view_starts_display_line(SV* text_view, SV* iter)
+{
+    return gtk_text_view_starts_display_line(SvGtkTextView(text_view), SvGtkTextIter(iter));
+}
+
+/* gboolean gtk_text_view_move_visually (GtkTextView *text_view, GtkTextIter *iter, gint count) */
+int gtkperl_text_view_move_visually(SV* text_view, SV* iter, int count)
+{
+    return gtk_text_view_move_visually(SvGtkTextView(text_view), SvGtkTextIter(iter), count);
+}
+
 
 /* MORE NOT YET IMPLEMENTED
-void        gtk_text_view_scroll_to_mark    (GtkTextView *text_view,
-                                             GtkTextMark *mark,
-                                             gdouble within_margin,
-                                             gboolean use_align,
-                                             gdouble xalign,
-                                             gdouble yalign);
-gboolean    gtk_text_view_scroll_to_iter    (GtkTextView *text_view,
-                                             GtkTextIter *iter,
-                                             gdouble within_margin,
-                                             gboolean use_align,
-                                             gdouble xalign,
-                                             gdouble yalign);
-void        gtk_text_view_scroll_mark_onscreen
-                                            (GtkTextView *text_view,
-                                             GtkTextMark *mark);
-gboolean    gtk_text_view_move_mark_onscreen
-                                            (GtkTextView *text_view,
-                                             GtkTextMark *mark);
-gboolean    gtk_text_view_place_cursor_onscreen
-                                            (GtkTextView *text_view);
-void        gtk_text_view_get_visible_rect  (GtkTextView *text_view,
-                                             GdkRectangle *visible_rect);
-void        gtk_text_view_get_iter_location (GtkTextView *text_view,
-                                             const GtkTextIter *iter,
-                                             GdkRectangle *location);
 void        gtk_text_view_get_line_at_y     (GtkTextView *text_view,
                                              GtkTextIter *target_iter,
                                              gint y,
@@ -86,38 +157,6 @@ void        gtk_text_view_window_to_buffer_coords
                                              gint window_y,
                                              gint *buffer_x,
                                              gint *buffer_y);
-GdkWindow*  gtk_text_view_get_window        (GtkTextView *text_view,
-                                             GtkTextWindowType win);
-GtkTextWindowType gtk_text_view_get_window_type
-                                            (GtkTextView *text_view,
-                                             GdkWindow *window);
-void        gtk_text_view_set_border_window_size
-                                            (GtkTextView *text_view,
-                                             GtkTextWindowType type,
-                                             gint size);
-gint        gtk_text_view_get_border_window_size
-                                            (GtkTextView *text_view,
-                                             GtkTextWindowType type);
-
-
-gboolean    gtk_text_view_forward_display_line
-                                            (GtkTextView *text_view,
-                                             GtkTextIter *iter);
-gboolean    gtk_text_view_backward_display_line
-                                            (GtkTextView *text_view,
-                                             GtkTextIter *iter);
-gboolean    gtk_text_view_forward_display_line_end
-                                            (GtkTextView *text_view,
-                                             GtkTextIter *iter);
-gboolean    gtk_text_view_backward_display_line_start
-                                            (GtkTextView *text_view,
-                                             GtkTextIter *iter);
-gboolean    gtk_text_view_starts_display_line
-                                            (GtkTextView *text_view,
-                                             const GtkTextIter *iter);
-gboolean    gtk_text_view_move_visually     (GtkTextView *text_view,
-                                             GtkTextIter *iter,
-                                             gint count);
 void        gtk_text_view_add_child_at_anchor
                                             (GtkTextView *text_view,
                                              GtkWidget *child,

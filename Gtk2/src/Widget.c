@@ -1,4 +1,4 @@
-/* $Id: Widget.c,v 1.47 2003/02/03 17:12:03 ggc Exp $
+/* $Id: Widget.c,v 1.48 2003/03/06 23:10:08 joered Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -673,7 +673,7 @@ gboolean    gtk_widget_has_screen           (GtkWidget *widget);
 #define     gtk_widget_set_default_visual   (visual)
 */
 
-void gtkperl_widget_set_size_request(SV *widget, int width, int height)
+void gtkperl_widget__set_size_request(SV *widget, int width, int height)
 {
     gtk_widget_set_size_request(SvGtkWidget(widget), width, height);
 }

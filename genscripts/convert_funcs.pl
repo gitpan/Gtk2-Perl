@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# $Id: convert_funcs.pl,v 1.14 2002/11/28 13:55:28 ggc Exp $
+# $Id: convert_funcs.pl,v 1.15 2003/03/04 12:11:45 ggc Exp $
 #
 #
 # Takes .h function definitions of gtk and convert them to .c
@@ -79,10 +79,11 @@ while ($contents =~ /\s*(((?:G_CONST_RETURN)?\s*\w+\s*\**)\s*([^\(]+)\s*\(([^\)]
 	    }
 	    $return = 'SV*';
 	} else {
-	    if ($const_return || $return eq 'gboolean' || $return =~ /^g?u?int$/) {
+	    if ($const_return && $return ne 'gchar*' || $return eq 'gboolean' || $return =~ /^g?u?int$/) {
 		$funccall = "    return ~~FUNCCALL~~;";
 	    } else {
                 ($newsvcall = $return) =~ s/\*//g;
+		$const_return && $return eq 'gchar*' and $newsvcall .= '_nofree';
 		$funccall = "    return newSV$newsvcall(~~FUNCCALL~~);";
 	        $return = 'SV*';
 	    }

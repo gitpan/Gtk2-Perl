@@ -75,7 +75,7 @@ int gperl_value_from_object(GValue* value, SV* obj)
 	default:
 	    fprintf(stderr, "[gperl_value_from_object] FIXME: unhandled type - %d (%s fundamental for %s)\n",
 		    typ, g_type_name(G_TYPE_FUNDAMENTAL(G_VALUE_TYPE(value))), g_type_name(G_VALUE_TYPE(value)));
-	    break;
+	    return -1;
 	}
     return 0;
 }

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Pixbuf.c,v 1.2 2002/12/12 16:41:53 ggc Exp $
+ * $Id: Pixbuf.c,v 1.3 2003/03/11 21:39:06 ggc Exp $
  */
 
 #include "gtk2-perl-gdk.h"
@@ -40,6 +40,7 @@ SV* gdkperl_pixbuf_new_from_file(char* class, char* filename)
     GdkPixbuf* g_pixbuf = gdk_pixbuf_new_from_file(filename, &error);
     if (!g_pixbuf) {
 	SV* msg = newSVpv(error->message, 0);
+	SvUTF8_on(msg);
 	g_error_free(error);
 	croak("FATAL: error loading image: %s", SvPV_nolen(msg));
     }

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: Drawable.c,v 1.11 2002/12/16 17:55:50 ggc Exp $
+ * $Id: Drawable.c,v 1.12 2003/02/12 15:35:31 ggc Exp $
  */
 
 #include "gtk2-perl-gdk.h"
@@ -165,6 +165,14 @@ int gdkperl_drawable_XWINDOW(SV* drawable)
 {
     return GDK_WINDOW_XWINDOW(SvGdkDrawable(drawable));
 }
+
+#ifdef _XLIB_H_
+/* a very special function call, in order to force the X11 focus on a GdkDrawable */
+void gdkperl_drawable_XSetInputFocus(SV* drawable)
+{
+    XSetInputFocus(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(SvGdkDrawable(drawable)), RevertToParent, CurrentTime);
+}
+#endif
 
 /*
  * Local variables:

@@ -1,4 +1,4 @@
-/* $Id: Pixmap.c,v 1.4 2002/11/27 13:18:21 gthyni Exp $
+/* $Id: Pixmap.c,v 1.5 2003/03/04 13:33:01 joered Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -21,12 +21,6 @@ SV* gdkperl_pixmap_create_from_data(char* class, SV* window, char* data, int wid
 
 /* NOT IMPLEMENTED YET
 GdkPixmap*  gdk_pixmap_create_from_xpm      (GdkWindow *window,
-                                             GdkBitmap **mask,
-                                             GdkColor *transparent_color,
-                                             const gchar *filename);
-GdkPixmap*  gdk_pixmap_colormap_create_from_xpm
-                                            (GdkWindow *window,
-                                             GdkColormap *colormap,
                                              GdkBitmap **mask,
                                              GdkColor *transparent_color,
                                              const gchar *filename);
@@ -72,4 +66,36 @@ GdkPixmap*  gdk_pixmap_colormap_create_from_xpm_d
                                              gchar **data);
 #define     gdk_pixmap_ref
 #define     gdk_pixmap_unref
+*/
+
+
+SV* gdkperl_pixmap__create_from_xpm(char* class, SV *window,
+				    SV* xparent_color, SV *filename, int wantmask)
+{
+    SV* pixmap;
+    GdkBitmap* mask;
+    AV* ret;
+
+    pixmap = 
+	gtk2_perl_new_object_from_pointer(gdk_pixmap_create_from_xpm(SvGdkWindow(window), 
+								       wantmask ? &mask : NULL,
+								       SvGdkColor(xparent_color),
+								       SvPV_nolen(filename)),
+					  class);
+    ret = newAV();
+    av_push(ret,pixmap);
+
+    if (wantmask)
+	av_push(ret,gtk2_perl_new_object_from_pointer(mask, "Gtk2::Gdk::Bitmap"));
+
+    return newRV_noinc((SV*) ret);
+}
+
+/*
+GdkPixmap*  gdk_pixmap_colormap_create_from_xpm
+                                            (GdkWindow *window,
+                                             GdkColormap *colormap,
+                                             GdkBitmap **mask,
+                                             GdkColor *transparent_color,
+                                             const gchar *filename);
 */

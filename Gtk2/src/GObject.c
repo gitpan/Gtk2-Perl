@@ -1,4 +1,4 @@
-/* $Id: GObject.c,v 1.17 2003/02/08 15:43:25 ggc Exp $
+/* $Id: GObject.c,v 1.18 2003/02/11 12:52:18 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -125,6 +125,7 @@ static void marshal_GWeakNotify(gpointer data, GObject *where_the_object_was)
     perl_call_sv(cb_data->pl_func, G_DISCARD);
     FREETMPS;
     LEAVE;
+    gtk2_perl_destroy_notify(cb_data);
 }
 
 /* void g_object_weak_ref (GObject *object, GWeakNotify notify, gpointer data) */
@@ -140,11 +141,70 @@ void gperl_object_weak_ref(SV* object, SV* notify, SV* data)
     SvREFCNT_inc(cb_data->pl_func);
     SvREFCNT_inc(cb_data->data);
     g_object_weak_ref(SvGObject(object), marshal_GWeakNotify, cb_data);
-    g_object_weak_ref(SvGObject(object), (GWeakNotify)gtk2_perl_destroy_notify, cb_data);
 }
 
-/* weak_unref would be rather complicated :) */
+/* initial code for adding weak_unref; first, I think it's a bit overkill;
+   second, it doesn't reduce the arrays nor free the members
 
+[*] global static variable
+
+static HV* weak_refs = NULL;
+
+[*] code to add in weak_ref
+
+    {
+	AV* w;
+	SV** w_ref;
+	HV* new_store;
+	char* object_name;
+	if (!weak_refs)
+	    weak_refs = newHV();
+	asprintf(&object_name, "0x%p", object);
+	w_ref = hv_fetch(weak_refs, object_name, strlen(object_name), 0);
+	if (!w_ref) {
+	    w = newAV();
+	    hv_store(weak_refs, object_name, strlen(object_name), newRV_noinc((SV*)w), 0);
+	} else
+	    w = (AV*) SvRV(*w_ref);
+	printf("for object %s weak-refs len currently %d\n", object_name, (int)av_len(w));
+	new_store = newHV();
+	hv_store(new_store, "pl_cb", 5, notify, 0);
+	hv_store(new_store, "gtk_data", 8, newSViv((IV)cb_data), 0);
+	av_push(w, newRV_noinc((SV*)new_store));
+    }
+
+[*] weak_unref
+
+void gperl_object_weak_unref(SV* object, SV* notify, SV* data)
+{
+    char* object_name;
+    SV** w_ref;
+    AV* w;
+    int i;
+    if (!weak_refs)
+	return;
+    asprintf(&object_name, "0x%p", object);
+    w_ref = hv_fetch(weak_refs, object_name, strlen(object_name), 0);
+    if (!w_ref)
+	return;
+    w = (AV*) SvRV(*w_ref);
+    printf("for object %s weak-refs len currently %d\n", object_name, (int)av_len(w));
+    for (i=0; i<=av_len(w); i++) {
+	HV* values = (HV*) SvRV(*av_fetch(w, i, 0));
+	SV** pl_cb = hv_fetch(values, "pl_cb", 5, 0);
+	if (pl_cb && *pl_cb == notify) {
+	    SV** gtk_data = hv_fetch(values, "gtk_data", 8, 0);
+	    if (gtk_data) {
+		struct callback_data * cb_data = (struct callback_data *) SvIV(*gtk_data);
+		if (cb_data->data == data) {
+		    printf("match! %d\n", i);
+		    g_object_weak_unref(SvGObject(object), marshal_GWeakNotify, cb_data);
+		}
+	    }
+	}
+    }
+}
+*/
 
 gchar* gperl_object_DEBUG_get_perl_type(SV* object)
 { 

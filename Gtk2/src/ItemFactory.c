@@ -1,4 +1,4 @@
-/* $Id: ItemFactory.c,v 1.10 2003/02/03 11:00:17 ggc Exp $
+/* $Id: ItemFactory.c,v 1.11 2003/02/16 11:42:48 gthyni Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -50,7 +50,7 @@ GtkWidget*  gtk_item_factory_get_item_by_action
 void gtkperl_item_factory__create_item(SV *ifactory,
 				       gchar* path, SV* accelerator, 
 				       SV* action, SV* type,
-				       SV* callback_type)
+				       SV* callback_type, SV* extra)
 {
     GtkItemFactoryEntry* e = g_malloc0(sizeof(GtkItemFactoryEntry));
     e->path = path;
@@ -58,6 +58,8 @@ void gtkperl_item_factory__create_item(SV *ifactory,
     e->callback = NULL;
     e->callback_action = (action == &PL_sv_undef) ? 0 : SvUV(action);
     e->item_type = (type == &PL_sv_undef) ? NULL : SvPV_nolen(type);
+    e->extra_data = (extra == &PL_sv_undef) ? NULL : SvPV_nolen(type);
+
     gtk_item_factory_create_item(SvGtkItemFactory(ifactory), e, 
 				 NULL,
 				 (callback_type == &PL_sv_undef) ? 1 : SvUV(callback_type));

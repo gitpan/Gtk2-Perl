@@ -1,23 +1,11 @@
 /*
- * $Id: TreeModel.c,v 1.6 2002/11/22 12:02:47 ggc Exp $
+ * $Id: TreeModel.c,v 1.7 2003/02/11 12:06:10 ggc Exp $
  * Copyright 2002, Christian Borup <borup@users.sourceforge.net>
  * licensed under Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
  */
 
 #include "gtk2-perl.h"
-
-
-SV* gtkperl_tree_model__get(SV* model, SV* iter, int column)
-{
-    GValue gval = { 0, };
-    SV *value;
-
-    gtk_tree_model_get_value(SvGtkTreeModel(model), SvGtkTreeIter(iter), column, &gval);
-    value = gperl_object_from_value(&gval);
-
-    return value ? value : &PL_sv_undef;
-}
 
 /* GtkTreeModelFlags gtk_tree_model_get_flags (GtkTreeModel *tree_model) */
 SV* gtkperl_tree_model_get_flags(SV* tree_model)
@@ -61,10 +49,25 @@ SV* gtkperl_tree_model_get_iter_from_string(SV* tree_model, gchar* path_string)
     get_iter_generic(gtk_tree_model_get_iter_from_string(SvGtkTreeModel(tree_model), iter, path_string));
 }
 
+#if GTK_CHECK_VERSION(2,2,0)
+/* gchar * gtk_tree_model_get_string_from_iter (GtkTreeModel *tree_model, GtkTreeIter *iter) */
+SV* gtkperl_tree_model_get_string_from_iter(SV* tree_model, SV* iter)
+{
+    return newSVgchar(gtk_tree_model_get_string_from_iter(SvGtkTreeModel(tree_model), SvGtkTreeIter(iter)));
+}
+#endif
+
 /* gboolean gtk_tree_model_get_iter_first (GtkTreeModel *tree_model, GtkTreeIter *iter) */
 SV* gtkperl_tree_model_get_iter_first(SV* tree_model)
 {
     get_iter_generic(gtk_tree_model_get_iter_first(SvGtkTreeModel(tree_model), iter));
+}
+
+/* GtkTreePath * gtk_tree_model_get_path (GtkTreeModel *tree_model, GtkTreeIter *iter) */
+SV* gtkperl_tree_model_get_path(SV* tree_model, SV* iter)
+{
+    return gtk2_perl_new_object_from_pointer(gtk_tree_model_get_path(SvGtkTreeModel(tree_model), SvGtkTreeIter(iter)),
+					     "Gtk2::TreePath");
 }
 
 /* gboolean gtk_tree_model_iter_next (GtkTreeModel *tree_model, GtkTreeIter *iter) */
@@ -109,14 +112,28 @@ SV* gtkperl_tree_model_iter_parent(SV* tree_model, SV* child)
     get_iter_generic(gtk_tree_model_iter_parent(SvGtkTreeModel(tree_model), iter, SvGtkTreeIter(child)));
 }
 
-
-/* GtkTreePath * gtk_tree_model_get_path (GtkTreeModel *tree_model, GtkTreeIter *iter) */
-SV* gtkperl_tree_model_get_path(SV* tree_model, SV* iter)
+/* void gtk_tree_model_ref_node (GtkTreeModel *tree_model, GtkTreeIter *iter) */
+void gtkperl_tree_model_ref_node(SV* tree_model, SV* iter)
 {
-    return gtk2_perl_new_object_from_pointer(gtk_tree_model_get_path(SvGtkTreeModel(tree_model), SvGtkTreeIter(iter)),
-					     "Gtk2::TreePath");
+    gtk_tree_model_ref_node(SvGtkTreeModel(tree_model), SvGtkTreeIter(iter));
 }
 
+/* void gtk_tree_model_unref_node (GtkTreeModel *tree_model, GtkTreeIter *iter) */
+void gtkperl_tree_model_unref_node(SV* tree_model, SV* iter)
+{
+    gtk_tree_model_unref_node(SvGtkTreeModel(tree_model), SvGtkTreeIter(iter));
+}
+
+SV* gtkperl_tree_model__get(SV* model, SV* iter, int column)
+{
+    GValue gval = { 0, };
+    SV *value;
+
+    gtk_tree_model_get_value(SvGtkTreeModel(model), SvGtkTreeIter(iter), column, &gval);
+    value = gperl_object_from_value(&gval);
+
+    return value ? value : &PL_sv_undef;
+}
 
 /* auto generated marshal for GtkTreeModelForeachFunc (using genscripts/castmacros-autogen.pl GtkTreeModelForeachFunc) */
 static gboolean marshal_GtkTreeModelForeachFunc(GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)

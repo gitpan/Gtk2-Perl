@@ -1,42 +1,270 @@
-2003-02-09  gthyni
+2003-03-17 19:36  muppetman
+
+	* Gtk2/MessageDialog.pm, Gtk2/src/MessageDialog.c, 
+	misc-examples/message-dialog.pl: implemented GtkMessageDialog
+	* Gtk2/src/ListStore.c: ignore return value of gtk_list_store_remove
+	if gtk+ < 2.2.0; the function returned void in 2.0.x.  this fixes
+	a compile breakage.
+
+2003-03-12 16:40  ggc
+
+	* Makefile.PL: install headers, contributed by <scott at
+	asofyet.org>
+
+2003-03-11 22:39  ggc
+
+	* Gtk2/Gdk/src/Pixbuf.c: don't forget to set utf8 flag on the error
+	message when new_from_file fails (even if for the moment it's
+	useless with perl 5.8.0 since this sucker destroys the utf8 flag of
+	an SV passed to croak/die)
+
+2003-03-11 17:42  ggc
+
+	* misc-examples/signal-emit.pl: misc fixes
+
+2003-03-11 17:38  ggc
+
+	* Gtk2/GObject.pm, Gtk2/GSignal.pm, Gtk2/src/GSignal.c,
+	Gtk2/src/GType.c, misc-examples/signal-emit.pl: add signal_emit
+	functionality
+
+2003-03-11 00:42  ggc
+
+	* Gtk2/: GObject.pm, src/GSignal.c: add signal_handler_block
+	signal_handler_unblock and signal_is_connected
+
+2003-03-10 17:12  gthyni
+
+	* MANIFEST: update
+
+2003-03-07 00:21  joered
+
+	* Gtk2/Widget.pm: bugfix: Gtk2::Widget->set_size_request: passing
+	undef as height didn't work
+
+2003-03-07 00:10  joered
+
+	* Gtk2/: Widget.pm, src/Widget.c: Gtk2::Widget->set_size_request:
+	undef sizes are converted to -1 to get old Gtk default behaviour
+
+2003-03-06 13:58  ggc
+
+	* Gtk2/: ListStore.pm, TreeStore.pm: verify arrayref param of
+	append_set so that people don't mess TreeStore and ListStore
+
+2003-03-04 14:33  joered
+
+	* Gtk2/Gdk/: Pixmap.pm, src/Pixmap.c: implemented
+	Gtk2::Gdk::Pixmap->create_from_xpm
+
+2003-03-04 14:29  joered
+
+	* Gtk2/_Object.pm: bugfix: eval wrapper introduced in rev 1.11
+	didn't check 'wantarray' and always expected a scalar return value
+
+2003-03-04 14:16  ggc
+
+	* Gtk2/src/TextView.c: add some missing functions
+
+2003-03-04 13:25  ggc
+
+	* Gtk2/: src/TextMark.c, src/TextBuffer.c, TextBuffer.pm,
+	TextMark.pm: add many missing functions in TextBuffer, and TextMark
+	support
+
+2003-03-04 13:15  ggc
+
+	* Gtk2/src/_Helpers.c: have newSVgchar and newSVgchar_nofree handle
+	case when argument is NULL
+
+2003-03-04 13:11  ggc
+
+	* genscripts/convert_funcs.pl: we need to use newSVgchar_nofree
+	when a function returns G_CONST_RETURN gchar* in order for utf8
+	setting to be ok
+
+2003-03-04 12:26  ggc
+
+	* Gtk2/src/: ListStore.c, TreeStore.c: G_GNUC_FUNCTION doesn't seem
+	to work well for printing the function in which the fprintf is
+	running
+
+2003-03-04 12:07  ggc
+
+	* Gtk2/src/TreeStore.c: add 2.2 functions iter_is_valid, swap,
+	move_after, move_before
+
+2003-03-04 12:06  ggc
+
+	* Gtk2/src/ListStore.c: add insert, before, after, prepend add 2.2
+	functions iter_is_valid, swap, move_after, move_before
+
+2003-02-22 20:47  ggc
+
+	* Gtk2/src/SpinButton.c: add Gtk2::SpinButton->new_with_range (from
+	pixel@mandrakesoft.com)
+
+2003-02-21 13:44  ggc
+
+	* Gtk2/: GObject.pm, GSignal.pm, src/GSignal.c: add
+	signal_connect_after
+
+2003-02-21 13:41  ggc
+
+	* Gtk2/Text.pm: remove unneeded enums declarations as constants
+
+2003-02-19 13:11  ggc
+
+	* Gtk2/Gdk/Window.pm: fix syntax error leading to gtk2 not finding
+	some functions :((
+
+2003-02-19 12:23  ggc
+
+	* Gtk2/Widget.pm: revert Goran change's which clashed with already
+	existing functions in src/Widget.c
+
+2003-02-19 12:11  ggc
+
+	* Gtk2/Widget.pm: add get_sensitive
+
+2003-02-16 12:42  gthyni
+
+	* Gtk2/: ItemFactory.pm, src/ItemFactory.c:  support extra data for
+	StockItem and ImageItem in Gtk2::ItemFactory
+	 patch from  Jeffrey W. Baker
+
+2003-02-16 12:38  gthyni
+
+	* Gtk2/: AccelGroup.pm, Gtk2.pm, Text.pm, Widget.pm, Gdk/Event.pm,
+	Gdk/Gdk.pm, Gdk/Window.pm: added some enums
+
+2003-02-16 12:37  gthyni
+
+	* testgtk.pl: start cleanup with "use strict"
+
+2003-02-16 02:35  gthyni
+
+	* testgtk.pl: syntax correct without strict at least
+
+2003-02-13 12:51  ggc
+
+	* Gtk2/src/ScrolledWindow.c: add accessors to internal stuff
+
+2003-02-12 16:35  ggc
+
+	* Gtk2/Gdk/src/Drawable.c: add XSetInputFocus, a very special
+	function call that should not be here in gtk2-perl, in order to
+	force the X11 focus on a GdkDrawable in some odd situations when
+	it's needed
+
+2003-02-12 13:08  ggc
+
+	* docs/porting: document that an alternative syntax for
+	signal_connect is no more authorized
+
+2003-02-11 14:19  ggc
+
+	* Gtk2/src/VScrollbar.c: oops I did it again :)
+
+2003-02-11 13:52  ggc
+
+	* Gtk2/src/GObject.c: initial code for g_object_weak_unref
+	(probably too much overkill for the use for it..)
+
+2003-02-11 13:49  ggc
+
+	* Gtk2/src/VScrollbar.c: oops
+
+2003-02-11 13:05  ggc
+
+	* Gtk2/: TreeModel.pm, src/TreeModel.c: add the few missing
+	methods, sort the methods according to the header file
+
+2003-02-11 12:46  ggc
+
+	* Gtk2/src/Adjustment.c: add missing methods
+
+2003-02-11 12:41  ggc
+
+	* Gtk2/: ScrolledWindow.pm, src/ScrolledWindow.c, Range.pm,
+	src/Range.c: implement all methods
+
+2003-02-10 12:35  ggc
+
+	* Gtk2/: VScrollbar.pm, src/VScrollbar.c: - gtk_vscrollbar_new can
+	take NULL pointers - allow Gtk2::VScrollbar->new without params
+
+2003-02-09 22:27  gthyni
+
+	* Gtk2.pm: up version to 0.11 number post release 0.10
+
+2003-02-09 21:28  gthyni
+
+	* Gtk2.pm: update version for release 0.10
+
+2003-02-09 21:23  gthyni
 
 	* Gtk2/_Object.pm: shuffle
+
+2003-02-09 21:22  gthyni
+
 	* Gtk2/GObject.pm: fix build problems by shuffeling lines
 
-2003-02-08  ggc
+2003-02-08 16:43  ggc
 
-	* ChangeLog: update
-	* Gtk2/src/GObject.c, misc-examples/gobject-weakref.pl:
-	add Gtk2::GObject::weak_ref
-	* Gtk2/src/Gtk2.c:
-	add Gtk2->pointer_address, a function to get the Gtk address (e.g. memory pointer address) of a gtk2-perl wrapped object
+	* Gtk2/src/GObject.c, misc-examples/gobject-weakref.pl: add
+	Gtk2::GObject::weak_ref
 
-2003-02-08  ggc
+2003-02-08 16:42  ggc
 
-	* Gtk2/src/GObject.c, misc-examples/gobject-weakref.pl: add Gtk2::GObject::weak_ref
 	* Gtk2/src/Gtk2.c: add Gtk2->pointer_address, a function to get the
 	Gtk address (e.g. memory pointer address) of a gtk2-perl wrapped
 	object
 
-2003-02-07  ggc
+2003-02-07 20:39  ggc
 
 	* Gtk2/src/_Helpers.c: leak less memory
+
+2003-02-07 20:28  ggc
+
+	* Gtk2/src/_Helpers.c: [no log message]
+
+2003-02-07 20:28  ggc
+
 	* Gtk2/src/_Helpers.c: fix detection of a derivative of GtkStyle
 	(for engines) -> it failed when the style's name began with G
 	because of the glib things :)
 
-2003-02-03  ggc
+2003-02-03 23:39  ggc
 
 	* Gtk2/src/TreeViewColumn.c: add a few (easy) missing functions
+
+2003-02-03 23:05  ggc
+
 	* Gtk2/src/BoxChild.c: don't set BoxChild->widget to a
 	Gtk2::Widget, let it discover the class itself
+
+2003-02-03 18:11  ggc
+
 	* Gtk2/: Widget.pm, src/Widget.c: add most simple missing functions
+
+2003-02-03 17:54  ggc
+
 	* Gtk2/src/Widget.c: add set_direction get_direction
 	set_default_direction get_default_direction
+
+2003-02-03 12:00  ggc
+
 	* Gtk2/src/ItemFactory.c: gtk_item_factory_get_widget can return
 	NULL, call the right gtk2_perl function so that we return undef in
 	that case
+
+2003-02-03 11:57  ggc
+
 	* docs/memory: add Gtk2::Bin::get_child
+
+2003-02-03 11:57  ggc
+
 	* Gtk2/src/Bin.c: get_child can return a NULL pointer, call the
 	right gtk2_perl function
 

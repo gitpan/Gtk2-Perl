@@ -1,4 +1,4 @@
-/* $Id: Adjustment.c,v 1.4 2002/10/20 15:53:32 ggc Exp $
+/* $Id: Adjustment.c,v 1.5 2003/02/11 11:46:21 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -25,6 +25,27 @@ void gtkperl_adjustment_set_value(SV *adjustment, double value)
 {
     gtk_adjustment_set_value(SvGtkAdjustment(adjustment), value);
 }
+
+/* void gtk_adjustment_changed (GtkAdjustment *adjustment) */
+void gtkperl_adjustment_changed(SV* adjustment)
+{
+    gtk_adjustment_changed(SvGtkAdjustment(adjustment));
+}
+
+/* void gtk_adjustment_value_changed (GtkAdjustment *adjustment) */
+void gtkperl_adjustment_value_changed(SV* adjustment)
+{
+    gtk_adjustment_value_changed(SvGtkAdjustment(adjustment));
+}
+
+/* void gtk_adjustment_clamp_page (GtkAdjustment *adjustment, gdouble lower, gdouble upper) */
+void gtkperl_adjustment_clamp_page(SV* adjustment, double lower, double upper)
+{
+    gtk_adjustment_clamp_page(SvGtkAdjustment(adjustment), lower, upper);
+}
+
+
+/** methods to access internal stuff **/
 
 double gtkperl_adjustment_get_lower(SV *adjustment)
 {

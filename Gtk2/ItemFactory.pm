@@ -1,11 +1,11 @@
 package Gtk2::ItemFactory;
 
-# $Id: ItemFactory.pm,v 1.10 2002/12/16 17:20:31 ggc Exp $a
+# $Id: ItemFactory.pm,v 1.11 2003/02/16 11:42:46 gthyni Exp $a
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: ItemFactory.pm,v 1.10 2002/12/16 17:20:31 ggc Exp $';
+our $rcsid = '$Id: ItemFactory.pm,v 1.11 2003/02/16 11:42:46 gthyni Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 BEGIN { do 'Gtk2/_config.pm'; $@ and die }
@@ -24,17 +24,17 @@ sub new
 sub create_item
 {
   my ($factory, $entry, $callback_data, $callback_type) = @_;
-  my ($path, $accelerator, $callback, $action, $type);
+  my ($path, $accelerator, $callback, $action, $type, $extra);
 
   if (ref($entry) eq 'ARRAY') {
-      ($path, $accelerator, $callback, $action, $type) = @$entry;
+      ($path, $accelerator, $callback, $action, $type, $extra) = @$entry;
   } elsif (ref($entry) eq 'HASH') {
-      ($path, $accelerator, $callback, $action, $type) = @$entry{qw(path accelerator callback action type)};
+      ($path, $accelerator, $callback, $action, $type, $extra) = @$entry{qw(path accelerator callback action type extra)};
   } else {
       die "FATAL: can't guess datatype of entries";
   }
 
-  $factory->_create_item($path, $accelerator || undef, $action || undef, $type || undef, $callback_type || undef);
+  $factory->_create_item($path, $accelerator || undef, $action || undef, $type || undef, $callback_type || undef, $extra || undef);
 #  print STDERR "CREATED ITEM: ", join(':', $factory->get_widget($path), @$entry), "\n";
   if ($callback)
     {

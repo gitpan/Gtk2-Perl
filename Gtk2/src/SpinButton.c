@@ -1,4 +1,4 @@
-/* $Id: SpinButton.c,v 1.5 2002/11/16 07:33:48 glade-perl Exp $
+/* $Id: SpinButton.c,v 1.6 2003/02/22 19:47:16 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -11,6 +11,10 @@ SV* gtkperl_spin_button_new(char* class, SV* adj, double rate, int digits)
     return gtk2_perl_new_object(gtk_spin_button_new(SvGtkAdjustment(adj), rate, digits));
 }
 
+SV* gtkperl_spin_button_new_with_range(char* class, double min, double max, double step)
+{
+    return gtk2_perl_new_object(gtk_spin_button_new_with_range(min, max, step));
+}
 
 double gtkperl_spin_button_get_value(SV* spin_button)
 {

@@ -1,11 +1,11 @@
 package Gtk2::Widget;
 
-# $Id: Widget.pm,v 1.28 2003/02/03 17:11:48 ggc Exp $
+# $Id: Widget.pm,v 1.34 2003/03/11 19:40:00 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 
-our $rcsid = '$Id: Widget.pm,v 1.28 2003/02/03 17:11:48 ggc Exp $';
+our $rcsid = '$Id: Widget.pm,v 1.34 2003/03/11 19:40:00 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 BEGIN { do 'Gtk2/_config.pm'; $@ and die }
@@ -16,8 +16,8 @@ use Gtk2::Object;
 use Gtk2::_Helpers;
 use Gtk2::Gdk::Atom;
 
-
 sub set_sensitive { $_[0]->set_property('sensitive', $_[1]) }
+sub get_sensitive { $_[0]->get_property('sensitive') }
 sub set_name { $_[0]->set_property('name', $_[1]) }
 sub get_name { $_[0]->get_property('name') }
 
@@ -78,6 +78,12 @@ sub style_get {
 sub get_size_request {
     my $values = shift->_get_size_request;
     return wantarray ? @$values : $values;
+}
+
+sub set_size_request {
+    my $self = shift;
+    return $self->_set_size_request(defined $_[0] ? $_[0] : -1,
+				    defined $_[1] ? $_[1] : -1);
 }
 
 # PROPERTIES

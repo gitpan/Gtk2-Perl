@@ -1,13 +1,13 @@
 package Gtk2::Gtk2;
 
-# $Id: Gtk2.pm,v 1.5 2002/12/16 17:16:54 ggc Exp $
+# $Id: Gtk2.pm,v 1.6 2003/02/16 11:38:08 gthyni Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 # Contributor:
 # - Dermot Musgrove
 
-our $rcsid = '$Id: Gtk2.pm,v 1.5 2002/12/16 17:16:54 ggc Exp $';
+our $rcsid = '$Id: Gtk2.pm,v 1.6 2003/02/16 11:38:08 gthyni Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 BEGIN { do 'Gtk2/_config.pm'; $@ and die }
@@ -119,6 +119,22 @@ sub SELECTION_SINGLE	{ 'single' }
 sub SELECTION_BROWSE	{ 'browse' }
 sub SELECTION_MULTIPLE	{ 'multiple' }
 # GtkSelectionMode
+
+#/* Built-in stock icon sizes */
+# enum GtkIconSize
+use constant ICON_SIZE_INVALID => 0;
+use constant ICON_SIZE_MENU    => 1;
+use constant ICON_SIZE_SMALL_TOOLBAR => 2;
+use constant ICON_SIZE_LARGE_TOOLBAR => 3;
+use constant ICON_SIZE_BUTTON => 4;
+use constant ICON_SIZE_DND    => 5;
+use constant ICON_SIZE_DIALOG => 6;
+
+#/* Packing types (for boxes) */
+# enum  GtkPackType
+use constant PACK_START => 0;
+use constant PACK_END => 1;
+
 
 sub init
   {
