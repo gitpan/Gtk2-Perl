@@ -452,11 +452,9 @@ Makefile.PL
 README
 TODO.txt
 compile-widgets.pl
-snapshot.sh
-.cvsignore
 MANIFEST
 fast-compile.pl
 blib-build.sh
 INSTALL
 inline_0_44.diff
-testgtk.pl
+

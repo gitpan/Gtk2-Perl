@@ -1,13 +1,13 @@
 package Gtk2::Gtk2;
 
-# $Id: Gtk2.pm,v 1.2 2002/11/20 19:30:03 gthyni Exp $
+# $Id: Gtk2.pm,v 1.4 2002/12/09 22:10:07 ggc Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
 # Contributor:
 # - Dermot Musgrove
 
-our $rcsid = '$Id: Gtk2.pm,v 1.2 2002/11/20 19:30:03 gthyni Exp $';
+our $rcsid = '$Id: Gtk2.pm,v 1.4 2002/12/09 22:10:07 ggc Exp $';
 our $VERSION = $1 if $rcsid =~ /(\d+\.[\d\.]+)/;
 
 BEGIN { do 'Gtk2/_config.pm'; }

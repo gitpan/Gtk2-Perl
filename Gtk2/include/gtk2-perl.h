@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: gtk2-perl.h,v 1.7 2002/11/26 15:13:32 ggc Exp $
+ * $Id: gtk2-perl.h,v 1.8 2002/12/09 22:10:08 ggc Exp $
  *
  */
 
@@ -41,5 +41,9 @@ void gtk2_perl_marshal_GtkCallback(GtkWidget *widget, gpointer data);
 /* function to use when installing function callbacks (that produce deferred calls of the callback, thus),
    as the GtkDestroyNotify function, (see gtkperl_tree_selection_set_select_function for an example) */
 void gtk2_perl_destroy_notify(gpointer user_data);
+
+/* from Gtk2/src/_Helpers.c, for Gtk2.c and GClosure.c */
+int gtk2_perl_trap_exceptions_in_callbacks;
+int gtk2_perl_trap_exceptions_trapped;
 
 #endif

@@ -1,4 +1,4 @@
-/* $Id: Gtk2.c,v 1.14 2002/11/21 21:14:52 gthyni Exp $
+/* $Id: Gtk2.c,v 1.16 2002/12/09 22:00:17 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -71,25 +71,39 @@ int gtkperl_gtk2__init_check(char* class, SV* argv_ref)
     return ret;
 }
 
-/*
-gboolean    gtk_init_check                  (int *argc,
-                                             char ***argv);
-*/
-/* gchar*      gtk_set_locale                  (void); */
-void gtkperl_gtk2_set_locale(char* class) { gtk_set_locale(); }
+void gtkperl_gtk2_set_locale(char* class)
+{
+    gtk_set_locale();
+}
 
-/* void        gtk_disable_setlocale           (void); */
-/* PangoLanguage* gtk_get_default_language     (void); */
-/* void        gtk_main                        (void); */
-int gtkperl_gtk2_main(char* class) { gtk_main(); return 1; }
-/* guint       gtk_main_level                  (void); */
-/* void        gtk_main_quit                   (void); */
-void gtkperl_gtk2_main_quit(char* class) { gtk_main_quit(); }
-/* gboolean    gtk_true                        (void); */
-/* gboolean    gtk_false                       (void); */
-void gtkperl_gtk2_quit(char* class) { gtk_main_quit(); }
-/* void        gtk_exit                        (gint error_code); */
-void gtkperl_gtk2_exit(char* class, int errorcode) { gtk_exit(errorcode); }
+int gtkperl_gtk2_main(char* class)
+{
+    gtk2_perl_trap_exceptions_in_callbacks++;
+    gtk_main();
+    gtk2_perl_trap_exceptions_in_callbacks--;
+    if (gtk2_perl_trap_exceptions_trapped) {
+	gtk2_perl_trap_exceptions_trapped = 0;
+	croak(Nullch);
+    }
+    gtk2_perl_trap_exceptions_trapped = 0;
+    return 1;
+}
+
+void gtkperl_gtk2_main_quit(char* class)
+{
+    gtk_main_quit();
+}
+
+void gtkperl_gtk2_quit(char* class)
+{
+    gtk_main_quit();
+}
+
+void gtkperl_gtk2_exit(char* class, int errorcode)
+{
+    gtk_exit(errorcode);
+}
+
 
 /* gint        gtk_events_pending              (void); */
 int gtkperl_gtk2_events_pending(char* class)
@@ -189,3 +203,9 @@ GtkWidget*  gtk_get_event_widget            (GdkEvent *event);
 void        gtk_propagate_event             (GtkWidget *widget,
                                              GdkEvent *event);
 */
+
+/*
+ * Local variables:
+ *  c-basic-offset: 4
+ * End:
+ */

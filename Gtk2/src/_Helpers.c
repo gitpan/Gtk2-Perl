@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id: _Helpers.c,v 1.27 2002/12/06 20:44:48 ggc Exp $
+ * $Id: _Helpers.c,v 1.28 2002/12/09 22:10:08 ggc Exp $
  */
 
 #include "gtk2-perl.h"
@@ -375,6 +375,15 @@ void gtk2_perl_marshal_GtkCallback(GtkWidget *widget, gpointer data)
     FREETMPS;
     LEAVE;
 }
+
+
+/* this is a special feature used to not segfault when gtk2-perl
+ * callbacks call "die"; e.g. we can't just let the exception
+ * propagate as usual, else it will mess up the gtk C stack call
+ */
+int gtk2_perl_trap_exceptions_in_callbacks = 0;
+int gtk2_perl_trap_exceptions_trapped = 0;
+
 
 
 /*

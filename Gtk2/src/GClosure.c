@@ -1,4 +1,4 @@
-/* $Id: GClosure.c,v 1.12 2002/11/28 14:25:38 ggc Exp $
+/* $Id: GClosure.c,v 1.15 2002/12/09 22:10:08 ggc Exp $
  * Copyright 2002, Göran Thyni, kirra.net
  * licensed with Lesser General Public License (LGPL)
  * see http://www.fsf.org/licenses/lgpl.txt
@@ -85,7 +85,18 @@ perl_closure_marshal(GClosure *closure,
 	XPUSHs(pc->extra_args ? pc->extra_args : &PL_sv_undef);
 	XPUSHs(pc->swap_data ? pc->swap_data : &PL_sv_undef);
 	PUTBACK;
-	perl_call_sv(pc->callback, G_DISCARD);
+	perl_call_sv(pc->callback, G_DISCARD|G_EVAL);
+	if (SvTRUE(ERRSV)) {
+	    if (!gtk2_perl_trap_exceptions_in_callbacks)
+		fprintf(stderr, "Gtk2-Perl: callback throwed a perl exception (a die) but I can't recover\n"
+			        "correctly from it, sorry (only handled when callbacks are called from within\n"
+			        "a gtk_main), continuing normal execution; try to not use exceptions in\n"
+			        "this callback.\n\tException: %s\n", SvPV_nolen(ERRSV));
+	    else {
+		gtk2_perl_trap_exceptions_trapped = 1;
+		gtk_main_quit();
+	    }
+	}
 	for (i=0; i<=av_len(supp_args); i++)
 	    SvREFCNT_dec(*av_fetch(supp_args, i, 0));
 	SvREFCNT_dec(supp_args);

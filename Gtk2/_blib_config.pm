@@ -1,11 +1,10 @@
 #this file is to overwrite _config.pm when installed
 #instead of Inline:ing we bootstrap modules
-# $Id: _blib_config.pm,v 1.6 2002/12/09 20:20:06 gthyni Exp $
+# $Id: _blib_config.pm,v 1.7 2002/12/10 09:28:35 gthyni Exp $
+
+use base qw(DynaLoader);
 
 #use Gtk2;
-require DynaLoader;
-@ISA=qw(DynaLoader);
-
 use Carp;
 
 #$DynaLoader::dl_debug=1;

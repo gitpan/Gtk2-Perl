@@ -4,11 +4,11 @@
 # copyright 2002, Dermot Musgrove
 # parts copyright 2002,  Göran Thyni, kirra.net
 #
-# $Id: Makefile.PL,v 1.17 2002/12/09 20:38:08 gthyni Exp $
+# $Id: Makefile.PL,v 1.18 2002/12/10 10:09:26 gthyni Exp $
 #
 
-require 5.000;
-require ExtUtils::MakeMaker;
+use 5.006;
+use ExtUtils::MakeMaker 6.0;
 use strict;
 use Cwd;
 

@@ -1,7 +1,9 @@
-# $Id: _config.pm,v 1.10 2002/11/18 15:28:39 gthyni Exp $
+# $Id: _config.pm,v 1.11 2002/12/10 12:53:17 gthyni Exp $
 # Copyright 2002, Göran Thyni, kirra.net
 # licensed with Lesser General Public License (LGPL)
 # see http://www.fsf.org/licenses/lgpl.txt
+
+use Cwd;
 
 BEGIN {
 # make automatic prefix
@@ -46,8 +48,8 @@ use Inline C => Config =>
   GLOBAL_LOAD => 1,
   LIBS => `pkg-config gtk+-2.0 --libs`,
   OPTIMIZE => $ENV{GTK2_PERL_CFLAGS} || '-g -Wall -Wstrict-prototypes',
-  TYPEMAPS => '' . $ENV{PWD} . '/Gtk2/typemap',
-  INC => '-I' . $ENV{PWD} . '/Gtk2/include ' . `pkg-config gtk+-2.0 --cflags`;
+  TYPEMAPS => '' . getcwd() . '/Gtk2/typemap',
+  INC => '-I' . getcwd() . '/Gtk2/include ' . `pkg-config gtk+-2.0 --cflags`;
 use Inline C => $_srcfile;
 
 #print "Configuring: ",__PACKAGE__,' in ', $ENV{PWD}, "\n";
